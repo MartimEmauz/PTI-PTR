@@ -1,0 +1,13 @@
+ATA 27-03
+
+Faltou o Bernardo Caldas
+
+-----------------------------------------
+
+Após o debatido na ultima SCRUM meeting, deu-se início à programação em angular, e foram criadas as primeiras páginas com sucesso. 
+A página de pesquisa de objetos já tem alguns elementos a utilizar quando a lógica em Django estiver concluida.
+A programação em Django dará início nos próximos dias, bem como a inicialização da base de dados no PostGreSQL.
+
+No final o David Carreira ajudou os restantes elementos a configurar as suas áreas de trabalho de forma a que todos possam ajudar na programação e visualização dos elementos do website.
+
+Através do seu branch, o David publicou as mudanças no repositório git.
