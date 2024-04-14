@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './menubar.component.html',
   styleUrls: ['./menubar.component.css']
 })
+
 export class MenubarComponent {
   badgevisible = false;
   badgevisibility() {

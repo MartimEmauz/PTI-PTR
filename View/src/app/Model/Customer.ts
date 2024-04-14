@@ -3,7 +3,7 @@ export interface Customer {
     name: string;
     email: string;
     phone: string;
-    active: string
+    active: string 
 }
 
 export interface Country{

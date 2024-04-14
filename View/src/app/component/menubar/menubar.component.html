@@ -2,7 +2,13 @@
     <button (click)="drawer.toggle()" mat-icon-button>
         <mat-icon>menu</mat-icon>
     </button>
+    <h1>Lost&Found</h1>
+
+    
     <span class="example-spacer"></span>
+    <button routerLink="login" mat-icon-button>
+        <mat-icon>account_circle</mat-icon>
+    </button>
     <button (click)="badgevisibility()"  mat-icon-button>
         <mat-icon matBadgeColor="accent" matBadge="15" [matBadgeHidden]="badgevisible" matBadgeSize="small">notifications</mat-icon>
     </button>

@@ -31,7 +31,7 @@ export class MasterService {
   }
 
   GetCustomerbycode(code:any){
-    return this.http.get("http://localhost:3000/customer/"+code);
+    return this.http.get<Customer>("http://localhost:3000/customer/"+code);
   }
 
   GetAssociate(){

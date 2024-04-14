@@ -13,6 +13,7 @@ import { TableComponent } from './component/table/table.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PopupComponent } from './component/popup/popup.component';
 import { UserdetailComponent } from './component/userdetail/userdetail.component';
+import { LoginComponent } from './component/login/login.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { UserdetailComponent } from './component/userdetail/userdetail.component
     SliderComponent,
     TableComponent,
     PopupComponent,
-    UserdetailComponent
+    UserdetailComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
