@@ -3,6 +3,7 @@
         <mat-icon>menu</mat-icon>
     </button>
     <span class="example-spacer"></span>
+    <button>Login</button>
     <button (click)="badgevisibility()"  mat-icon-button>
         <mat-icon matBadgeColor="accent" matBadge="15" [matBadgeHidden]="badgevisible" matBadgeSize="small">notifications</mat-icon>
     </button>
@@ -17,7 +18,10 @@
             <button routerLink="slider" mat-button><mat-icon>explore</mat-icon> Maps</button>
         </mat-list-item>
         <mat-list-item>
-            <button routerLink="table" mat-button><mat-icon>table</mat-icon> Objetos</button>
+            <button routerLink="leiloes" mat-button><mat-icon>form</mat-icon> Leilões</button>
+        </mat-list-item>
+        <mat-list-item>
+            <button routerLink="myleiloes" mat-button><mat-icon>form</mat-icon> Meus Leilões</button>
         </mat-list-item>
     </mat-nav-list>
     </mat-drawer>

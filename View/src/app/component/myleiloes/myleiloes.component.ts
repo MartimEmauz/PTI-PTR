@@ -10,10 +10,10 @@ import { UserdetailComponent } from '../userdetail/userdetail.component';
 
 @Component({
   selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css']
+  templateUrl: './myleiloes.component.html',
+  styleUrls: ['./myleiloes.component.css']
 })
-export class TableComponent {
+export class MyLeiloesComponent {
 
   customerlist !: Customer[];
   dataSource: any;

@@ -9,10 +9,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenubarComponent } from './component/menubar/menubar.component';
 import { HomeComponent } from './component/home/home.component';
 import { SliderComponent } from './component/slider/slider.component';
-import { TableComponent } from './component/table/table.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PopupComponent } from './component/popup/popup.component';
 import { UserdetailComponent } from './component/userdetail/userdetail.component';
+import { LeiloesComponent } from './component/leiloes/leiloes.component';
+import { MyLeiloesComponent } from './component/myleiloes/myleiloes.component';
+import { LoginComponent } from './component/login/login.component';
 
 @NgModule({
   declarations: [
@@ -20,9 +22,11 @@ import { UserdetailComponent } from './component/userdetail/userdetail.component
     MenubarComponent,
     HomeComponent,
     SliderComponent,
-    TableComponent,
     PopupComponent,
-    UserdetailComponent
+    UserdetailComponent,
+    LeiloesComponent,
+    MyLeiloesComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
