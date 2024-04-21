@@ -7,10 +7,6 @@
   },
   "tags": [
     {
-      "name": "Address",
-      "description": "Everything about your Address"
-    },
-    {
       "name": "Objects",
       "description": "Everything about your Objects"
     },
@@ -32,161 +28,6 @@
     }
   ],
   "paths": {
-    "/addresses": {
-      "get": {
-        "tags": [
-          "Address"
-        ],
-        "summary": "List all addresses",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Address"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new address",
-        "tags": [
-          "Address"
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Address"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Address created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Address"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/addresses/{id}": {
-      "get": {
-        "tags": [
-          "Address"
-        ],
-        "summary": "Get address by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "example": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Address"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Address not found"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Address"
-        ],
-        "summary": "Update address by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "example": 1
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Address"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Address updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Address"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Address not found"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Address"
-        ],
-        "summary": "Delete address by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            },
-            "example": 1
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Address deleted successfully"
-          },
-          "404": {
-            "description": "Address not found"
-          }
-        }
-      }
-    },
     "/lostobjects": {
       "get": {
         "tags": [
@@ -338,6 +179,40 @@
           },
           "404": {
             "description": "Lost object not found"
+          }
+        }
+      }
+    },
+    "/lostobjects/similar/{id}": {
+      "get": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "Get similar lost objects by object ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LostObject"
+                  }
+                }
+              }
+            }
           }
         }
       }
