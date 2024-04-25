@@ -1,0 +1,26 @@
+Parâmetros VM
+
+--Servidores
+
+Region: europe-west1 (Belgium) Zone: europe-west1-b
+
+Machine configuration: E2; e2-medium (2vCPU, 1 core, 1GB memory)
+
+Boot disk: 
+
+-OS -> Ubuntu
+-Version -> Ubuntu 20.04 LTS
+-Size 10 GB
+
+Firewall:
+🟢 Allow HTTP traffic
+🟢 Allow HTTPS traffic
+🟢 Add load balancer health checks
+
+**Advanced Options**
+
+Networking:
+
+Network performance configuration: gVNIC
+
+Network interface: default

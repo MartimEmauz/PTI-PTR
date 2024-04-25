@@ -1,0 +1,26 @@
+Comando para aceder às máquinas pelo gCloud.
+
+gcloud compute ssh --zone "europe-west1-b" "servidor-1" --project "fcul-ptr"
+
+-----------------------------------------------------------------------------------------
+
+
+Comandos servers (correr um de cada vez):
+
+sudo -s
+
+apt-get update
+
+echo "Y" | apt-get install apache2
+
+systemctl enable apache2
+
+systemctl start apache2
+
+SERVER_NUMBER=$(curl -s -H "Metadata-Flavor:Google" http://metadata.google.internal/computeMetadata/v1/instance/hostname | awk -F'-' '{print $2}' | awk -F'.' '{print $1}')
+echo "<html><head><title>Servidor $SERVER_NUMBER</title></head><body><h1>Servidor $SERVER_NUMBER</h1></body></html>" > /var/www/html/index.html
+
+
+----------------------------------------------------------------------------------------------------------------------
+
+Nota 2: Podem visualizar os conteúdos da página html através de um web browser, endereço "<ip_server>/index.html", em que 'ip_server' corresponde ao IP do servidor, que é possível consultar na página "Compute engine" no parâmetro "external IP" da VM em questão.
