@@ -1,0 +1,19 @@
+ATA 21-04
+
+Todos presentes
+
+-----------------------------------------
+
+O David, o Martim e o Bernardo continuaram o desenvolvimento das funcionalidades básicas do website, e criaram elementos importantes como uma página de login, e atualizaram a barra de navegação.
+Os restantes progrediram na implementação da API e da programação. Além disso, restruturaram a lógica do back end.
+
+------------------------------
+
+Esforço alocado (em horas):
+
+André Silva - 17
+Bernardo Caldas - 12
+David Carreira - 16
+Martim Emauz - 7
+Miguel Martins - 17
+Tomás Alves - 8
