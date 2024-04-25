@@ -1,0 +1,20 @@
+ATA 03-04
+
+Todos presentes
+
+-----------------------------------------
+
+Debateram-se os papéis a adotar nas próximas semanas, tendo em conta que não prevemos a chegada dos créditos da GCP tão cedo.
+O Miguel sugeriu ajudar o Tomás e o André na integração da API e na programação em Django.
+O Martim ficou disposto a ajudar o David e o Bernardo nos avanços ao website
+
+------------------------------
+
+Esforço alocado (em horas):
+
+André Silva - 5
+Bernardo Caldas - 5
+David Carreira - 5
+Martim Emauz - 5
+Miguel Martins - 5
+Tomás Alves - 5
