@@ -4,7 +4,7 @@ Parâmetros VM
 
 Region: europe-west1 (Belgium) Zone: europe-west1-b
 
-Machine configuration: E2; e2-medium (2vCPU, 1 core, 1GB memory)
+Machine configuration: E2; e2-micro (2vCPU, 1 core, 1GB memory)
 
 Boot disk: 
 
