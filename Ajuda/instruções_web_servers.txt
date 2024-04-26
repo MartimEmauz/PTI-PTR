@@ -1,6 +1,6 @@
 Comando para aceder às máquinas pelo gCloud.
 
-gcloud compute ssh --zone "us-central1-a" "servidor-1" --project "fcul-ptr"
+gcloud compute ssh --zone "europe-west4-a" "servidor-1" --project "fcul-ptr"
 
 -----------------------------------------------------------------------------------------
 
