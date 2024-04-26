@@ -1,0 +1,20 @@
+ATA 31-03
+
+Todos presentes
+
+-----------------------------------------
+
+O David começou a desenvolver os elementos básicos do website, junto com o Bernardo.
+O André e o Miguel atualizaram a API, com base no feedback dado pelos docentes.
+Foi revista a lógica da arquitetura e atualizado o relatório, pelo Martim e o Tomás.
+
+------------------------------
+
+Esforço alocado (em horas):
+
+André Silva - 15
+Bernardo Caldas - 14
+David Carreira - 17
+Martim Emauz - 10
+Miguel Martins - 15
+Tomás Alves - 10

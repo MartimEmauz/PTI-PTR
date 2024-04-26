@@ -1,0 +1,21 @@
+ATA 25-04
+
+Faltou o Tomás
+
+-----------------------------------------
+
+Obtidos os créditos da GCP, os papéis voltaram ao normal.
+O Martim e o Tomás criaram e congfiguraram os servidores web, e alteraram o diagrama.
+O David e o Bernardo, continuaram no desenvolvimento dos elementos da página web, como a implementação de um footer, e elementos da página "Home"
+O André e o Miguel planeiam implementar a API com o website para garantir o funcionamento das funcionalidades mais primordiais.
+
+------------------------------
+
+Esforço alocado (em horas):
+
+André Silva - 5
+Bernardo Caldas - 14
+David Carreira - 14
+Martim Emauz - 16
+Miguel Martins - 5
+Tomás Alves - 16

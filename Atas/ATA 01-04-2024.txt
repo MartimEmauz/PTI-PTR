@@ -1,7 +1,0 @@
-ATA 01-04
-
-Faltou o André Silva e o Miguel Martins
-
-------------------------------------------------
-
-Revimos o (pouco) que foi feito nas férias da páscoa. O André fez as alterações necessárias para integrar a base de dados no PostgreSQL, bem como a integração com o Django. Segue-se a integração do Django com o Angular e a programação de funções em Django.

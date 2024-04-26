@@ -1,0 +1,23 @@
+ATA 07-04
+
+Faltou o David
+
+-----------------------------------------
+
+Revimos o feedback dado pelos professores e definimos metas para a próxima entrega:
+-Atualizar o diagrama do relatório para incluir as sub-redes e outros aspetos;
+-Desenvolvimento de aspetos mais básicos da página web, e das páginas existentes;
+-Integração da API e correções à sua lógica e funcionamento.
+
+Os papéis debatidos na última aula mantiveram-se.
+
+------------------------------
+
+Esforço alocado (em horas):
+
+André Silva - 2
+Bernardo Caldas - 2
+David Carreira - 2
+Martim Emauz - 2
+Miguel Martins - 2
+Tomás Alves - 2
