@@ -2,7 +2,7 @@ Parâmetros VM
 
 --Servidores
 
-Region: europe-west1 (Belgium) Zone: europe-west1-b
+Region: europe-west4 (Netherlands)
 
 Machine configuration: E2; e2-micro (2vCPU, 1 core, 1GB memory)
 
