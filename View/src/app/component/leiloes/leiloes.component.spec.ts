@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LeiloesComponent } from './component/leiloes/leiloes.component';
+import { LeiloesComponent } from '../leiloes/leiloes.component';
 
 describe('LeiloesComponent', () => {
   let component: LeiloesComponent;

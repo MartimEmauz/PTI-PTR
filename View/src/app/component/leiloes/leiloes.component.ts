@@ -17,7 +17,7 @@ export class LeiloesComponent {
 
   customerlist !: Customer[];
   dataSource: any;
-  displayedColumns: string[] = ["code", "name", "email", "phone", "status", "action"];
+  displayedColumns: string[] = ["Item", "Nome", "Estado", "Licitador","action"];
   @ViewChild(MatPaginator) paginatior !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
 
@@ -50,7 +50,7 @@ export class LeiloesComponent {
   
 
   addcustomer(){
-    this.Openpopup(0, 'Add Customer',PopupComponent);
+    this.Openpopup(0, 'Adicionar Leilão',PopupComponent);
   }
 
   Openpopup(code: any, title: any,component:any) {
