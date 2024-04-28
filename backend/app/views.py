@@ -1,10 +1,10 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from .models import Category, CategoryAtributes, Bid, Auction, Subscription
+from .models import Address, Category, CategoryAtributes, Bid, Auction, Subscription
 from .users_models import UserPolice, GeneralUser
 from .object_models import LostObject, FoundObject
 from .serializers import CategorySerializer, CategoryAtributesSerializer, BidSerializer, AuctionSerializer, SubscriptionSerializer, LostObjectSerializer, FoundObjectSerializer, UserPoliceSerializer, GeneralUserSerializer
-from .utils import find_similar_objects
+from utils.utils import find_similar_objects
 
 class LostObjectListCreateAPIView(generics.ListCreateAPIView):
     queryset = LostObject.objects.all()

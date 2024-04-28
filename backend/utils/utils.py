@@ -1,4 +1,4 @@
-from .object_models import LostObject, FoundObject
+from app.object_models import LostObject, FoundObject
 
 def find_similar_objects(reported_lost_object):
     # Extrair informações do objeto perdido relatado

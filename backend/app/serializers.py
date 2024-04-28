@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Address, Category, CategoryAtributes, Bid, Auction, Subscription, ApiResponse
-from users_models import User, UserPolice, GeneralUser
-from object_models import LostObject, FoundObject
+from .users_models import User, UserPolice, GeneralUser
+from .object_models import LostObject, FoundObject
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
