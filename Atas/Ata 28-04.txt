@@ -1,0 +1,21 @@
+Ata 28-04
+
+Apenas presentes Martim e Tomás (após reunir segregadamente com outros membros)
+
+------------------------------------------------
+
+Foi discutido anteriormente com o Miguel que seria adequado adaptar o modelo de programação de MVC (Model View Controller) para um sistema simplificado segregando apenas as componentes do backend e do frontend. Isto porque as views (classes da API) são responsáveis pela interação com a base de dados.
+Foram postas questões e formulado um sumário destas para apresentar aos professores.
+O frontend teve progresso, nomeadamente na adição de elementos pedidos pelos docentes e na reformulação da tabela de objetos perdidos e achados.
+A API foi atualizada e resta agora implementar as funções de pesquisa à base de dados.
+
+------------------------------------------------
+
+Esforço alocado (em horas):
+
+André Silva - 0
+Bernardo Caldas - 0
+David Carreira - 30
+Martim Emauz - 30
+Miguel Martins - 30
+Tomás Alves - 30
