@@ -3,20 +3,21 @@ from app import views
 
 urlpatterns = [
     # Lost Objects URLs
-    path('lost-objects/', views.LostObjectListCreateAPIView.as_view(), name='lostobject-list-create'),
-    path('lost-objects/<int:pk>/', views.LostObjectRetrieveUpdateDestroyAPIView.as_view(), name='lostobject-retrieve-update-destroy'),
+    path('lostobjects/', views.LostObjectListCreateAPIView.as_view(), name='lostobject-list-create'),
+    path('lostobjects/<int:pk>/', views.LostObjectRetrieveUpdateDestroyAPIView.as_view(), name='lostobject-retrieve-update-destroy'),
+    path('lostobjects/similar/<int:pk>/', views.SimilarLostObjectListAPIView.as_view(), name='lostobject-similar-list'),
     
     # Found Objects URLs
-    path('found-objects/', views.FoundObjectListCreateAPIView.as_view(), name='foundobject-list-create'),
-    path('found-objects/<int:pk>/', views.FoundObjectRetrieveUpdateDestroyAPIView.as_view(), name='foundobject-retrieve-update-destroy'),
+    path('foundobjects/', views.FoundObjectListCreateAPIView.as_view(), name='foundobject-list-create'),
+    path('foundobjects/<int:pk>/', views.FoundObjectRetrieveUpdateDestroyAPIView.as_view(), name='foundobject-retrieve-update-destroy'),
     
     # General Users URLs
-    path('general-users/', views.GeneralUserListCreateAPIView.as_view(), name='generaluser-list-create'),
-    path('general-users/<int:pk>/', views.GeneralUserRetrieveUpdateDestroyAPIView.as_view(), name='generaluser-retrieve-update-destroy'),
+    path('generalusers/', views.GeneralUserListCreateAPIView.as_view(), name='generaluser-list-create'),
+    path('generalusers/<int:pk>/', views.GeneralUserRetrieveUpdateDestroyAPIView.as_view(), name='generaluser-retrieve-update-destroy'),
     
     # User Police URLs
-    path('user-polices/', views.UserPoliceListCreateAPIView.as_view(), name='userpolice-list-create'),
-    path('user-polices/<int:pk>/', views.UserPoliceRetrieveUpdateDestroyAPIView.as_view(), name='userpolice-retrieve-update-destroy'),
+    path('policeusers/', views.UserPoliceListCreateAPIView.as_view(), name='userpolice-list-create'),
+    path('policeusers/<int:pk>/', views.UserPoliceRetrieveUpdateDestroyAPIView.as_view(), name='userpolice-retrieve-update-destroy'),
     
     # Auction URLs
     path('auctions/', views.AuctionListCreateAPIView.as_view(), name='auction-list-create'),
@@ -31,13 +32,8 @@ urlpatterns = [
     path('categories/<int:pk>/', views.CategoryRetrieveUpdateDestroyAPIView.as_view(), name='category-retrieve-update-destroy'),
     
     # Category Attributes URLs
-    path('category-attributes/', views.CategoryAtributesListCreateAPIView.as_view(), name='categoryattributes-list-create'),
-    path('category-attributes/<int:pk>/', views.CategoryAtributesRetrieveUpdateDestroyAPIView.as_view(), name='categoryattributes-retrieve-update-destroy'),
+    path('categoryattributes/', views.CategoryAttributeListCreateAPIView.as_view(), name='categoryattribute-list-create'),
+    path('categoryattributes/<int:pk>/', views.CategoryAttributeRetrieveUpdateDestroyAPIView.as_view(), name='categoryattribute-retrieve-update-destroy'),
     
-    # Subscription URLs
-    path('subscriptions/', views.SubscriptionListCreateAPIView.as_view(), name='subscription-list-create'),
-    path('subscriptions/<int:pk>/', views.SubscriptionRetrieveUpdateDestroyAPIView.as_view(), name='subscription-retrieve-update-destroy'),
     
-    # Similar Found Objects URL
-    path('similar-found-objects/', views.SimilarFoundObjectListAPIView.as_view(), name='similarfoundobject-list'),
 ]

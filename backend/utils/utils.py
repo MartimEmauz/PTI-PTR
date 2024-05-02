@@ -1,4 +1,4 @@
-from app.object_models import LostObject, FoundObject
+from app.models import Lostobject, Foundobject
 
 def find_similar_objects(reported_lost_object):
     # Extrair informações do objeto perdido relatado
@@ -7,7 +7,7 @@ def find_similar_objects(reported_lost_object):
     reported_location = reported_lost_object.location
 
     # Encontrar objetos encontrados na mesma categoria e zona
-    similar_found_objects = FoundObject.objects.filter(
+    similar_found_objects = Foundobject.objects.filter(
         category=reported_category,
         attributes__in=reported_attributes,
         location=reported_location
