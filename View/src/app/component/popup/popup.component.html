@@ -1,25 +1,25 @@
 <form [formGroup]="myform" (ngSubmit)="Saveuser()">
-  <h1>Adicionar Leilão</h1>
+  <h1>Adicionar Objeto</h1>
   <div mat-dialog-content>
       <mat-form-field>
           <mat-label>ID</mat-label>
           <input formControlName="id" matInput>
       </mat-form-field>
       <mat-form-field>
-          <mat-label>Valor Base</mat-label>
-          <input matInput formControlName="baseValue">
+          <mat-label>Date</mat-label>
+          <input matInput formControlName="date">
       </mat-form-field>
       <mat-form-field>
-          <mat-label>Data de Início</mat-label>
-          <input matInput formControlName="beginDate">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description">
       </mat-form-field>
       <mat-form-field>
-          <mat-label>Data de Fim</mat-label>
-          <input matInput formControlName="endDate">
+          <mat-label>Category</mat-label>
+          <input matInput formControlName="category">
       </mat-form-field>
       <mat-form-field>
-          <mat-label>Objeto</mat-label>
-          <input matInput formControlName="object">
+          <mat-label>Adress</mat-label>
+          <input matInput formControlName="adress">
       </mat-form-field>
   </div>
   <div mat-dialog-actions>
