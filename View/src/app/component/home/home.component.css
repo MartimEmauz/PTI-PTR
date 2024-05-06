@@ -1,0 +1,33 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .leiloes-section, .participando-section {
+    margin-bottom: 20px;
+  }
+  
+  .leiloes-container, .participando-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .leilao-box {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    width: calc(50% - 20px); /* Distribui em duas colunas */
+  }
+  
+  @media (max-width: 600px) {
+    .leilao-box {
+      width: 100%; /* Em telas menores, ocupa toda a largura */
+    }
+  }
+  
