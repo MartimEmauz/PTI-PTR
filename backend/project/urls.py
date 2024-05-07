@@ -34,6 +34,11 @@ urlpatterns = [
     # Category Attributes URLs
     path('categoryattributes/', views.CategoryAttributeListCreateAPIView.as_view(), name='categoryattribute-list-create'),
     path('categoryattributes/<int:pk>/', views.CategoryAttributeRetrieveUpdateDestroyAPIView.as_view(), name='categoryattribute-retrieve-update-destroy'),
+
+    # Subscriptions URLs
+    path('subscriptions/', views.SubscriptionListCreateAPIView.as_view(), name='subscription-list-create'),
+    path('subscriptions/<int:pk>/', views.SubscriptionRetrieveUpdateDestroyAPIView.as_view(), name='subscription-retrieve-update-destroy'),
+    
     
     
 ]

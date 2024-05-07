@@ -217,12 +217,12 @@ class Generaluser(models.Model):
 
 
 class Leilao(models.Model):
-    valor_base = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    valor_base = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     data_inicio = models.DateField(blank=True, null=True)
     data_fim = models.DateField(blank=True, null=True)
-    maior_licitacao = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    maior_licitacao = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     id_licitacao = models.ForeignKey('Licitacao', models.DO_NOTHING, db_column='id_licitacao', blank=True, null=True)
-    objeto = models.ForeignKey('Objeto', models.DO_NOTHING, db_column='objeto', blank=True, null=True)
+    objeto = models.ForeignKey('objeto', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -231,9 +231,9 @@ class Leilao(models.Model):
 
 
 class Licitacao(models.Model):
-    valor_licitacao = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    valor_licitacao = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     data = models.DateField(blank=True, null=True)
-    id_user = models.ForeignKey(Generaluser, models.DO_NOTHING, db_column='id_user', blank=True, null=True)
+    id_user = models.ForeignKey(Generaluser, models.DO_NOTHING, to_field='id', db_column='id_user', blank=True, null=True)
 
     class Meta:
         managed = False
