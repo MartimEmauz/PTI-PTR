@@ -1,36 +1,63 @@
 <div class="container">
-    <h1>Bem-vindo à Página Inicial</h1>
-  
-    <!-- Seção para os leilões -->
-    <div class="leiloes-section">
-      <h2>Leilões em Andamento</h2>
-      <div *ngIf="leiloes && leiloes.length > 0" class="leiloes-container">
-        <div class="leilao-box" *ngFor="let leilao of leiloes">
-          <h3>{{ leilao.nome }}</h3>
-          <p>Descrição: {{ leilao.descricao }}</p>
-          <p>Preço atual: {{ leilao.precoAtual }}</p>
-          <!-- Adicione mais informações do leilão conforme necessário -->
-        </div>
-      </div>
-      <div *ngIf="!leiloes || leiloes.length === 0">
-        <p>Nenhum leilão em andamento no momento.</p>
+  <!-- Carrossel de imagens -->
+  <h1>Bem-vindo à Página Inicial</h1>
+  <div class="carousel">
+    <div><img src="imagem1.jpg" alt="Imagem 1"></div>
+    <div><img src="imagem2.jpg" alt="Imagem 2"></div>
+    <div><img src="imagem3.jpg" alt="Imagem 3"></div>
+  </div>
+  <!-- Barra de pesquisa -->
+  <div class="search-bar">
+    <input type="text" placeholder="Pesquisar leilões...">
+    <button>Pesquisar</button>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filters">
+    <!-- Aqui vão os filtros -->
+    <label>Categoria:</label>
+    <select>
+      <option>Todas</option>
+      <option>Perdidos</option>
+      <option>Achados</option>
+      <option>Leilões</option>
+      <!-- Adicione mais opções conforme necessário -->
+    </select>
+    <label>Preço Mínimo:</label>
+    <input type="number">
+    <label>Preço Máximo:</label>
+    <input type="number">
+    <button>Aplicar Filtros</button>
+  </div>
+
+  <!-- Seção para os leilões -->
+  <div class="leiloes-section">
+    <h2>Leilões em Andamento</h2>
+    <!-- Lista de leilões com paginação -->
+    <div class="leiloes-container">
+      <!-- Lista de leilões -->
+      <div class="leilao-box" *ngFor="let leilao of leiloes">
+        <img src="{{ leilao.imagem }}" alt="{{ leilao.nome }}">
+        <h3>{{ leilao.nome }}</h3>
+        <p class="preco">Preço atual: R$ {{ leilao.precoAtual.toFixed(2) }}</p>
+        <p class="descricao">{{ leilao.descricao }}</p>
+        <button class="ver-mais-button">Ver Mais</button>
       </div>
     </div>
-    
-    <!-- Seção para os leilões em que o usuário está participando -->
-    <div class="participando-section">
-      <h2>Leilões em que Você Está Participando</h2>
-      <div *ngIf="leiloesParticipando && leiloesParticipando.length > 0" class="leiloes-container">
-        <div class="leilao-box" *ngFor="let leilaoParticipando of leiloesParticipando">
-          <h3>{{ leilaoParticipando.nome }}</h3>
-          <p>Descrição: {{ leilaoParticipando.descricao }}</p>
-          <p>Seu Lance: {{ leilaoParticipando.lanceUsuario }}</p>
-          <!-- Adicione mais informações do leilão conforme necessário -->
-        </div>
-      </div>
-      <div *ngIf="!leiloesParticipando || leiloesParticipando.length === 0">
-        <p>Você não está participando de nenhum leilão no momento.</p>
-      </div>
+    <!-- Paginação -->
+    <div class="pagination">
+      <!-- Botões de páginação -->
+      <button>Anterior</button>
+      <span>Página 1 de 3</span>
+      <button>Próxima</button>
     </div>
   </div>
-  
+
+  <!-- Informações Gerais -->
+  <div class="info">
+    <h2>Informações Gerais</h2>
+    <p>Total de Leilões Concluídos: 100</p>
+    <p>Número de Usuários: 500</p>
+    <!-- Adicione mais informações conforme necessário -->
+  </div>
+</div>
