@@ -15,6 +15,9 @@ import { UserdetailComponent } from './component/userdetail/userdetail.component
 import { LeiloesComponent } from './component/leiloes/leiloes.component';
 import { MyLeiloesComponent } from './component/myleiloes/myleiloes.component';
 import { LoginComponent } from './component/login/login.component';
+import { MyAccountComponent } from './component/my-account/my-account.component';
+import { EntrarRegistarComponent } from './component/entrar-registar/entrar-registar.component';
+import { FooterComponent } from './component/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import { LoginComponent } from './component/login/login.component';
     UserdetailComponent,
     LeiloesComponent,
     MyLeiloesComponent,
-    LoginComponent
+    LoginComponent,
+    MyAccountComponent,
+    EntrarRegistarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
