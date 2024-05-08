@@ -1,3 +1,14 @@
 .example-spacer {
     flex: 1 1 auto;
   }
+
+  .mat-toolbar {
+    display: flex;
+    justify-content: space-between; /* Align items at the start and end */
+    align-items: center;
+}
+
+.title {
+    flex-grow: 1; /* Allow the title to take up remaining space */
+    text-align: center; /* Center the title horizontally */
+}

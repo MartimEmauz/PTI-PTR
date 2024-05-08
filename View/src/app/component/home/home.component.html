@@ -3,7 +3,7 @@
   
     <!-- Seção para os leilões -->
     <div class="leiloes-section">
-      <h2>Leilões em Andamento</h2>
+      <h2>Leilões a decorrer</h2>
       <div *ngIf="leiloes && leiloes.length > 0" class="leiloes-container">
         <div class="leilao-box" *ngFor="let leilao of leiloes">
           <h3>{{ leilao.nome }}</h3>
@@ -13,13 +13,13 @@
         </div>
       </div>
       <div *ngIf="!leiloes || leiloes.length === 0">
-        <p>Nenhum leilão em andamento no momento.</p>
+        <p>Nenhum leilão a decorrer</p>
       </div>
     </div>
     
     <!-- Seção para os leilões em que o usuário está participando -->
     <div class="participando-section">
-      <h2>Leilões em que Você Está Participando</h2>
+      <h2>Leilões em que está a participar.</h2>
       <div *ngIf="leiloesParticipando && leiloesParticipando.length > 0" class="leiloes-container">
         <div class="leilao-box" *ngFor="let leilaoParticipando of leiloesParticipando">
           <h3>{{ leilaoParticipando.nome }}</h3>
@@ -29,7 +29,7 @@
         </div>
       </div>
       <div *ngIf="!leiloesParticipando || leiloesParticipando.length === 0">
-        <p>Você não está participando de nenhum leilão no momento.</p>
+        <p>Não está a participar em leiloões.</p>
       </div>
     </div>
   </div>

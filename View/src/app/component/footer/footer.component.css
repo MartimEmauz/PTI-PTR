@@ -9,3 +9,10 @@ footer {
     margin: 0;
   }
   
+  a:link{
+    color: #fff;
+  }
+
+  a:visited{
+    color: #fff;
+  }
