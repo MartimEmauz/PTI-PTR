@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./my-account.component.css']
 })
 export class MyAccountComponent {
-  userName: string = "John Doe";
-  userEmail: string = "john@example.com";
+  userName: string = "Darina Jimenez";
+  userEmail: string = "jdarinaJimenezSIUU@example.com";
   userPhone: string = "(XX) XXXX-XXXX";
 }
