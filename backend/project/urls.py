@@ -39,6 +39,8 @@ urlpatterns = [
     path('subscriptions/', views.SubscriptionListCreateAPIView.as_view(), name='subscription-list-create'),
     path('subscriptions/<int:pk>/', views.SubscriptionRetrieveUpdateDestroyAPIView.as_view(), name='subscription-retrieve-update-destroy'),
     
-    
+    # PolicePosts URLs
+    path('policeposts/', views.PolicePostListCreateAPIView.as_view(), name='policepost-list-create'),
+    path('policeposts/<int:pk>/', views.PolicePostRetrieveUpdateDestroyAPIView.as_view(), name='policepost-retrieve-update-destroy'),
     
 ]

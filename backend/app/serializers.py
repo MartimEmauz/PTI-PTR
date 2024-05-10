@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Address, Category, CategoryAttribute, Objeto, AtributesObject, Users, Userpolice, Generaluser, Foundobject, Lostobject, Licitacao, Leilao, Subscription
+from .models import Address, Category, CategoryAttribute, Objeto, AtributesObject, PolicePost, Users, Userpolice, Generaluser, Foundobject, Lostobject, Licitacao, Leilao, Subscription
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
@@ -64,4 +64,9 @@ class AuctionSerializer(serializers.ModelSerializer):
 class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
+        fields = '__all__'
+
+class PolicePostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PolicePost
         fields = '__all__'

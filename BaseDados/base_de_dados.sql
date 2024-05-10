@@ -19,6 +19,14 @@ DROP TABLE IF EXISTS Address;
 -- Enable PostGIS (if not already enabled)
 CREATE EXTENSION IF NOT EXISTS postgis;
 
+-- Creating Policepost table
+CREATE TABLE policepost (
+    id SERIAL PRIMARY KEY,
+    location INTEGER,
+    stationnumber INTEGER
+        FOREIGN KEY (location) REFERENCES Address(id)
+);
+
 -- Creating Address table with PostGIS
 CREATE TABLE Address (
     id SERIAL PRIMARY KEY,
@@ -40,7 +48,7 @@ CREATE TABLE Category (
 -- Creating Objeto table
 CREATE TABLE Objeto (
     id SERIAL PRIMARY KEY,
-    date VARCHAR(255),
+    date DATE,
     description TEXT,
     category INTEGER,
         FOREIGN KEY (category) REFERENCES Category(id),
@@ -73,7 +81,7 @@ CREATE TABLE Users (
     email VARCHAR(255),
     password VARCHAR(255),
     gender VARCHAR(50),
-    birthday INT,
+    birthday DATE,
     status BOOLEAN,
     address INTEGER,
         FOREIGN KEY (address) REFERENCES Address(id)
@@ -82,8 +90,7 @@ CREATE TABLE Users (
 -- Creating UserPolice table inheriting from Users
 CREATE TABLE UserPolice (
     internalId INTEGER,
-    postoPolice VARCHAR(255),
-    stationNumber INTEGER,
+    postoPolice INTEGER,
 		UNIQUE (internalId)
 ) INHERITS (Users);
 
@@ -102,7 +109,7 @@ CREATE TABLE FoundObject (
     name VARCHAR(255),
     email VARCHAR(255),
     genero VARCHAR(50),
-    birthday INTEGER,
+    birthday DATE,
     idFiscal INTEGER,
     idCivil INTEGER,
     phoneNumber INTEGER,
