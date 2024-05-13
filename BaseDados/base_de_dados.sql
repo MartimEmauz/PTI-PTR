@@ -15,17 +15,11 @@ DROP TABLE IF EXISTS Objeto;
 DROP TABLE IF EXISTS Category_attribute;
 DROP TABLE IF EXISTS Category;
 DROP TABLE IF EXISTS Address;
+DROP TABLE IF EXISTS Subscription;
+DROP TABLE IF EXISTS PolicePost;
 
 -- Enable PostGIS (if not already enabled)
 CREATE EXTENSION IF NOT EXISTS postgis;
-
--- Creating Policepost table
-CREATE TABLE policepost (
-    id SERIAL PRIMARY KEY,
-    location INTEGER,
-    stationnumber INTEGER
-        FOREIGN KEY (location) REFERENCES Address(id)
-);
 
 -- Creating Address table with PostGIS
 CREATE TABLE Address (
@@ -48,7 +42,7 @@ CREATE TABLE Category (
 -- Creating Objeto table
 CREATE TABLE Objeto (
     id SERIAL PRIMARY KEY,
-    date DATE,
+    date TEXT,
     description TEXT,
     category INTEGER,
         FOREIGN KEY (category) REFERENCES Category(id),
@@ -143,4 +137,26 @@ CREATE TABLE Leilao (
         FOREIGN KEY (id_licitacao) REFERENCES Licitacao(id),
     objeto INTEGER,
         FOREIGN KEY (objeto) REFERENCES Objeto(id)
+        
 );
+
+-- Creating Subscription table
+CREATE TABLE Subscription (
+    id SERIAL PRIMARY KEY,
+    id_user INTEGER,
+        FOREIGN KEY (id_user) REFERENCES GeneralUser(idCivil),
+    id_leilao INTEGER,
+        FOREIGN KEY (id_leilao) REFERENCES Leilao(id)
+);
+
+
+-- Creating Policepost table
+CREATE TABLE PolicePost (
+    id SERIAL PRIMARY KEY,
+    location INTEGER,
+    stationnumber INTEGER,
+    	FOREIGN KEY (location) REFERENCES Address(id)
+);
+
+
+

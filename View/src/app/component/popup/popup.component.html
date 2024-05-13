@@ -1,10 +1,6 @@
-<form [formGroup]="myform" (ngSubmit)="Saveuser()">
+<form [formGroup]="myForm" (ngSubmit)="addLostObject()">
   <h1>Adicionar Objeto</h1>
   <div mat-dialog-content>
-      <mat-form-field>
-          <mat-label>ID</mat-label>
-          <input formControlName="id" matInput>
-      </mat-form-field>
       <mat-form-field>
           <mat-label>Date</mat-label>
           <input matInput formControlName="date">

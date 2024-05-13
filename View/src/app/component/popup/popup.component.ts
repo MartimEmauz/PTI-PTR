@@ -2,6 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MasterService } from 'src/app/service/master.service';
+import {LostObject} from 'src/app/Model/lost-object.model';
+
+
 
 @Component({
   selector: 'app-popup',
@@ -12,13 +15,13 @@ export class PopupComponent implements OnInit {
   inputdata: any;
   editdata: any;
   closemessage = 'closed using directive'
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private ref: MatDialogRef<PopupComponent>, private buildr: FormBuilder,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private ref: MatDialogRef<PopupComponent>, private formBuilder: FormBuilder,
     private service: MasterService) {
 
   }
   ngOnInit(): void {
     this.inputdata = this.data;
-    if(this.inputdata.code>0){
+    if(this.inputdata.code > 0){
       this.setpopupdata(this.inputdata.code)
     }
   }
@@ -26,25 +29,49 @@ export class PopupComponent implements OnInit {
   setpopupdata(code: any) {
     this.service.GetCustomerbycode(code).subscribe(item => {
       this.editdata = item;
-      this.myform.setValue({name:this.editdata.name,email:this.editdata.email,phone:this.editdata.phone,
-      status:this.editdata.status})
+      this.myForm.setValue({
+        date: '', 
+        description: '', 
+        category: null, 
+        address: null
+      });
     });
   }
+  
 
   closepopup() {
     this.ref.close('Closed using function');
   }
 
-  myform = this.buildr.group({
-    name: this.buildr.control(''),
-    email: this.buildr.control(''),
-    phone: this.buildr.control(''),
-    status: this.buildr.control(true)
+  myForm = this.formBuilder.group({
+    date: [''],
+    description: [''],
+    category: [''],
+    address: ['']
   });
 
+
   Saveuser() {
-    this.service.Savecustomer(this.myform.value).subscribe(res => {
+    this.service.Savecustomer(this.myForm.value).subscribe(res => {
       this.closepopup();
     });
   }
-}
+
+  addLostObject() {
+    const formValue = this.myForm.value;
+  
+    // Ensure that form values are of the correct types
+    const newLostObject: LostObject = {
+      date: formValue.date as string | null, // Cast to string | null
+      description: formValue.description as string | null, // Cast to string | null
+      category: typeof formValue.category === 'string' && formValue.category !== '' ? parseInt(formValue.category, 10) : null, // Parse as number or null
+      address: typeof formValue.address === 'string' && formValue.address !== '' ? parseInt(formValue.address, 10) : null // Parse as number or null
+    };
+  
+    this.service.addLostObject(newLostObject).subscribe(() => {
+      this.closepopup();
+    });
+  }
+  
+  
+}   

@@ -8,6 +8,7 @@ import { MasterService } from 'src/app/service/master.service';
 import { PopupComponent } from '../popup/popup.component';
 import { UserdetailComponent } from '../userdetail/userdetail.component';
 
+
 @Component({
   selector: 'app-table',
   templateUrl: './myleiloes.component.html',
@@ -49,8 +50,8 @@ export class MyLeiloesComponent {
 
   
 
-  addcustomer(){
-    this.Openpopup(0, 'Add Customer',PopupComponent);
+  addLostObject(){
+    this.Openpopup(0, 'Add Lost Object',PopupComponent);
   }
 
   Openpopup(code: any, title: any,component:any) {

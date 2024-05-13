@@ -6,7 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-from django.contrib.gis.db.models import models
+#from django.contrib.gis.db.models import models
 
 
 class Address(models.Model):
@@ -15,7 +15,8 @@ class Address(models.Model):
     country = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=255, blank=True, null=True)
     zip = models.CharField(max_length=20, blank=True, null=True)
-    location = models.PointField(geography=True, blank=True, null=True)
+    #location = models.PointField(geography=True, blank=True, null=True)
+    location = models.CharField(max_length=255, blank=True, null=True)
     radius = models.IntegerField(blank=True, null=True)
 
     class Meta:
@@ -248,7 +249,8 @@ class Licitacao(models.Model):
 
 class Lostobject(models.Model):
     id = models.AutoField(primary_key=True)
-    date = models.DateField(blank=True, null=True)
+    #date = models.DateField(blank=True, null=True)
+    date = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     category = models.IntegerField(blank=True, null=True)
     address = models.IntegerField(blank=True, null=True)
@@ -287,7 +289,8 @@ class SpatialRefSys(models.Model):
 
 class PolicePost(models.Model):
     id = models.AutoField(primary_key=True)
-    location = models.PointField(geography=True, blank=True, null=True)
+    #location = models.PointField(geography=True, blank=True, null=True)
+    location = models.CharField(max_length=255, blank=True, null=True)
     stationnumber = models.IntegerField(max_length=9, blank=True, null=True)
 
     class Meta:
