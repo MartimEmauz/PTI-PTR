@@ -9,6 +9,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+GDAL_LIBRARY_PATH = 'caminho/para/sua/biblioteca/gdal'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

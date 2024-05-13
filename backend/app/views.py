@@ -1,6 +1,6 @@
 from rest_framework import generics
-from .models import Lostobject, Foundobject, Generaluser, Userpolice, Leilao, Licitacao, Category, CategoryAttribute, Subscription, Address
-from .serializers import LostObjectSerializer, FoundObjectSerializer, GeneralUserSerializer, UserPoliceSerializer, AuctionSerializer, BidSerializer, CategorySerializer, CategoryAtributesSerializer, SubscriptionSerializer, AddressSerializer
+from .models import Lostobject, Foundobject, Generaluser, Userpolice, PolicePost,Leilao, Licitacao, Category, CategoryAttribute, Subscription, Address
+from .serializers import LostObjectSerializer, FoundObjectSerializer, GeneralUserSerializer, UserPoliceSerializer, PolicePostSerializer,AuctionSerializer, BidSerializer, CategorySerializer, CategoryAtributesSerializer, SubscriptionSerializer, AddressSerializer
 from utils.utils import find_similar_objects
 
 class LostObjectListCreateAPIView(generics.ListCreateAPIView):
@@ -87,4 +87,10 @@ class AdressListCreateAPIView(generics.ListCreateAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
 
+class PolicePostListCreateAPIView(generics.ListCreateAPIView):
+    queryset = PolicePost.objects.all()
+    serializer_class = PolicePostSerializer
 
+class PolicePostRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PolicePost.objects.all()
+    serializer_class = PolicePostSerializer

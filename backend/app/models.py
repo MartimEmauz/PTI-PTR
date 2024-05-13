@@ -6,14 +6,16 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.contrib.gis.db.models import models
 
 
 class Address(models.Model):
+    id = models.AutoField(primary_key=True)
     street = models.CharField(max_length=255, blank=True, null=True)
     country = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=255, blank=True, null=True)
     zip = models.CharField(max_length=20, blank=True, null=True)
-    location = models.TextField(blank=True, null=True)  # This field type is a guess.
+    location = models.PointField(geography=True, blank=True, null=True)
     radius = models.IntegerField(blank=True, null=True)
 
     class Meta:
@@ -109,6 +111,7 @@ class AuthUserUserPermissions(models.Model):
 
 
 class Category(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
@@ -178,18 +181,18 @@ class DjangoSession(models.Model):
 
 class Foundobject(models.Model):
     id = models.AutoField(primary_key=True)
-    date = models.CharField(max_length=255, blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     category = models.IntegerField(blank=True, null=True)
     address = models.IntegerField(blank=True, null=True)
     name = models.CharField(max_length=255, blank=True, null=True)
     email = models.CharField(max_length=255, blank=True, null=True)
     genero = models.CharField(max_length=50, blank=True, null=True)
-    birthday = models.IntegerField(blank=True, null=True)
+    birthday = models.DateField(blank=True, null=True)
     idfiscal = models.IntegerField(blank=True, null=True)
     idcivil = models.IntegerField(blank=True, null=True)
     phonenumber = models.IntegerField(blank=True, null=True)
-    police = models.ForeignKey('Userpolice', models.DO_NOTHING, db_column='police', blank=True, null=True)
+    police = models.ForeignKey('Userpolice', models.DO_NOTHING, db_column='id', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -204,7 +207,7 @@ class Generaluser(models.Model):
     email = models.CharField(max_length=255, blank=True, null=True)
     password = models.CharField(max_length=255, blank=True, null=True)
     gender = models.CharField(max_length=50, blank=True, null=True)
-    birthday = models.IntegerField(blank=True, null=True)
+    birthday = models.DateField(blank=True, null=True)
     status = models.BooleanField(blank=True, null=True)
     address = models.IntegerField(blank=True, null=True)
     idcivil = models.IntegerField(unique=True, blank=True, null=True)
@@ -217,12 +220,13 @@ class Generaluser(models.Model):
 
 
 class Leilao(models.Model):
+    id = models.AutoField(primary_key=True)
     valor_base = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     data_inicio = models.DateField(blank=True, null=True)
     data_fim = models.DateField(blank=True, null=True)
     maior_licitacao = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     id_licitacao = models.ForeignKey('Licitacao', models.DO_NOTHING, db_column='id_licitacao', blank=True, null=True)
-    objeto = models.ForeignKey('objeto', models.DO_NOTHING, blank=True, null=True)
+    objeto = models.ForeignKey('Objeto', models.DO_NOTHING, db_column='objeto', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -231,6 +235,7 @@ class Leilao(models.Model):
 
 
 class Licitacao(models.Model):
+    id = models.AutoField(primary_key=True)
     valor_licitacao = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     data = models.DateField(blank=True, null=True)
     id_user = models.ForeignKey(Generaluser, models.DO_NOTHING, to_field='id', db_column='id_user', blank=True, null=True)
@@ -243,7 +248,7 @@ class Licitacao(models.Model):
 
 class Lostobject(models.Model):
     id = models.AutoField(primary_key=True)
-    date = models.CharField(max_length=255, blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     category = models.IntegerField(blank=True, null=True)
     address = models.IntegerField(blank=True, null=True)
@@ -256,7 +261,7 @@ class Lostobject(models.Model):
 
 
 class Objeto(models.Model):
-    date = models.CharField(max_length=255, blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     category = models.ForeignKey(Category, models.DO_NOTHING, db_column='category', blank=True, null=True)
     address = models.ForeignKey(Address, models.DO_NOTHING, db_column='address', blank=True, null=True)
@@ -280,6 +285,16 @@ class SpatialRefSys(models.Model):
         app_label = 'app'
 
 
+class PolicePost(models.Model):
+    id = models.AutoField(primary_key=True)
+    location = models.PointField(geography=True, blank=True, null=True)
+    stationnumber = models.IntegerField(max_length=9, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'policepost'
+        app_label = 'app'
+
 class Userpolice(models.Model):
     id = models.AutoField(primary_key=True)
     firstname = models.CharField(max_length=255, blank=True, null=True)
@@ -287,12 +302,11 @@ class Userpolice(models.Model):
     email = models.CharField(max_length=255, blank=True, null=True)
     password = models.CharField(max_length=255, blank=True, null=True)
     gender = models.CharField(max_length=50, blank=True, null=True)
-    birthday = models.IntegerField(blank=True, null=True)
+    birthday = models.DateField(blank=True, null=True)
     status = models.BooleanField(blank=True, null=True)
     address = models.IntegerField(blank=True, null=True)
     internalid = models.IntegerField(unique=True, blank=True, null=True)
-    postopolice = models.CharField(max_length=255, blank=True, null=True)
-    stationnumber = models.IntegerField(blank=True, null=True)
+    post_police = models.ForeignKey(PolicePost, on_delete=models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -306,7 +320,7 @@ class Users(models.Model):
     email = models.CharField(max_length=255, blank=True, null=True)
     password = models.CharField(max_length=255, blank=True, null=True)
     gender = models.CharField(max_length=50, blank=True, null=True)
-    birthday = models.IntegerField(blank=True, null=True)
+    birthday = models.DateField(blank=True, null=True)
     status = models.BooleanField(blank=True, null=True)
     address = models.ForeignKey(Address, models.DO_NOTHING, db_column='address', blank=True, null=True)
 
