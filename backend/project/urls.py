@@ -1,5 +1,7 @@
 from django.urls import path
 from app import views
+from django.urls import path
+from app.views import ProtectedView
 
 urlpatterns = [
     # Lost Objects URLs
@@ -42,5 +44,8 @@ urlpatterns = [
     # PolicePosts URLs
     path('policeposts/', views.PolicePostListCreateAPIView.as_view(), name='policepost-list-create'),
     path('policeposts/<int:pk>/', views.PolicePostRetrieveUpdateDestroyAPIView.as_view(), name='policepost-retrieve-update-destroy'),
+
+    # Auth0 URLs
+    path('protected/', ProtectedView.as_view(), name='protected')
     
 ]

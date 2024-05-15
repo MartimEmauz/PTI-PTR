@@ -3,6 +3,11 @@ from .models import Lostobject, Foundobject, Generaluser, Userpolice, PolicePost
 from .serializers import LostObjectSerializer, FoundObjectSerializer, GeneralUserSerializer, UserPoliceSerializer, PolicePostSerializer,AuctionSerializer, BidSerializer, CategorySerializer, CategoryAtributesSerializer, SubscriptionSerializer, AddressSerializer
 from utils.utils import find_similar_objects
 
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+
 class LostObjectListCreateAPIView(generics.ListCreateAPIView):
     queryset = Lostobject.objects.all()
     serializer_class = LostObjectSerializer
@@ -94,3 +99,9 @@ class PolicePostListCreateAPIView(generics.ListCreateAPIView):
 class PolicePostRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = PolicePost.objects.all()
     serializer_class = PolicePostSerializer
+
+class ProtectedView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response(data={"message": "Hello, you are authenticated!"}, status=200)

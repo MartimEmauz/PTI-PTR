@@ -31,6 +31,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'app.middlewares.Auth0JWTMiddleware',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -82,10 +83,47 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# Auth0 configuration
+AUTH0_DOMAIN = 'dev-7ety36lrjtchzs5o.us.auth0.com'
+API_IDENTIFIER = 'http://127.0.0.1:8000/'
+PUBLIC_KEY = None
+JWT_ISSUER = None
+
+if AUTH0_DOMAIN and API_IDENTIFIER:
+    JWT_ISSUER = f'https://{AUTH0_DOMAIN}/'
+    PUBLIC_KEY = f'https://{AUTH0_DOMAIN}/.well-known/jwks.json'
+
+
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
+
+# Simple JWT settings
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ALGORITHM': 'RS256',
+    'SIGNING_KEY': None,
+    'VERIFYING_KEY': PUBLIC_KEY,
+    'AUDIENCE': API_IDENTIFIER,
+    'ISSUER': JWT_ISSUER,
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+}
+
+
 
