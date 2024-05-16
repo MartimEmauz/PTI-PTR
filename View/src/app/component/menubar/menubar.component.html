@@ -5,7 +5,7 @@
     <span class="example-spacer"></span>
     <h1 class="title">Lost&Found</h1>
     <span class="example-spacer"></span>
-    <button>Login</button>
+    <button (click)="userLogin()">Login</button>
     <button (click)="badgevisibility()"  mat-icon-button>
         <mat-icon matBadgeColor="accent" matBadge="15" [matBadgeHidden]="badgevisible" matBadgeSize="small">notifications</mat-icon>
     </button>
@@ -20,10 +20,10 @@
             <button routerLink="slider" mat-button><mat-icon>explore</mat-icon> Maps</button>
         </mat-list-item>
         <mat-list-item>
-            <button routerLink="leiloes" mat-button><mat-icon>form</mat-icon> Leilões</button>
+            <button routerLink="leiloes" mat-button><mat-icon>menu</mat-icon> Leilões</button>
         </mat-list-item>
         <mat-list-item>
-            <button routerLink="myleiloes" mat-button><mat-icon>form</mat-icon>Objetos</button>
+            <button routerLink="myleiloes" mat-button><mat-icon>phonelink</mat-icon>Objetos</button>
         </mat-list-item>
         <mat-list-item>
             <button routerLink="myaccount" mat-button><mat-icon>account_circle</mat-icon> Minha Conta</button>

@@ -57,8 +57,8 @@ export class MyLeiloesComponent {
   Openpopup(code: any, title: any,component:any) {
     var _popup = this.dialog.open(component, {
       width: '40%',
-      enterAnimationDuration: '1000ms',
-      exitAnimationDuration: '1000ms',
+      enterAnimationDuration: '800ms',
+      exitAnimationDuration: '800ms',
       data: {
         title: title,
         code: code

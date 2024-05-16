@@ -18,6 +18,8 @@ import { LoginComponent } from './component/login/login.component';
 import { MyAccountComponent } from './component/my-account/my-account.component';
 import { EntrarRegistarComponent } from './component/entrar-registar/entrar-registar.component';
 import { FooterComponent } from './component/footer/footer.component';
+import { LoginPopUpComponent } from './login-pop-up/login-pop-up.component';
+import { RegisterPopUpComponent } from './register-pop-up/register-pop-up.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { FooterComponent } from './component/footer/footer.component';
     LoginComponent,
     MyAccountComponent,
     EntrarRegistarComponent,
-    FooterComponent
+    FooterComponent,
+    LoginPopUpComponent,
+    RegisterPopUpComponent
   ],
   imports: [
     BrowserModule,
