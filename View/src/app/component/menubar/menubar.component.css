@@ -1,14 +1,53 @@
 .example-spacer {
-    flex: 1 1 auto;
-  }
-
-  .mat-toolbar {
-    display: flex;
-    justify-content: space-between; /* Align items at the start and end */
-    align-items: center;
+  flex: 1 1 auto;
 }
 
+.mat-toolbar {
+  display: flex;
+  justify-content: space-between; /* Align items at the start and end */
+  align-items: center;
+}
+
+.signup-button{
+width:5%;
+height:45px;
+margin-right:7px;
+border:none;
+border-radius:5px;
+background-color:#e9ecf0;
+font-size:17px;
+font-weight:600;
+cursor:pointer;
+}
+
+.login-button{
+width:5%;
+height:45px;
+border:none;
+border-radius:5px;
+font-size:17px;
+font-weight:600;
+color:#fff;
+background-color:#1859c9;
+cursor:pointer;
+}
+
+.mat-nav-list.active{
+background-color: gray;
+
+}
+
+.mat-list-item.active{
+background-color: gray;
+
+}
+
+.lista.active{
+background-color: gray;
+}
+
+
 .title {
-    flex-grow: 1; /* Allow the title to take up remaining space */
-    text-align: center; /* Center the title horizontally */
+  flex-grow: 1; /* Allow the title to take up remaining space */
+  text-align: center; /* Center the title horizontally */
 }
