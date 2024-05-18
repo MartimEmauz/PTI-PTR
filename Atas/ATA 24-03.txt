@@ -12,3 +12,14 @@ Revimos o planeamento feito no semestre anterior, e atribuímos as tarefas como 
 O Martim e o Miguel Martins vão estar responsáveis pela implementação da arquitetura, e das alterações à mesma, bem como à API, com base no feedback dado na reunião.
 
 O Tomás vai ajudar estes últimos, com ênfase na configuração dos servidores.
+
+------------------------------
+
+Esforço alocado (em horas):
+
+André Silva - 15
+Bernardo Caldas - 12
+David Carreira - 15
+Martim Emauz - 13
+Miguel Martins - 15
+Tomás Alves - 13

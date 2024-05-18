@@ -1,0 +1,1944 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API RET - Lost and Found App",
+    "description": "Welcome to the API for the Lost and Found Application developed as part of the PGP Project.\n\n## Overview\nThis API serves as the backend for a Lost and Found application, providing endpoints for managing lost and found items, user profiles, auctions, and more.\n\n## Purpose\nThe primary goal of this project is to create a platform where users can report lost items, search for found items, and participate in auctions for recovered belongings.\n\n## Our Team\n    André Silva nº 58644\n    Bernardo Caldas nº 58650\n    David Carreira nº 58629\n    Martim Emauz nº 58668\n    Miguel Martins nº 58661\n    Tomás Alves nº 58633\n\n## Terms of Service\nPlease review our [Terms of Service](https://www.youtube.com/watch?v=dQw4w9WgXcQ) for information on how to use this API responsibly.\n\n\n## Version\nCurrent API Version: 1.0.11\n\nThank you for using the Lost and Found App API!\n",
+    "version": "1.0.11"
+  },
+  "tags": [
+    {
+      "name": "Objects",
+      "description": "Everything about your Objects"
+    },
+    {
+      "name": "User",
+      "description": "Everything about your User"
+    },
+    {
+      "name": "Auctions",
+      "description": "Everything about your Auctions and Bid"
+    },
+    {
+      "name": "Category",
+      "description": "Everything about your Category. A subclass of Object"
+    },
+    {
+      "name": "Subscription",
+      "description": "Everything about your Subscription"
+    }
+  ],
+  "paths": {
+    "/lostobjects": {
+      "get": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "List all lost objects",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LostObject"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "Create a new lost object",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LostObject"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Lost object created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LostObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lostobjects/{id}": {
+      "get": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "Get lost object by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LostObject"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Lost object not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "Update lost object by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LostObject"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lost object updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LostObject"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Lost object not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "Delete lost object by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Lost object deleted successfully"
+          },
+          "404": {
+            "description": "Lost object not found"
+          }
+        }
+      }
+    },
+    "/lostobjects/similar/{id}": {
+      "get": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "Get similar lost objects by object ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LostObject"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/foundobjects": {
+      "get": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "List all found objects",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FoundObject"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "Create a new found object",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FoundObject"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Found object created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoundObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/foundobjects/{id}": {
+      "get": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "Get found object by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoundObject"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Found object not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "Update found object by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FoundObject"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Found object updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoundObject"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Found object not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Objects"
+        ],
+        "summary": "Delete found object by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Found object deleted successfully"
+          },
+          "404": {
+            "description": "Found object not found"
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "List all categories",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new category",
+        "tags": [
+          "Category"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Category"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Category created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/{id}": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Get category by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Category not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Update category by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Category"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Category updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Category not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Delete category by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Category deleted successfully"
+          },
+          "404": {
+            "description": "Category not found"
+          }
+        }
+      }
+    },
+    "/category_attributes": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "List all category attributes",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category_Atributes"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new category attribute",
+        "tags": [
+          "Category"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Category_Atributes"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Category attribute created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category_Atributes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/category_attributes/{id}": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Get category attribute by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category_Atributes"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Category attribute not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Update category attribute by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Category_Atributes"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Category attribute updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category_Atributes"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Category attribute not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Delete category attribute by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Category attribute deleted successfully"
+          },
+          "404": {
+            "description": "Category attribute not found"
+          }
+        }
+      }
+    },
+    "/auctions": {
+      "get": {
+        "tags": [
+          "Auctions"
+        ],
+        "summary": "List all auctions",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Auction"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new auction",
+        "tags": [
+          "Auctions"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Auction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Auction created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Auction"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auctions/{id}": {
+      "get": {
+        "tags": [
+          "Auctions"
+        ],
+        "summary": "Get auction by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Auction"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Auction not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Auctions"
+        ],
+        "summary": "Update auction by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Auction"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Auction updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Auction"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Auction not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Auctions"
+        ],
+        "summary": "Delete auction by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Auction deleted successfully"
+          },
+          "404": {
+            "description": "Auction not found"
+          }
+        }
+      }
+    },
+    "/bids": {
+      "get": {
+        "tags": [
+          "Auctions"
+        ],
+        "summary": "List all bids",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Bid"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Auctions"
+        ],
+        "summary": "Create a new bid",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Bid"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Bid created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Bid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bids/{id}": {
+      "get": {
+        "tags": [
+          "Auctions"
+        ],
+        "summary": "Get bid by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Bid"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bid not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Auctions"
+        ],
+        "summary": "Update bid by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Bid"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bid updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Bid"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bid not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Auctions"
+        ],
+        "summary": "Delete bid by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Bid deleted successfully"
+          },
+          "404": {
+            "description": "Bid not found"
+          }
+        }
+      }
+    },
+    "/generalusers": {
+      "get": {
+        "summary": "List all general users",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GeneralUser"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new general user",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GeneralUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "General user created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralUser"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/generalusers/{id}": {
+      "get": {
+        "summary": "Get general user by ID",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralUser"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "General user not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update general user by ID",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GeneralUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "General user updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralUser"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "General user not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete general user by ID",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "General user deleted successfully"
+          },
+          "404": {
+            "description": "General user not found"
+          }
+        }
+      }
+    },
+    "/policeusers": {
+      "get": {
+        "summary": "List all police users",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserPolice"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new police user",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPolice"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Police user created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPolice"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/policeusers/{id}": {
+      "get": {
+        "summary": "Get police user by ID",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPolice"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Police user not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update police user by ID",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPolice"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Police user updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPolice"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Police user not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete police user by ID",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Police user deleted successfully"
+          },
+          "404": {
+            "description": "Police user not found"
+          }
+        }
+      }
+    },
+    "/subscriptions": {
+      "post": {
+        "summary": "Criar uma nova assinatura",
+        "tags": [
+          "Subscription"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Subscription"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Assinatura criada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Subscription"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Obter todas as assinaturas",
+        "tags": [
+          "Subscription"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de assinaturas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Subscription"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}": {
+      "get": {
+        "summary": "Obter detalhes de uma assinatura específica",
+        "tags": [
+          "Subscription"
+        ],
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes da assinatura",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Subscription"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar uma assinatura existente",
+        "tags": [
+          "Subscription"
+        ],
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Subscription"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Assinatura atualizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Subscription"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Cancelar uma assinatura",
+        "tags": [
+          "Subscription"
+        ],
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Assinatura cancelada com sucesso"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Object": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1542
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "example": "2022-02-28"
+          },
+          "description": {
+            "type": "string",
+            "example": "Um objecto lindo"
+          },
+          "local": {
+            "type": "object",
+            "xml": {
+              "name": "local"
+            },
+            "properties": {
+              "address": {
+                "$ref": "#/components/schemas/Address"
+              }
+            }
+          },
+          "category": {
+            "type": "object",
+            "xml": {
+              "name": "category"
+            },
+            "properties": {
+              "category": {
+                "$ref": "#/components/schemas/Category"
+              }
+            }
+          },
+          "atributes": {
+            "type": "array",
+            "xml": {
+              "name": "atributes",
+              "wrapped": true
+            },
+            "items": {
+              "$ref": "#/components/schemas/Category_Atributes"
+            }
+          }
+        },
+        "discriminator": {
+          "propertyName": "object_type"
+        },
+        "xml": {
+          "name": "object"
+        }
+      },
+      "LostObject": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Object"
+          },
+          {
+            "type": "object"
+          }
+        ],
+        "xml": {
+          "name": "lostObject"
+        }
+      },
+      "FoundObject": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Object"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Lucas Alves"
+              },
+              "email": {
+                "type": "string",
+                "example": "john@email.com"
+              },
+              "genero": {
+                "type": "string",
+                "example": "Masculino"
+              },
+              "birthday": {
+                "type": "string",
+                "format": "date",
+                "example": "2023-01-01"
+              },
+              "idFiscal": {
+                "type": "integer",
+                "format": "int32",
+                "example": 190568762
+              },
+              "idCivil": {
+                "type": "integer",
+                "format": "int32",
+                "example": 190568764
+              },
+              "phoneNumber": {
+                "type": "integer",
+                "format": "int32",
+                "example": 925871284
+              }
+            }
+          }
+        ],
+        "xml": {
+          "name": "foundObject"
+        }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string",
+            "example": "Rua das Flores"
+          },
+          "country": {
+            "type": "string",
+            "example": "Portugal"
+          },
+          "city": {
+            "type": "string",
+            "example": "Lisboa"
+          },
+          "zip": {
+            "type": "string",
+            "example": "1000-100"
+          },
+          "longitude": {
+            "type": "number",
+            "example": 38.7071
+          },
+          "latitude": {
+            "type": "number",
+            "example": -9.13549
+          },
+          "radius": {
+            "type": "integer",
+            "example": 0
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          }
+        },
+        "xml": {
+          "name": "address"
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Tecnology"
+          }
+        },
+        "xml": {
+          "name": "category"
+        }
+      },
+      "Category_Atributes": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "array",
+            "xml": {
+              "name": "category",
+              "wrapped": true
+            },
+            "items": {
+              "$ref": "#/components/schemas/Category"
+            }
+          },
+          "atribute": {
+            "type": "string",
+            "example": "brand"
+          }
+        },
+        "xml": {
+          "name": "category_atributes"
+        }
+      },
+      "User": {
+        "discriminator": {
+          "propertyName": "user_type"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 10
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "James"
+          },
+          "genero": {
+            "type": "string",
+            "example": "Masculino"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date",
+            "example": "2023-01-01"
+          },
+          "address": {
+            "type": "object",
+            "xml": {
+              "name": "address"
+            },
+            "properties": {
+              "address": {
+                "$ref": "#/components/schemas/Address"
+              }
+            }
+          },
+          "status": {
+            "type": "string",
+            "description": "User Status",
+            "example": "active",
+            "enum": [
+              "active",
+              "deactivated"
+            ]
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "UserPolice": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/User"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "internalId": {
+                "type": "integer",
+                "format": "int32",
+                "example": 11156789
+              },
+              "postoPolicia": {
+                "type": "string",
+                "example": "Esquadra da Pontinha"
+              },
+              "stationPhone": {
+                "type": "integer",
+                "example": 202404505
+              }
+            }
+          }
+        ],
+        "xml": {
+          "name": "userPolice"
+        }
+      },
+      "GeneralUser": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/User"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "idFiscal": {
+                "type": "integer",
+                "format": "int32",
+                "example": 190568762
+              },
+              "idCivil": {
+                "type": "integer",
+                "format": "int32",
+                "example": 190568764
+              }
+            }
+          }
+        ],
+        "xml": {
+          "name": "generalUser"
+        }
+      },
+      "Auction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 21
+          },
+          "min_bid": {
+            "type": "number",
+            "example": 100
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-01-01T00:00:00Z"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-01-15T23:59:59Z"
+          },
+          "biggest_bid": {
+            "$ref": "#/components/schemas/Bid"
+          }
+        },
+        "xml": {
+          "name": "auction"
+        }
+      },
+      "Bid": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "bid_value": {
+            "type": "number",
+            "example": 150
+          }
+        },
+        "xml": {
+          "name": "bid"
+        }
+      },
+      "Subscription": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "planId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive"
+            ]
+          }
+        },
+        "xml": {
+          "name": "subscription"
+        }
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "ApiResponse"
+        }
+      }
+    },
+    "requestBodies": {
+      "Auction": {
+        "description": "Auction object that needs to be added",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Auction"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Auction"
+            }
+          }
+        }
+      },
+      "Category": {
+        "description": "Category object that needs to be added",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Category"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Category"
+            }
+          }
+        }
+      },
+      "CategoryAttributes": {
+        "description": "Category attributes object that needs to be added",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Category_Atributes"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Category_Atributes"
+            }
+          }
+        }
+      },
+      "Address": {
+        "description": "Address object that needs to be added",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Address"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Address"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "petstore_auth": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://your-oauth-provider.com/oauth/authorize",
+            "scopes": {
+              "write:auctions": "modify auctions in your account",
+              "read:auctions": "read your auctions"
+            }
+          }
+        }
+      },
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      }
+    }
+  }
+}

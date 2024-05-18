@@ -3,6 +3,7 @@ import { colorentity } from '../Entity/colorentity';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { Country, Customer } from '../Model/Customer';
+import { LostObject } from '../Model/lost-object.model';
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +48,25 @@ export class MasterService {
   SaveAssociate(data:any,code:any){
     return this.http.put('http://localhost:3000/associate/'+code,data);
   }
+
+
+  //API ------------------------------------------------------------------
+
+  private apiUrl = 'http://127.0.0.1:8000/'; // Your Django API URL
+
+  // Example function to fetch data from Django API
+  getData(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/endpoint`);
+  }
+
+  // Example function to send data to Django API
+  sendData(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/endpoint`, data);
+  }
+
+  addLostObject(newLostObject: LostObject): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/lostobjects/`, newLostObject);
+  }
+
 
 }

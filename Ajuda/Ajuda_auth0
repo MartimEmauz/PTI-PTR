@@ -1,0 +1,128 @@
+Domain: dev-7ety36lrjtchzs5o.us.auth0.com
+
+Client ID: QtBbOFF8p3ObAlrfl8NvoARtRysybsAi
+
+Client Secret: 
+
+
+
+Steps for Frontend Team to Use Auth0
+
+Install Auth0 SDK:
+
+npm install @auth0/auth0-angular
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+Configure Auth0 in Angular:
+In app.module.ts, configure the Auth0 module with the details you provide:
+
+import { AuthModule } from '@auth0/auth0-angular';
+
+@NgModule({
+  imports: [
+    AuthModule.forRoot({
+      domain: 'your-auth0-domain',
+      clientId: 'your-auth0-client-id',
+      audience: 'your-auth0-api-identifier', // Optional, only if you are using API authorization
+      redirectUri: window.location.origin,
+    }),
+  ],
+  ...
+})
+export class AppModule {}
+
+----------------------------------------------------------------------------------------------------
+
+Protecting Routes with Auth Guard:
+Use Auth0's AuthGuard to protect routes that require authentication:
+
+import { AuthGuard } from '@auth0/auth0-angular';
+
+const routes: Routes = [
+  { path: 'protected', component: ProtectedComponent, canActivate: [AuthGuard] },
+  ...
+];
+
+--------------------------------------------------------------------------------------------------------------
+
+Login and Logout Components:
+Implement login and logout methods using the Auth0 SDK:
+
+import { Component } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
+
+@Component({
+  selector: 'app-login-button',
+  template: `<button (click)="login()">Log in</button>`,
+})
+export class LoginButtonComponent {
+  constructor(public auth: AuthService) {}
+
+  login(): void {
+    this.auth.loginWithRedirect();
+  }
+}
+
+@Component({
+  selector: 'app-logout-button',
+  template: `<button (click)="logout()">Log out</button>`,
+})
+export class LogoutButtonComponent {
+  constructor(public auth: AuthService) {}
+
+  logout(): void {
+    this.auth.logout({ returnTo: window.location.origin });
+  }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+Fetch Authenticated User Info:
+Use the Auth0 SDK to fetch and display authenticated user information:
+
+
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
+
+@Component({
+  selector: 'app-profile',
+  template: `
+    <div *ngIf="auth.user$ | async as user">
+      <h2>{{ user.name }}</h2>
+      <p>{{ user.email }}</p>
+    </div>
+  `,
+})
+export class ProfileComponent implements OnInit {
+  constructor(public auth: AuthService) {}
+
+  ngOnInit(): void {}
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Make Authenticated API Calls:
+Use the Auth0 SDK to get the access token and include it in the Authorization header for API requests:
+
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '@auth0/auth0-angular';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiService {
+  constructor(private http: HttpClient, private auth: AuthService) {}
+
+  getProtectedData() {
+    this.auth.idTokenClaims$.subscribe(claims => {
+      const token = claims.__raw;
+      this.http.get('http://127.0.0.1:8000/protected/', {
+        headers: { Authorization: `Bearer ${token}` }
+      }).subscribe(data => {
+        console.log(data);
+      });
+    });
+  }
+}

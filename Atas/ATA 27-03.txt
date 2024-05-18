@@ -11,3 +11,14 @@ A programação em Django dará início nos próximos dias, bem como a inicializ
 No final o David Carreira ajudou os restantes elementos a configurar as suas áreas de trabalho de forma a que todos possam ajudar na programação e visualização dos elementos do website.
 
 Através do seu branch, o David publicou as mudanças no repositório git.
+
+------------------------------
+
+Esforço alocado (em horas):
+
+André Silva - 10
+Bernardo Caldas - 15
+David Carreira - 20
+Martim Emauz - 7
+Miguel Martins - 6
+Tomás Alves - 7

@@ -2,14 +2,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './component/home/home.component';
 import { SliderComponent } from './component/slider/slider.component';
-import { TableComponent } from './component/table/table.component';
-import { LoginComponent } from './component/login/login.component';
+import { LeiloesComponent } from './component/leiloes/leiloes.component';
+import { MyLeiloesComponent } from './component/myleiloes/myleiloes.component';
+import { MyAccountComponent } from './component/my-account/my-account.component';
+import { EntrarRegistarComponent } from './component/entrar-registar/entrar-registar.component';
 
 const routes: Routes = [
   {path:'',component:HomeComponent},
   {path:'slider',component:SliderComponent},
-  {path:'table',component:TableComponent},
-  {path:'login',component:LoginComponent},
+  {path:'leiloes',component:LeiloesComponent},
+  {path:'myleiloes',component:MyLeiloesComponent},
+  {path:'myaccount',component:MyAccountComponent},
+  {path:'entrarregistar',component:EntrarRegistarComponent}
 ];
 
 @NgModule({

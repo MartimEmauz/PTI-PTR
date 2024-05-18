@@ -10,14 +10,14 @@ import { UserdetailComponent } from '../userdetail/userdetail.component';
 
 @Component({
   selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css']
+  templateUrl: './leiloes.component.html',
+  styleUrls: ['./leiloes.component.css']
 })
-export class TableComponent {
+export class LeiloesComponent {
 
   customerlist !: Customer[];
   dataSource: any;
-  displayedColumns: string[] = ["code", "name", "email", "phone", "status", "action"];
+  displayedColumns: string[] = ["Item", "Nome", "Estado", "Licitador","action"];
   @ViewChild(MatPaginator) paginatior !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
 
@@ -50,7 +50,7 @@ export class TableComponent {
   
 
   addcustomer(){
-    this.Openpopup(0, 'Add Customer',PopupComponent);
+    this.Openpopup(0, 'Adicionar Leilão',PopupComponent);
   }
 
   Openpopup(code: any, title: any,component:any) {

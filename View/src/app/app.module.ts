@@ -9,11 +9,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenubarComponent } from './component/menubar/menubar.component';
 import { HomeComponent } from './component/home/home.component';
 import { SliderComponent } from './component/slider/slider.component';
-import { TableComponent } from './component/table/table.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PopupComponent } from './component/popup/popup.component';
 import { UserdetailComponent } from './component/userdetail/userdetail.component';
+import { LeiloesComponent } from './component/leiloes/leiloes.component';
+import { MyLeiloesComponent } from './component/myleiloes/myleiloes.component';
 import { LoginComponent } from './component/login/login.component';
+import { MyAccountComponent } from './component/my-account/my-account.component';
+import { EntrarRegistarComponent } from './component/entrar-registar/entrar-registar.component';
+import { FooterComponent } from './component/footer/footer.component';
+import { LoginPopUpComponent } from './login-pop-up/login-pop-up.component';
+import { RegisterPopUpComponent } from './register-pop-up/register-pop-up.component';
 
 @NgModule({
   declarations: [
@@ -21,10 +27,16 @@ import { LoginComponent } from './component/login/login.component';
     MenubarComponent,
     HomeComponent,
     SliderComponent,
-    TableComponent,
     PopupComponent,
     UserdetailComponent,
-    LoginComponent
+    LeiloesComponent,
+    MyLeiloesComponent,
+    LoginComponent,
+    MyAccountComponent,
+    EntrarRegistarComponent,
+    FooterComponent,
+    LoginPopUpComponent,
+    RegisterPopUpComponent
   ],
   imports: [
     BrowserModule,
