@@ -47,7 +47,15 @@ background-color: gray;
 }
 
 
+.example-spacer {
+  flex: 1;
+}
+
 .title {
-  flex-grow: 1; /* Allow the title to take up remaining space */
-  text-align: center; /* Center the title horizontally */
+  flex: 0;
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }

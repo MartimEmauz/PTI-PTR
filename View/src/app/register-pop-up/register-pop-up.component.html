@@ -1,0 +1,39 @@
+<form [formGroup]="signupForm" (ngSubmit)="userSignUp()">
+    <h1>Signup</h1>
+    <div mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Primeiro Name</mat-label>
+            <input matInput formControlName="firstName">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Último Nome</mat-label>
+            <input matInput formControlName="lastName">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Género</mat-label>
+            <input matInput formControlName="gender">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Data de Nascimento</mat-label>
+            <input matInput formControlName="date" type="date">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Morada</mat-label>
+            <input matInput formControlName="address"> <!-- Corrected from "adress" -->
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button type="submit" color="primary">Signup</button>
+        <a (click)="closePopup()" mat-raised-button color="warn">Close</a>
+    </div>
+</form>
