@@ -6,9 +6,10 @@
   display: flex;
   justify-content: space-between; /* Align items at the start and end */
   align-items: center;
+  background-color: #54acb4;
 }
 
-.signup-button{
+.login-button{
 width:5%;
 height:45px;
 margin-right:7px;
@@ -20,17 +21,6 @@ font-weight:600;
 cursor:pointer;
 }
 
-.login-button{
-width:5%;
-height:45px;
-border:none;
-border-radius:5px;
-font-size:17px;
-font-weight:600;
-color:#fff;
-background-color:#1859c9;
-cursor:pointer;
-}
 
 .mat-nav-list.active{
 background-color: gray;
@@ -58,4 +48,43 @@ background-color: gray;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
+}
+
+.title-link {
+  color: white;
+  text-decoration: none;
+}
+
+.title-link:hover {
+  text-decoration: underline;
+}
+
+/* Add this to your global styles.css or component-specific CSS file */
+
+/* Ensure the mat-toolbar takes full width */
+mat-toolbar {
+    width: 100%;
+}
+
+/* Remove padding and margin from the main container */
+mat-drawer-content {
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    padding: 0;
+    margin: 0;
+}
+
+/* Ensure the main content takes full width and height */
+mat-drawer-content div {
+    width: 100%;
+    height: calc(100vh - 64px); /* Adjust height based on your header/footer size */
+    box-sizing: border-box;
+}
+
+/* Optional: Set background color to match the rest of the page */
+mat-drawer-content {
+    background-color: #f8f9fa; /* Change to your desired background color */
 }

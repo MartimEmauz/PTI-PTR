@@ -37,7 +37,7 @@ h1 {
 
 .search-bar button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #54acb4;
   color: #fff;
   border: none;
   border-radius: 0 5px 5px 0;
@@ -121,7 +121,7 @@ h1 {
 }
 
 .ver-mais-button:hover {
-  background-color: #0056b3;
+  background-color: #54acb4;
 }
 
 .pagination {
@@ -134,7 +134,7 @@ h1 {
 .pagination button,
 .pagination span {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #54acb4;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -145,7 +145,7 @@ h1 {
 }
 
 .pagination button:hover {
-  background-color: #0056b3;
+  background-color: #54acb4;
 }
 
 .pagination span {
@@ -205,6 +205,6 @@ h1 {
 }
 
 .slick-dots li.slick-active button:before {
-  color: #007bff;
+  color: #54acb4;
 }
 

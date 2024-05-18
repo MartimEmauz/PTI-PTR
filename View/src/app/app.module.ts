@@ -20,6 +20,7 @@ import { EntrarRegistarComponent } from './component/entrar-registar/entrar-regi
 import { FooterComponent } from './component/footer/footer.component';
 import { LoginPopUpComponent } from './login-pop-up/login-pop-up.component';
 import { RegisterPopUpComponent } from './register-pop-up/register-pop-up.component';
+import { AuthModule } from '@auth0/auth0-angular';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,17 @@ import { RegisterPopUpComponent } from './register-pop-up/register-pop-up.compon
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AuthModule.forRoot({
+      domain: 'dev-7ety36lrjtchzs5o.us.auth0.com',
+      clientId: 'QtBbOFF8p3ObAlrfl8NvoARtRysybsAi',
+      //audience: 'your-auth0-api-identifier', // Optional, only if you are using API authorization
+      authorizationParams:{
+        redirectUri: window.location.origin,
+      }
+    }),
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]
