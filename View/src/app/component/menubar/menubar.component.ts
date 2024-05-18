@@ -8,12 +8,10 @@ import { AuthService } from '@auth0/auth0-angular';
   templateUrl: './menubar.component.html',
   styleUrls: ['./menubar.component.css']
 })
-
 export class MenubarComponent {
   badgevisible = false;
   
   constructor(public _auth: AuthService) {}
-
 
   badgevisibility() {
     this.badgevisible = true;

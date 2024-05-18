@@ -2,7 +2,6 @@
     <button (click)="drawer.toggle()" mat-icon-button>
         <mat-icon>menu</mat-icon>
     </button>
-
     
     <span class="example-spacer"></span>
     <h1 class="title">Lost&Found</h1>
@@ -10,33 +9,36 @@
     <button (click)="_auth.loginWithPopup()" class="login-button" *ngIf="!(_auth.isAuthenticated$ | async)">Login</button>
     <button (click)="_auth.logout()" class="login-button" *ngIf="_auth.isAuthenticated$ | async">Logout</button>
     <button (click)="badgevisibility()"  mat-icon-button>
+    
+    <button (click)="openSignupDialog()" class="signup-button">Signup</button>
+    <button (click)="userLogin()" class="login-button">Login</button>
+    <button (click)="badgevisibility()" mat-icon-button>
         <mat-icon matBadgeColor="accent" matBadge="15" [matBadgeHidden]="badgevisible" matBadgeSize="small">notifications</mat-icon>
     </button>
 </mat-toolbar>
 <mat-drawer-container autosize>
     <mat-drawer #drawer opened="true" mode="side" position="start">
-    <mat-nav-list class="lista">
-        <mat-list-item>
-            <button routerLink="" mat-button class="botao"><mat-icon>home</mat-icon> Home</button>
-        </mat-list-item>
-        <mat-list-item>
-            <button routerLink="slider" mat-button class="botao"><mat-icon>explore</mat-icon> Maps</button>
-        </mat-list-item>
-        <mat-list-item>
-            <button routerLink="leiloes" mat-button class="botao"><mat-icon>menu</mat-icon> Leilões</button>
-        </mat-list-item>
-        <mat-list-item>
-            <button routerLink="myleiloes" mat-button class="botao"><mat-icon>phonelink</mat-icon>Objetos</button>
-        </mat-list-item>
-        <mat-list-item>
-            <button routerLink="myaccount" mat-button class="botao"><mat-icon>account_circle</mat-icon> Minha Conta</button>
-        </mat-list-item>
-    </mat-nav-list>
+        <mat-nav-list class="lista">
+            <mat-list-item>
+                <button routerLink="" mat-button class="botao"><mat-icon>home</mat-icon> Home</button>
+            </mat-list-item>
+            <mat-list-item>
+                <button routerLink="slider" mat-button class="botao"><mat-icon>explore</mat-icon> Maps</button>
+            </mat-list-item>
+            <mat-list-item>
+                <button routerLink="leiloes" mat-button class="botao"><mat-icon>menu</mat-icon> Leilões</button>
+            </mat-list-item>
+            <mat-list-item>
+                <button routerLink="myleiloes" mat-button class="botao"><mat-icon>phonelink</mat-icon>Objetos</button>
+            </mat-list-item>
+            <mat-list-item>
+                <button routerLink="myaccount" mat-button class="botao"><mat-icon>account_circle</mat-icon> Minha Conta</button>
+            </mat-list-item>
+        </mat-nav-list>
     </mat-drawer>
     <mat-drawer-content>
         <div style="text-align: center;min-height: 600px;">
-
             <router-outlet></router-outlet>
-            </div>
+        </div>
     </mat-drawer-content>
 </mat-drawer-container>
