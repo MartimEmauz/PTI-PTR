@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginPopUpComponent } from 'src/app/login-pop-up/login-pop-up.component';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-menubar',
@@ -11,33 +12,14 @@ import { LoginPopUpComponent } from 'src/app/login-pop-up/login-pop-up.component
 export class MenubarComponent {
   badgevisible = false;
   
-  constructor(private dialog: MatDialog) {}
+  constructor(public _auth: AuthService) {}
 
 
   badgevisibility() {
     this.badgevisible = true;
   }
 
-  userLogin(){
-    this.Openpopup(0, 'User LogIn',LoginPopUpComponent);
-  }
-  
-  
-  Openpopup(code: any, title: any,component:any) {
-    var _popup = this.dialog.open(component, {
-      width: '40%',
-      enterAnimationDuration: '800ms',
-      exitAnimationDuration: '800ms',
-      data: {
-        title: title,
-        code: code
-      }
-    });
-    _popup.afterClosed().subscribe(item => {
-      // console.log(item)
-      //this.loadcustomer();
-    })
-  }
+ 
 
 }
 

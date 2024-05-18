@@ -8,7 +8,7 @@
   align-items: center;
 }
 
-.signup-button{
+.login-button{
 width:5%;
 height:45px;
 margin-right:7px;
@@ -20,17 +20,6 @@ font-weight:600;
 cursor:pointer;
 }
 
-.login-button{
-width:5%;
-height:45px;
-border:none;
-border-radius:5px;
-font-size:17px;
-font-weight:600;
-color:#fff;
-background-color:#1859c9;
-cursor:pointer;
-}
 
 .mat-nav-list.active{
 background-color: gray;
