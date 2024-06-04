@@ -41,7 +41,7 @@ import { AuthModule } from '@auth0/auth0-angular';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    AppRoutingModule, // Certifique-se de que isso está correto
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
@@ -54,9 +54,7 @@ import { AuthModule } from '@auth0/auth0-angular';
       authorizationParams:{
         redirectUri: window.location.origin,
       }
-    }),
-
-
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

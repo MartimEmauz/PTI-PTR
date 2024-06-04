@@ -1,73 +1,73 @@
-import { Component, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Customer } from 'src/app/Model/Customer';
 import { MasterService } from 'src/app/service/master.service';
-import { PopupComponent } from '../popup/popup.component';
-import { UserdetailComponent } from '../userdetail/userdetail.component';
-
+import { LostObject } from 'src/app/Model/lost-object.model';
 
 @Component({
   selector: 'app-table',
   templateUrl: './myleiloes.component.html',
   styleUrls: ['./myleiloes.component.css']
 })
-export class MyLeiloesComponent {
+export class MyLeiloesComponent implements OnInit {
 
-  customerlist !: Customer[];
-  dataSource: any;
+  dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ["code", "name", "email", "phone", "status", "action"];
-  @ViewChild(MatPaginator) paginatior !: MatPaginator;
-  @ViewChild(MatSort) sort !: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  newLostObject: LostObject = {
+    date: '',
+    description: '',
+    category: null,
+    address: null
+  };
+  showAddObjectForm: boolean = false;
 
-  constructor(private service: MasterService, private dialog: MatDialog) {
-    this.loadcustomer();
+  constructor(private service: MasterService) {
+    this.dataSource = new MatTableDataSource<any>();
   }
 
-  loadcustomer() {
+  ngOnInit(): void {
+    this.loadCustomer();
+  }
+
+  loadCustomer() {
     this.service.GetCustomer().subscribe(res => {
-      this.customerlist = res;
-      this.dataSource = new MatTableDataSource<Customer>(this.customerlist);
-      this.dataSource.paginator = this.paginatior;
+      this.dataSource.data = res;
+      this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
   }
 
-  Filterchange(data: Event) {
+  filterChange(data: Event) {
     const value = (data.target as HTMLInputElement).value;
     this.dataSource.filter = value;
   }
 
-  editcustomer(code: any) {
-    this.Openpopup(code, 'Edit Customer',PopupComponent);
+  editCustomer(code: any) {
+    // Lógica para editar cliente
   }
 
-  detailcustomer(code: any) {
-    this.Openpopup(code, 'Customer Detail',UserdetailComponent);
+  detailCustomer(code: any) {
+    // Lógica para detalhar cliente
   }
 
-  
-
-  addLostObject(){
-    this.Openpopup(0, 'Add Lost Object',PopupComponent);
-  }
-
-  Openpopup(code: any, title: any,component:any) {
-    var _popup = this.dialog.open(component, {
-      width: '40%',
-      enterAnimationDuration: '800ms',
-      exitAnimationDuration: '800ms',
-      data: {
-        title: title,
-        code: code
-      }
+  addLostObject() {
+    this.service.addLostObject(this.newLostObject).subscribe(() => {
+      this.loadCustomer();
+      this.cancelAddObject();
     });
-    _popup.afterClosed().subscribe(item => {
-      // console.log(item)
-      this.loadcustomer();
-    })
+  }
+
+  cancelAddObject() {
+    this.newLostObject = {
+      date: '',
+      description: '',
+      category: null,
+      address: null
+    };
+    this.showAddObjectForm = false;
   }
 
 }
