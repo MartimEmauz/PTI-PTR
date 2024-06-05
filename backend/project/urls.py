@@ -4,6 +4,10 @@ from django.urls import path
 from app.views import ProtectedView
 
 urlpatterns = [
+
+    # Root URL
+    
+
     # Lost Objects URLs
     path('lostobjects/', views.LostObjectListCreateAPIView.as_view(), name='lostobject-list-create'),
     path('lostobjects/<int:pk>/', views.LostObjectRetrieveUpdateDestroyAPIView.as_view(), name='lostobject-retrieve-update-destroy'),

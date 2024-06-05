@@ -6,15 +6,20 @@ from utils.utils import find_similar_objects
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+
+
 
 
 class LostObjectListCreateAPIView(generics.ListCreateAPIView):
     queryset = Lostobject.objects.all()
     serializer_class = LostObjectSerializer
+    permission_classes = [AllowAny]
 
 class LostObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Lostobject.objects.all()
     serializer_class = LostObjectSerializer
+    
 
 class SimilarLostObjectListAPIView(generics.ListAPIView):
     serializer_class = LostObjectSerializer
@@ -27,6 +32,7 @@ class SimilarLostObjectListAPIView(generics.ListAPIView):
 class FoundObjectListCreateAPIView(generics.ListCreateAPIView):
     queryset = Foundobject.objects.all()
     serializer_class = FoundObjectSerializer
+    permission_classes = [AllowAny]
 
 class FoundObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Foundobject.objects.all()
@@ -35,6 +41,7 @@ class FoundObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIV
 class GeneralUserListCreateAPIView(generics.ListCreateAPIView):
     queryset = Generaluser.objects.all()
     serializer_class = GeneralUserSerializer
+    permission_classes = [AllowAny]
 
 class GeneralUserRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Generaluser.objects.all()
