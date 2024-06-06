@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./entrar-registar.component.css']
 })
 export class EntrarRegistarComponent {
+  email: string ="";
+  password: string="";
 
+  constructor() { }
+
+  onSignUp() {
+    // Your signup logic here
+  }
+
+  onLogin() {
+    // Your login logic here
+  }
 }

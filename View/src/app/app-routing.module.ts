@@ -5,6 +5,7 @@ import { SliderComponent } from './component/slider/slider.component';
 import { LeiloesComponent } from './component/leiloes/leiloes.component';
 import { MyLeiloesComponent } from './component/myleiloes/myleiloes.component';
 import { MyAccountComponent } from './component/my-account/my-account.component';
+import { LoginComponent } from './component/login/login.component';
 import { EntrarRegistarComponent } from './component/entrar-registar/entrar-registar.component';
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'leiloes', component: LeiloesComponent },
   { path: 'myleiloes', component: MyLeiloesComponent },
   { path: 'myaccount', component: MyAccountComponent },
-  { path: 'entrarregistar', component: EntrarRegistarComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'entrar-registar', component: EntrarRegistarComponent},
 ];
 
 @NgModule({

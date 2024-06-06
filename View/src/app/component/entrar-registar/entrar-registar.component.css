@@ -1,0 +1,50 @@
+/* Add your styles here */
+.signup-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center; /* Center text */
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 0.5em;
+  }
+  
+  input {
+    width: calc(100% - 1em); /* Adjust input width to accommodate padding */
+    padding: 0.5em;
+    margin-bottom: 1em;
+  }
+  
+  button {
+    width: calc(100% - 1em); /* Adjust button width to accommodate padding */
+    padding: 0.5em;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Add smooth transition */
+    display: block; /* Make button a block element */
+    margin: 0 auto; /* Center button horizontally */
+  }
+  
+  button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
+  .login-link {
+    margin-top: 1em; /* Add some space between the form and the login link */
+  }
+  
+  .login-link a {
+    color: #007bff; /* Blue color for the login link */
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline; /* Underline the link on hover */
+  }
+  
