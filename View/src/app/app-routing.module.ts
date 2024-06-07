@@ -7,6 +7,7 @@ import { MyLeiloesComponent } from './component/myleiloes/myleiloes.component';
 import { MyAccountComponent } from './component/my-account/my-account.component';
 import { LoginComponent } from './component/login/login.component';
 import { EntrarRegistarComponent } from './component/entrar-registar/entrar-registar.component';
+import { ProfileCompletionComponent } from './component/profile-completion/profile-completion.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'myleiloes', component: MyLeiloesComponent },
   { path: 'myaccount', component: MyAccountComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'entrar-registar', component: EntrarRegistarComponent},
+  { path: 'entrar-registar', component: EntrarRegistarComponent },
+  { path: 'profile-completion', component: ProfileCompletionComponent }
 ];
 
 @NgModule({

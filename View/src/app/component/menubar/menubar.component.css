@@ -21,6 +21,19 @@ font-weight:600;
 cursor:pointer;
 }
 
+.logout-button{
+  width:5%;
+  height:45px;
+  margin-right:7px;
+  border:none;
+  border-radius:5px;
+  color: #f8f9fa;
+  background-color:#FF5733;
+  font-size:17px;
+  font-weight:600;
+  cursor:pointer;
+  }
+
 
 .mat-nav-list.active{
 background-color: gray;

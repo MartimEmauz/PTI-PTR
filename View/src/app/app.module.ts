@@ -21,6 +21,7 @@ import { FooterComponent } from './component/footer/footer.component';
 import { LoginPopUpComponent } from './login-pop-up/login-pop-up.component';
 import { RegisterPopUpComponent } from './register-pop-up/register-pop-up.component';
 import { AuthModule } from '@auth0/auth0-angular';
+import { ProfileCompletionComponent } from './component/profile-completion/profile-completion.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { AuthModule } from '@auth0/auth0-angular';
     EntrarRegistarComponent,
     FooterComponent,
     LoginPopUpComponent,
-    RegisterPopUpComponent
+    RegisterPopUpComponent,
+    ProfileCompletionComponent
   ],
   imports: [
     BrowserModule,

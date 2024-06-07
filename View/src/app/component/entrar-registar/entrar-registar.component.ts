@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-entrar-registar',
@@ -6,16 +7,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./entrar-registar.component.css']
 })
 export class EntrarRegistarComponent {
-  email: string ="";
-  password: string="";
+  email: string = '';
+  password: string = '';
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   onSignUp() {
-    // Your signup logic here
+    console.log("Email:", this.email);
+    console.log("Password:", this.password);
+    // Handle the sign-up logic
+    // On successful sign-up, navigate to profile completion page
+    this.router.navigate(['/profile-completion']);
   }
 
   onLogin() {
-    // Your login logic here
+    // Navigate to login or handle login logic here
   }
 }
