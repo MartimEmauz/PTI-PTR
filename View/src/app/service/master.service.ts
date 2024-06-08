@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { Country, Customer } from '../Model/Customer';
 import { LostObject } from '../Model/lost-object.model';
+import { GeneralUser } from '../Model/general-users-model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,14 @@ export class MasterService {
 
   addLostObject(newLostObject: LostObject): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/lostobjects/`, newLostObject);
+  }
+
+  createUser(user: GeneralUser): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}generalusers/`, user);
+  }
+
+  updateUser(email: string, userData: Partial<GeneralUser>): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}generalusers/${email}/`, userData);
   }
 
 

@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { MasterService } from '../../service/master.service';
+import { GeneralUser } from '../../Model/general-users-model';
+import { AuthService } from '@auth0/auth0-angular';
+import { User } from '@auth0/auth0-spa-js';
 
 @Component({
   selector: 'app-profile-completion',
@@ -8,24 +12,41 @@ import { Component } from '@angular/core';
 export class ProfileCompletionComponent {
   name: string = '';
   gender: string = '';
-  birthYear: number | null = null;
+  birthYear: Date | undefined;
   address: string = '';
-  geoCoordinates: string = '';
   nif: string = '';
   cc: string = '';
   phoneNumber: string = '';
 
-  constructor() { }
+  constructor(
+    private masterService: MasterService,
+    private auth: AuthService
+  ) { }
 
   onCompleteProfile() {
-    console.log("Name:", this.name);
-    console.log("Gender:", this.gender);
-    console.log("Birth Year:", this.birthYear);
-    console.log("Address:", this.address);
-    console.log("Geographic Coordinates:", this.geoCoordinates);
-    console.log("NIF:", this.nif);
-    console.log("CC:", this.cc);
-    console.log("Phone Number:", this.phoneNumber);
-    // Handle the profile completion logic
+    this.auth.user$.subscribe((user: User | null | undefined) => {
+      if (user && user.email) {
+        const userData: Partial<GeneralUser> = {
+          firstname: this.name,
+          gender: this.gender,
+          birthday: this.birthYear,
+          address: this.address,
+          idcivil: parseInt(this.nif),
+          idfiscal: parseInt(this.cc),
+          email: user.email // Use authenticated user's email
+        };
+
+        this.masterService.updateUser(user.email, userData).subscribe(
+          response => {
+            console.log('Profile updated successfully:', response);
+            // Handle success
+          },
+          error => {
+            console.error('Error updating profile:', error);
+            // Handle error
+          }
+        );
+      }
+    });
   }
 }

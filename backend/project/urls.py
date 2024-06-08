@@ -20,6 +20,8 @@ urlpatterns = [
     # General Users URLs
     path('generalusers/', views.GeneralUserListCreateAPIView.as_view(), name='generaluser-list-create'),
     path('generalusers/<int:pk>/', views.GeneralUserRetrieveUpdateDestroyAPIView.as_view(), name='generaluser-retrieve-update-destroy'),
+    path('generalusers/<str:email>/', views.GeneralUserRetrieveUpdateDestroyAPIView_Email.as_view(), name='generaluser-retrieve-update-destroy-email'),
+
     
     # User Police URLs
     path('policeusers/', views.UserPoliceListCreateAPIView.as_view(), name='userpolice-list-create'),
