@@ -1,8 +1,4 @@
 import { Component } from '@angular/core';
-import { MasterService } from '../../service/master.service';
-import { GeneralUser } from '../../Model/general-users-model';
-import { AuthService } from '@auth0/auth0-angular';
-import { User } from '@auth0/auth0-spa-js';
 
 @Component({
   selector: 'app-profile-completion',
@@ -12,41 +8,64 @@ import { User } from '@auth0/auth0-spa-js';
 export class ProfileCompletionComponent {
   name: string = '';
   gender: string = '';
-  birthYear: Date | undefined;
+  birthday: string = '';
   address: string = '';
+  country: string = '';
+  city: string = '';
+  zipCode: string = '';
   nif: string = '';
   cc: string = '';
   phoneNumber: string = '';
 
-  constructor(
-    private masterService: MasterService,
-    private auth: AuthService
-  ) { }
+  constructor() { }
 
   onCompleteProfile() {
-    this.auth.user$.subscribe((user: User | null | undefined) => {
-      if (user && user.email) {
-        const userData: Partial<GeneralUser> = {
-          firstname: this.name,
-          gender: this.gender,
-          birthday: this.birthYear,
-          address: this.address,
-          idcivil: parseInt(this.nif),
-          idfiscal: parseInt(this.cc),
-          email: user.email // Use authenticated user's email
-        };
+    // Here you can handle the form submission, such as sending the data to a backend
+    console.log("Nome:", this.name);
+    console.log("Género:", this.gender);
+    console.log("Data de Nascimento:", this.birthday);
+    console.log("Morada:", this.address);
+    console.log("País:", this.country);
+    console.log("Cidade:", this.city);
+    console.log("Código Postal:", this.zipCode);
+    console.log("NIF:", this.nif);
+    console.log("CC:", this.cc);
+    console.log("Número de Telefone:", this.phoneNumber);
+  }
 
-        this.masterService.updateUser(user.email, userData).subscribe(
-          response => {
-            console.log('Profile updated successfully:', response);
-            // Handle success
-          },
-          error => {
-            console.error('Error updating profile:', error);
-            // Handle error
-          }
-        );
-      }
-    });
+  isNameValid(name: string): boolean {
+    return /^[a-zA-Z\s]+$/.test(name);
+  }
+
+  isDateValid(date: string): boolean {
+    return !isNaN(Date.parse(date));
+  }
+
+  isAddressValid(address: string): boolean {
+    return address.trim().length > 0;
+  }
+
+  isCountryValid(country: string): boolean {
+    return /^[a-zA-Z\s]+$/.test(country);
+  }
+
+  isCityValid(city: string): boolean {
+    return /^[a-zA-Z\s]+$/.test(city);
+  }
+
+  isZipCodeValid(zipCode: string): boolean {
+    return /^\d{4}-\d{3}$/.test(zipCode);
+  }
+
+  isNifValid(nif: string): boolean {
+    return /^\d{9}$/.test(nif);
+  }
+
+  isCcValid(cc: string): boolean {
+    return /^\d{8}$/.test(cc);
+  }
+
+  isPhoneNumberValid(phoneNumber: string): boolean {
+    return /^\d{9}$/.test(phoneNumber);
   }
 }
