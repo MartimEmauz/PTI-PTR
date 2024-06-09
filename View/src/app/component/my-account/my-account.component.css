@@ -55,6 +55,31 @@
   line-height: 50px;
 }
 
-.auth-button {
+.login-button, .signup-button {
   margin: 10px;
+  color: white;
 }
+
+.login-button {
+  background-color: #007bff; /* Azul primário */
+}
+
+.signup-button {
+  background-color: #0056b3; /* Azul mais escuro */
+}
+
+.auth-button:hover {
+  background-color: #004080; /* Azul ainda mais escuro ao passar o mouse */
+}
+
+.auth-button.police-login, .auth-button.user-login {
+  background-color: #007bff; /* Azul claro */
+  margin-right: 10px; /* Adiciona espaço à direita */
+}
+
+.auth-button.police-register, .auth-button.user-register {
+  background-color: #0366d6; /* Azul médio */
+  margin-left: 10px; /* Adiciona espaço à esquerda */
+}
+
+

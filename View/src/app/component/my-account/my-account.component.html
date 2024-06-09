@@ -10,11 +10,11 @@
           <mat-card-title>Polícia</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <p>Entre ou registre-se como um policial.</p>
+          <p>Entre ou registe-se como um policia.</p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="primary" class="auth-button" (click)="auth('login', 'policia')">Login</button>
-          <button mat-raised-button color="accent" class="auth-button" (click)="auth('signup', 'policia')">Registrar</button>
+          <button mat-raised-button class="auth-button police-login" (click)="auth('login', 'policia')">Login</button>
+          <button mat-raised-button class="auth-button police-register" (click)="auth('signup', 'policia')">Registrar</button>
         </mat-card-actions>
       </mat-card>
     </div>
@@ -25,11 +25,11 @@
           <mat-card-title>Utilizador</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <p>Entre ou registre-se como um utilizador.</p>
+          <p>Entre ou registe-se como um utilizador.</p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="primary" class="auth-button" (click)="auth('login', 'utilizador')">Login</button>
-          <button mat-raised-button color="accent" class="auth-button" (click)="auth('signup', 'utilizador')">Registrar</button>
+          <button mat-raised-button class="auth-button user-login" (click)="auth('login', 'utilizador')">Login</button>
+          <button mat-raised-button class="auth-button user-register" (click)="auth('signup', 'utilizador')">Registrar</button>
         </mat-card-actions>
       </mat-card>
     </div>
