@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-account',
@@ -6,7 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./my-account.component.css']
 })
 export class MyAccountComponent {
-  userName: string = "Darina Jimenez";
-  userEmail: string = "jdarinaJimenezSIUU@example.com";
-  userPhone: string = "(XX) XXXX-XXXX";
+
+  constructor(private router: Router) {}
+
+  auth(action: string, userType: string): void {
+    const authUrl = `https://your-oauth-provider.com/${action}?user=${userType}`;
+    window.location.href = authUrl; // Redireciona para o OAuth
+  }
 }
