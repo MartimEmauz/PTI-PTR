@@ -1,4 +1,6 @@
 -- Drop tables without dependencies or with dependencies that are also being dropped
+DROP TABLE IF EXISTS PolicePost;
+DROP TABLE IF EXISTS Subscription;
 DROP TABLE IF EXISTS Leilao;
 DROP TABLE IF EXISTS Licitacao;
 DROP TABLE IF EXISTS FoundObject;
@@ -15,9 +17,6 @@ DROP TABLE IF EXISTS Objeto;
 DROP TABLE IF EXISTS Category_attribute;
 DROP TABLE IF EXISTS Category;
 DROP TABLE IF EXISTS Address;
-DROP TABLE IF EXISTS Subscription;
-DROP TABLE IF EXISTS PolicePost;
-
 -- Enable PostGIS (if not already enabled)
 CREATE EXTENSION IF NOT EXISTS postgis;
 
@@ -108,7 +107,10 @@ CREATE TABLE FoundObject (
     idCivil INTEGER,
     phoneNumber INTEGER,
     police INTEGER,
-    	FOREIGN KEY (police) REFERENCES UserPolice(internalId)
+    	FOREIGN KEY (police) REFERENCES UserPolice(internalId),
+    possibleOwner INTEGER,
+    	FOREIGN KEY (possibleOwner) REFERENCES GeneralUser(idCivil),
+    delivered BOOLEAN
 ) INHERITS (Objeto);
 
 -- Creating LostObject table inheriting from Objeto
@@ -157,6 +159,3 @@ CREATE TABLE PolicePost (
     stationnumber INTEGER,
     	FOREIGN KEY (location) REFERENCES Address(id)
 );
-
-
-
