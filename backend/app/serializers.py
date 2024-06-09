@@ -37,9 +37,17 @@ class UserPoliceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class GeneralUserSerializer(serializers.ModelSerializer):
+    #adress = AddressSerializer()
     class Meta:
         model = Generaluser
         fields = '__all__'
+
+    #def update(self, instance, validated_data):
+        #address_data = validated_data.pop('address', None)
+        #if address_data:
+            #address, created = Address.objects.get_or_create(**address_data)
+            #instance.address = address
+        #return super().update(instance, validated_data)
 
 class FoundObjectSerializer(serializers.ModelSerializer):
     class Meta:

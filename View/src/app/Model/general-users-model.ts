@@ -1,3 +1,5 @@
+import { Address } from './address.model';
+
 export interface GeneralUser {
   firstname?: string;
   lastname?: string;
@@ -6,7 +8,8 @@ export interface GeneralUser {
   gender?: string;
   birthday?: Date;
   status?: boolean;
-  address?: number;
+  address?: Address;
   idcivil?: number;
   idfiscal?: number;
+  phoneNumber?: number;
 }

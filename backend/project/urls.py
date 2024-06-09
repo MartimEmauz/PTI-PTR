@@ -51,6 +51,10 @@ urlpatterns = [
     path('policeposts/', views.PolicePostListCreateAPIView.as_view(), name='policepost-list-create'),
     path('policeposts/<int:pk>/', views.PolicePostRetrieveUpdateDestroyAPIView.as_view(), name='policepost-retrieve-update-destroy'),
 
+    # Address URLs
+    path('addresses/', views.AddressListCreateAPIView.as_view(), name='address-list-create'),
+    path('addresses/<int:pk>/', views.AddressRetrieveUpdateDestroyAPIView.as_view(), name='address-retrieve-update-destroy'),
+
     # Auth0 URLs
     path('protected/', ProtectedView.as_view(), name='protected')
     

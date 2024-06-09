@@ -211,6 +211,7 @@ class Generaluser(models.Model):
     birthday = models.DateField(blank=True, null=True)
     status = models.BooleanField(blank=True, null=True)
     address = models.IntegerField(blank=True, null=True)
+    #address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
     idcivil = models.IntegerField(unique=True, blank=True, null=True)
     idfiscal = models.IntegerField(unique=True, blank=True, null=True)
 

@@ -102,7 +102,12 @@ class SubscriptionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPI
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
 
-class AdressListCreateAPIView(generics.ListCreateAPIView):
+class AddressListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+    permission_classes = [AllowAny]
+
+class AddressRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
 

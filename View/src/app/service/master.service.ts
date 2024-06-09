@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { Country, Customer } from '../Model/Customer';
 import { LostObject } from '../Model/lost-object.model';
 import { GeneralUser } from '../Model/general-users-model';
+import { Address } from '../Model/address.model';
 
 @Injectable({
   providedIn: 'root'
@@ -79,6 +80,10 @@ export class MasterService {
 
   getUserByEmail(email: string): Observable<GeneralUser | null> {
     return this.http.get<GeneralUser | null>(`${this.apiUrl}generalusers/${email}/`);
+  }
+
+  createAddress(address: Address): Observable<Address> {
+    return this.http.post<Address>(`${this.apiUrl}addresses/`, address);
   }
 
 
