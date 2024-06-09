@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User } from '@auth0/auth0-spa-js';
 import { MasterService } from '../../service/master.service';
 import { GeneralUser } from '../../Model/general-users-model';
+import { Observable, catchError, map, of } from 'rxjs';
 
 @Component({
   selector: 'app-menubar',
@@ -23,23 +24,41 @@ export class MenubarComponent implements OnInit {
     this._auth.user$.subscribe((user: User | null | undefined) => {
       if (user !== null && user !== undefined) {
         const userId = user.sub || ''; // Provide a default value if user.sub is undefined
-        const profileCompleted = this.isProfileCompleted(userId);
-        if (!profileCompleted) {
-          this.router.navigate(['/profile-completion']);
-        }
+        this.checkUser(user.email);
       }
-    });
-
-    this._auth.loginWithPopup().subscribe(() => {
-      this.signUp();
     });
   }
 
-  isProfileCompleted(userId: string): boolean {
-    // Implement logic to check if the user has completed their profile
-    // Return true if the profile is completed, false otherwise
-    // For demonstration purposes, always return false in this example
-    return false;
+  checkUser(email: string | undefined) {
+    if (email) {
+      this.apiService.getUserByEmail(email).subscribe(
+        (user) => {
+          console.log('User exists:', user);
+          // Additional logic if user exists
+          this.isProfileCompleted(email).subscribe(
+            (profileCompleted) => {
+              if (!profileCompleted) {
+                console.log('Profile is not completed');
+                this.router.navigate(['/profile-completion']);
+              }
+            },
+            (error) => {
+              console.error('Error checking profile completion:', error);
+            }
+          );
+        },
+        (error) => {
+          if (error.status === 404) {
+            console.log('User does not exist, signing up...');
+            this.signUp();
+          } else {
+            console.error('Error checking user existence:', error);
+          }
+        }
+      );
+    } else {
+      console.error('User email is undefined');
+    }
   }
 
   signUp() {
@@ -50,11 +69,12 @@ export class MenubarComponent implements OnInit {
             email: user.email,
           };
           this.apiService.createUser(generalUser).subscribe(
-            response => {
+            (response) => {
               console.log('User added to generalusers table:', response);
+              // Redirect to profile completion page after sign-up
               this.router.navigate(['/profile-completion']);
             },
-            error => {
+            (error) => {
               console.error('Error adding user to generalusers table:', error);
             }
           );
@@ -70,4 +90,22 @@ export class MenubarComponent implements OnInit {
   badgevisibility() {
     this.badgevisible = true;
   }
+
+  isProfileCompleted(email: string): Observable<boolean> {
+    return this.apiService.getUserByEmail(email).pipe(
+      map((user: GeneralUser | null) => {
+        if (user) {
+          const { password, ...userData } = user; // Destructure user object and exclude email
+          return Object.values(userData).every(value => value !== null);
+        } else {
+          return false; // User not found or error occurred, profile not completed
+        }
+      }),
+      catchError((error) => {
+        console.error('Error checking user:', error);
+        return of(false); // Return false if there is an error
+      })
+    );
+  }
+  
 }

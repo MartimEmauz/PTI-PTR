@@ -6,7 +6,7 @@ export interface GeneralUser {
   gender?: string;
   birthday?: Date;
   status?: boolean;
-  address?: string;
+  address?: number;
   idcivil?: number;
   idfiscal?: number;
 }

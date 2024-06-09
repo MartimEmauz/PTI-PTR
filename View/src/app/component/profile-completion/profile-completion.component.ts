@@ -30,7 +30,7 @@ export class ProfileCompletionComponent {
           firstname: this.name,
           gender: this.gender,
           birthday: this.birthYear,
-          address: this.address,
+          address: parseInt(this.address),
           idcivil: parseInt(this.nif),
           idfiscal: parseInt(this.cc),
           email: user.email // Use authenticated user's email

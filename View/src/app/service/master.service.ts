@@ -77,5 +77,9 @@ export class MasterService {
     return this.http.put<any>(`${this.apiUrl}generalusers/${email}/`, userData);
   }
 
+  getUserByEmail(email: string): Observable<GeneralUser | null> {
+    return this.http.get<GeneralUser | null>(`${this.apiUrl}generalusers/${email}/`);
+  }
+
 
 }
