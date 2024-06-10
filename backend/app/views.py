@@ -37,18 +37,24 @@ class GeneralUserRetrieveUpdateDestroyAPIView_Email(generics.RetrieveUpdateDestr
 class UserPoliceListCreateAPIView(generics.ListCreateAPIView):
     queryset = Userpolice.objects.all()
     serializer_class = UserpoliceSerializer
+    permission_classes = [AllowAny]
 
 class UserPoliceRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Userpolice.objects.all()
     serializer_class = UserpoliceSerializer
+    permission_classes = [AllowAny]
 
 class PolicePostListCreateAPIView(generics.ListCreateAPIView):
     queryset = PolicePost.objects.all()
     serializer_class = PolicePostSerializer
+    permission_classes = [AllowAny]
+
 
 class PolicePostRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = PolicePost.objects.all()
     serializer_class = PolicePostSerializer
+    permission_classes = [AllowAny]
+
 
 #---------------------------------------------------------
 #-----------Objectos perdidos e achados-------------------
@@ -66,6 +72,7 @@ class LostObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVi
 # Ver histórico dos seus objetos perdidos
 class LostObjectHistoryListAPIView(generics.ListAPIView):
     serializer_class = LostobjectSerializer
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         user = self.request.user
@@ -205,10 +212,12 @@ class SubscriptionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPI
 class AddressListCreateAPIView(generics.ListCreateAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
+    permission_classes = [AllowAny]
 
 class AddressRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
+    permission_classes = [AllowAny]
 
 class ProtectedView(APIView):
     permission_classes = [IsAuthenticated]

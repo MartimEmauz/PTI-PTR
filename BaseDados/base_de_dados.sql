@@ -1,22 +1,18 @@
 -- Drop tables without dependencies or with dependencies that are also being dropped
-DROP TABLE IF EXISTS PolicePost;
+DROP TABLE IF EXISTS FoundObject;
+DROP TABLE IF EXISTS LostObject;
 DROP TABLE IF EXISTS Subscription;
 DROP TABLE IF EXISTS Leilao;
 DROP TABLE IF EXISTS Licitacao;
-DROP TABLE IF EXISTS FoundObject;
-DROP TABLE IF EXISTS LostObject;
-DROP TABLE IF EXISTS atributes_object;
-
--- Drop tables that are parents in inheritance relationships
-DROP TABLE IF EXISTS UserPolice;
 DROP TABLE IF EXISTS GeneralUser;
-DROP TABLE IF EXISTS Users; -- Assuming 'Users' is the correct name instead of 'User'
-
--- Drop tables that are referenced by foreign keys in other tables
-DROP TABLE IF EXISTS Objeto;
+DROP TABLE IF EXISTS UserPolice;
+DROP TABLE IF EXISTS PolicePost;
+DROP TABLE IF EXISTS atributes_object;
 DROP TABLE IF EXISTS Category_attribute;
+DROP TABLE IF EXISTS Objeto;
 DROP TABLE IF EXISTS Category;
 DROP TABLE IF EXISTS Address;
+
 -- Enable PostGIS (if not already enabled)
 CREATE EXTENSION IF NOT EXISTS postgis;
 
@@ -28,7 +24,8 @@ CREATE TABLE Address (
     city VARCHAR(255),
     zip VARCHAR(20),
     -- Use the geography type for longitude and latitude
-    location GEOGRAPHY(Point, 4326),
+    location VARCHAR(255),
+    -- location GEOGRAPHY(Point, 4326),
     radius INTEGER
 );
 
@@ -49,7 +46,7 @@ CREATE TABLE Objeto (
     category INTEGER,
         FOREIGN KEY (category) REFERENCES Category(id),
     address INTEGER,
-        FOREIGN KEY (address) REFERENCES Address(id)
+        FOREIGN KEY (address) REFERENCES Address(id),
     CHECK (
         (specific_date IS NOT NULL AND start_date IS NULL AND end_date IS NULL) OR
         (specific_date IS NULL AND start_date IS NOT NULL AND end_date IS NOT NULL)
@@ -75,6 +72,13 @@ CREATE TABLE atributes_object (
     PRIMARY KEY (object_id, category_attribute_id)
 );
 
+-- Creating Policepost table
+CREATE TABLE PolicePost (
+    id SERIAL PRIMARY KEY,
+    location INTEGER,
+    stationnumber INTEGER,
+    	FOREIGN KEY (location) REFERENCES Address(id)
+);
 
 -- Creating UserPolice table inheriting from Users
 CREATE TABLE UserPolice (
@@ -104,7 +108,7 @@ CREATE TABLE GeneralUser (
         FOREIGN KEY (address) REFERENCES Address(id),
     phoneNumber INTEGER,
         UNIQUE (phoneNumber),
-    status BOOLEAN
+    status BOOLEAN,
     idCivil INTEGER,
     idFiscal INTEGER,
 		UNIQUE (idCivil),
@@ -130,7 +134,7 @@ CREATE TABLE FoundObject (
 -- Creating LostObject table
 CREATE TABLE LostObject (
     generalUser INTEGER,
-    	FOREIGN KEY (generalUser) REFERENCES GeneralUser(id),
+    	FOREIGN KEY (generalUser) REFERENCES GeneralUser(id)
 ) INHERITS (Objeto);
 
 -- Creating Licitação table
@@ -162,13 +166,4 @@ CREATE TABLE Subscription (
         FOREIGN KEY (id_user) REFERENCES GeneralUser(id),
     id_leilao INTEGER,
         FOREIGN KEY (id_leilao) REFERENCES Leilao(id)
-);
-
-
--- Creating Policepost table
-CREATE TABLE PolicePost (
-    id SERIAL PRIMARY KEY,
-    location INTEGER,
-    stationnumber INTEGER,
-    	FOREIGN KEY (location) REFERENCES Address(id)
 );

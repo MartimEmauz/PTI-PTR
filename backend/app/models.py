@@ -174,17 +174,17 @@ class DjangoSession(models.Model):
 
 class Generaluser(models.Model):
     id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=255, blank=True, null=True)
-    last_name = models.CharField(max_length=255, blank=True, null=True)
+    firstname = models.CharField(max_length=255, blank=True, null=True)
+    lastname = models.CharField(max_length=255, blank=True, null=True)
     email = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255, blank=True, null=True)
     gender = models.CharField(max_length=50, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=True, null=True)
-    phone_number = models.IntegerField(unique=True, blank=True, null=True)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
+    phonenumber = models.IntegerField(unique=True, blank=True, null=True)
     status = models.BooleanField(blank=True, null=True)
-    id_civil = models.IntegerField(unique=True, blank=True, null=True)
-    id_fiscal = models.IntegerField(unique=True, blank=True, null=True)
+    idCivil = models.IntegerField(unique=True, blank=True, null=True)
+    idFiscal = models.IntegerField(unique=True, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -196,7 +196,7 @@ class Licitacao(models.Model):
     id = models.AutoField(primary_key=True)
     valor_licitacao = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     data = models.DateField(blank=True, null=True)
-    id_user = models.ForeignKey(Generaluser, models.DO_NOTHING, to_field='id', db_column='id_user', blank=True, null=True)
+    id_user = models.ForeignKey(Generaluser, models.DO_NOTHING, to_field='id', db_column='id', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -210,7 +210,7 @@ class Lostobject(models.Model):
     description = models.TextField(blank=True, null=True)
     category = models.IntegerField(blank=True, null=True)
     address = models.IntegerField(blank=True, null=True)
-    generaluser = models.ForeignKey(Generaluser, models.DO_NOTHING, db_column='generaluser', blank=True, null=True)
+    generaluser = models.ForeignKey(Generaluser, models.DO_NOTHING, db_column='id', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -225,8 +225,8 @@ class Objeto(models.Model):
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -247,8 +247,8 @@ class Leilao(models.Model):
     data_inicio = models.DateField(blank=True, null=True)
     data_fim = models.DateField(blank=True, null=True)
     maior_licitacao = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
-    id_licitacao = models.ForeignKey(Licitacao, on_delete=models.CASCADE, blank=True, null=True)
-    objeto = models.ForeignKey(Objeto, on_delete=models.CASCADE, blank=True, null=True)
+    id_licitacao = models.ForeignKey(Licitacao, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
+    objeto = models.ForeignKey(Objeto, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -256,14 +256,14 @@ class Leilao(models.Model):
         app_label = 'app'
 
 class AtributesObject(models.Model):
-    object = models.ForeignKey(Objeto, on_delete=models.CASCADE)
-    category_attribute = models.ForeignKey(CategoryAttribute, on_delete=models.CASCADE)
-    value = models.CharField(max_length=255)
+    object_id = models.ForeignKey(Objeto, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
+    category_attribute = models.ForeignKey(CategoryAttribute, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
+    value = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'atributes_object'
-        unique_together = (('object', 'category_attribute'),)
+        unique_together = (('object_id', 'category_attribute'),)
         app_label = 'app'
 
 
@@ -282,7 +282,7 @@ class SpatialRefSys(models.Model):
 
 class PolicePost(models.Model):
     id = models.AutoField(primary_key=True)
-    location = models.ForeignKey(Address, on_delete=models.CASCADE, blank=True, null=True)
+    location = models.ForeignKey(Address, on_delete=models.CASCADE, db_column='id', blank=True, null=True)
     stationnumber = models.IntegerField(max_length=9, blank=True, null=True)
 
     class Meta:
@@ -292,12 +292,12 @@ class PolicePost(models.Model):
 
 class Userpolice(models.Model):
     id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=255, blank=True, null=True)
-    last_name = models.CharField(max_length=255, blank=True, null=True)
+    firstname = models.CharField(max_length=255, blank=True, null=True)
+    lastname = models.CharField(max_length=255, blank=True, null=True)
     email = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255, blank=True, null=True)
-    internal_id = models.IntegerField(unique=True)
-    posto_police = models.ForeignKey('PolicePost', on_delete=models.CASCADE, blank=True, null=True)
+    internalid = models.IntegerField(unique=True)
+    postopolice = models.ForeignKey('PolicePost', on_delete=models.CASCADE, db_column='id', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -307,15 +307,15 @@ class Userpolice(models.Model):
 
 class Foundobject(models.Model):
     id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=255, blank=True, null=True)
-    last_name = models.CharField(max_length=255, blank=True, null=True)
+    firstname = models.CharField(max_length=255, blank=True, null=True)
+    lastname = models.CharField(max_length=255, blank=True, null=True)
     genero = models.CharField(max_length=50, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
-    id_fiscal = models.IntegerField(blank=True, null=True)
-    id_civil = models.IntegerField(blank=True, null=True)
-    phone_number = models.IntegerField(blank=True, null=True)
-    police = models.ForeignKey(Userpolice, on_delete=models.CASCADE, blank=True, null=True)
-    possible_owner = models.ForeignKey(Generaluser, on_delete=models.CASCADE, blank=True, null=True)
+    idFiscal = models.IntegerField(blank=True, null=True)
+    idCivil = models.IntegerField(blank=True, null=True)
+    phoneNumber = models.IntegerField(blank=True, null=True)
+    police = models.ForeignKey(Userpolice, on_delete=models.CASCADE, db_column='id', blank=True, null=True)
+    possibleOwner = models.ForeignKey(Generaluser, on_delete=models.CASCADE, db_column='id', blank=True, null=True)
     delivered = models.BooleanField(blank=True, null=True)
 
     class Meta:
@@ -326,8 +326,8 @@ class Foundobject(models.Model):
 
 class Subscription(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(Generaluser, models.DO_NOTHING, db_column='user', blank=True, null=True)
-    category = models.ForeignKey(Category, models.DO_NOTHING, db_column='category', blank=True, null=True)
+    user = models.ForeignKey(Generaluser, models.DO_NOTHING, db_column='id', blank=True, null=True)
+    category = models.ForeignKey(Category, models.DO_NOTHING, db_column='id', blank=True, null=True)
 
     class Meta:
         managed = False
