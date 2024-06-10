@@ -1,4 +1,6 @@
 -- Drop tables without dependencies or with dependencies that are also being dropped
+DROP TABLE IF EXISTS PolicePost;
+DROP TABLE IF EXISTS Subscription;
 DROP TABLE IF EXISTS Leilao;
 DROP TABLE IF EXISTS Licitacao;
 DROP TABLE IF EXISTS FoundObject;
@@ -15,9 +17,6 @@ DROP TABLE IF EXISTS Objeto;
 DROP TABLE IF EXISTS Category_attribute;
 DROP TABLE IF EXISTS Category;
 DROP TABLE IF EXISTS Address;
-DROP TABLE IF EXISTS Subscription;
-DROP TABLE IF EXISTS PolicePost;
-
 -- Enable PostGIS (if not already enabled)
 CREATE EXTENSION IF NOT EXISTS postgis;
 
@@ -42,12 +41,19 @@ CREATE TABLE Category (
 -- Creating Objeto table
 CREATE TABLE Objeto (
     id SERIAL PRIMARY KEY,
-    date TEXT,
+    title VARCHAR(255),
+    specific_date TIMESTAMP,   -- Para armazenar uma data e hora específica
+    start_date DATE,           -- Para armazenar o início do intervalo de datas
+    end_date DATE,
     description TEXT,
     category INTEGER,
         FOREIGN KEY (category) REFERENCES Category(id),
     address INTEGER,
         FOREIGN KEY (address) REFERENCES Address(id)
+    CHECK (
+        (specific_date IS NOT NULL AND start_date IS NULL AND end_date IS NULL) OR
+        (specific_date IS NULL AND start_date IS NOT NULL AND end_date IS NOT NULL)
+    )
 );
 
 -- Creating Category_attribute table
@@ -55,7 +61,8 @@ CREATE TABLE Category_attribute (
     id SERIAL PRIMARY KEY,
     attribute VARCHAR(255),
     category_id INTEGER,
-        FOREIGN KEY (category_id) REFERENCES Category(id)
+        FOREIGN KEY (category_id) REFERENCES Category(id),
+    UNIQUE (attribute, category_id)
 );
 
 -- Creating atributes_object table
@@ -64,57 +71,66 @@ CREATE TABLE atributes_object (
         FOREIGN KEY (object_id) REFERENCES Objeto(id),
     category_attribute_id INTEGER,
         FOREIGN KEY (category_attribute_id) REFERENCES Category_attribute(id),
+    value VARCHAR(255),
     PRIMARY KEY (object_id, category_attribute_id)
 );
 
--- Creating Users table
-CREATE TABLE Users (
+
+-- Creating UserPolice table inheriting from Users
+CREATE TABLE UserPolice (
     id SERIAL PRIMARY KEY,
     firstName VARCHAR(255),
     lastName VARCHAR(255),
     email VARCHAR(255),
+        UNIQUE (email),
     password VARCHAR(255),
-    gender VARCHAR(50),
-    birthday DATE,
-    status BOOLEAN,
-    address INTEGER,
-        FOREIGN KEY (address) REFERENCES Address(id)
-);
-
--- Creating UserPolice table inheriting from Users
-CREATE TABLE UserPolice (
     internalId INTEGER,
     postoPolice INTEGER,
-		UNIQUE (internalId)
-) INHERITS (Users);
+		UNIQUE (internalId),
+        FOREIGN KEY (postoPolice) REFERENCES PolicePost(id)
+);
 
 -- Creating GeneralUser table inheriting from Users
 CREATE TABLE GeneralUser (
+    id SERIAL PRIMARY KEY,
+    firstName VARCHAR(255),
+    lastName VARCHAR(255),
+    email VARCHAR(255),
+        UNIQUE (email),
+    password VARCHAR(255),
+    gender VARCHAR(50),
+    birthday DATE,
+    address INTEGER,
+        FOREIGN KEY (address) REFERENCES Address(id),
+    phoneNumber INTEGER,
+        UNIQUE (phoneNumber),
+    status BOOLEAN
     idCivil INTEGER,
     idFiscal INTEGER,
 		UNIQUE (idCivil),
 		UNIQUE (idFiscal)
-) INHERITS (Users);
+);
 
--- Now that UserPolice and GeneralUser have been created, we can create FoundObject and LostObject
-
--- Creating FoundObject table inheriting from Objeto
+-- Creating FoundObject table
 CREATE TABLE FoundObject (
-    name VARCHAR(255),
-    email VARCHAR(255),
+    firstName VARCHAR(255),
+    lastName VARCHAR(255),
     genero VARCHAR(50),
     birthday DATE,
     idFiscal INTEGER,
     idCivil INTEGER,
     phoneNumber INTEGER,
     police INTEGER,
-    	FOREIGN KEY (police) REFERENCES UserPolice(internalId)
+    	FOREIGN KEY (police) REFERENCES UserPolice(internalId),
+    possibleOwner INTEGER,
+    	FOREIGN KEY (possibleOwner) REFERENCES GeneralUser(id),
+    delivered BOOLEAN
 ) INHERITS (Objeto);
 
--- Creating LostObject table inheriting from Objeto
+-- Creating LostObject table
 CREATE TABLE LostObject (
     generalUser INTEGER,
-    	FOREIGN KEY (generalUser) REFERENCES GeneralUser(idCivil)
+    	FOREIGN KEY (generalUser) REFERENCES GeneralUser(id),
 ) INHERITS (Objeto);
 
 -- Creating Licitação table
@@ -123,7 +139,7 @@ CREATE TABLE Licitacao (
     valor_licitacao NUMERIC,
     data DATE,
     id_user INTEGER,
-        FOREIGN KEY (id_user) REFERENCES GeneralUser(idCivil)
+        FOREIGN KEY (id_user) REFERENCES GeneralUser(id)
 );
 
 -- Creating Leilao table
@@ -137,14 +153,13 @@ CREATE TABLE Leilao (
         FOREIGN KEY (id_licitacao) REFERENCES Licitacao(id),
     objeto INTEGER,
         FOREIGN KEY (objeto) REFERENCES Objeto(id)
-        
 );
 
 -- Creating Subscription table
 CREATE TABLE Subscription (
     id SERIAL PRIMARY KEY,
     id_user INTEGER,
-        FOREIGN KEY (id_user) REFERENCES GeneralUser(idCivil),
+        FOREIGN KEY (id_user) REFERENCES GeneralUser(id),
     id_leilao INTEGER,
         FOREIGN KEY (id_leilao) REFERENCES Leilao(id)
 );
@@ -157,6 +172,3 @@ CREATE TABLE PolicePost (
     stationnumber INTEGER,
     	FOREIGN KEY (location) REFERENCES Address(id)
 );
-
-
-

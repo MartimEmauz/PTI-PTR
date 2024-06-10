@@ -14,3 +14,14 @@ def find_similar_objects(reported_lost_object):
     )
 
     return similar_found_objects
+
+def compare_objects(lost_object, found_object):
+    lost_attributes = lost_object.attributes.all()
+    found_attributes = found_object.attributes.all()
+
+    different_attributes = []
+    for attribute in lost_attributes:
+        if attribute not in found_attributes:
+            different_attributes.append(attribute)
+
+    return different_attributes
