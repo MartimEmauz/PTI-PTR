@@ -196,6 +196,7 @@ class SubscriptionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPI
 #---------------------------------------------------------
 #---------------------Outras precisas---------------------
 #---------------------------------------------------------
+
 class AdressListCreateAPIView(generics.ListCreateAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
