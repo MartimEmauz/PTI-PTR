@@ -282,7 +282,7 @@ class SpatialRefSys(models.Model):
 
 class PolicePost(models.Model):
     id = models.AutoField(primary_key=True)
-    location = models.PointField(geography=True, blank=True, null=True)
+    location = models.ForeignKey(Address, on_delete=models.CASCADE, blank=True, null=True)
     stationnumber = models.IntegerField(max_length=9, blank=True, null=True)
 
     class Meta:

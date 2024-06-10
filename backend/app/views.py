@@ -1,6 +1,11 @@
 from rest_framework import generics
 from .models import Lostobject, Foundobject, Generaluser, Userpolice, PolicePost,Leilao, Licitacao, Category, CategoryAttribute, Subscription, Address
-from .serializers import LostObjectSerializer, FoundObjectSerializer, GeneralUserSerializer, UserPoliceSerializer, PolicePostSerializer,AuctionSerializer, BidSerializer, CategorySerializer, CategoryAtributesSerializer, SubscriptionSerializer, AddressSerializer
+from .serializers import (
+    LostobjectSerializer, FoundobjectSerializer, GeneraluserSerializer,
+    UserpoliceSerializer, PolicePostSerializer, LeilaoSerializer, LicitacaoSerializer,
+    CategorySerializer, CategoryAttributeSerializer, SubscriptionSerializer,
+    AddressSerializer
+)
 from utils.utils import find_similar_objects, compare_objects
 
 from rest_framework.permissions import IsAuthenticated
@@ -15,27 +20,27 @@ from rest_framework.permissions import AllowAny
 
 class GeneralUserListCreateAPIView(generics.ListCreateAPIView):
     queryset = Generaluser.objects.all()
-    serializer_class = GeneralUserSerializer
+    serializer_class = GeneraluserSerializer
     permission_classes = [AllowAny]
 
 class GeneralUserRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Generaluser.objects.all()
-    serializer_class = GeneralUserSerializer
+    serializer_class = GeneraluserSerializer
     permission_classes = [AllowAny]
 
 class GeneralUserRetrieveUpdateDestroyAPIView_Email(generics.RetrieveUpdateDestroyAPIView):
     queryset = Generaluser.objects.all()
-    serializer_class = GeneralUserSerializer
+    serializer_class = GeneraluserSerializer
     permission_classes = [AllowAny]
     lookup_field = 'email'
 
 class UserPoliceListCreateAPIView(generics.ListCreateAPIView):
     queryset = Userpolice.objects.all()
-    serializer_class = UserPoliceSerializer
+    serializer_class = UserpoliceSerializer
 
 class UserPoliceRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Userpolice.objects.all()
-    serializer_class = UserPoliceSerializer
+    serializer_class = UserpoliceSerializer
 
 class PolicePostListCreateAPIView(generics.ListCreateAPIView):
     queryset = PolicePost.objects.all()
@@ -51,16 +56,16 @@ class PolicePostRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVi
 
 class LostObjectListCreateAPIView(generics.ListCreateAPIView):
     queryset = Lostobject.objects.all()
-    serializer_class = LostObjectSerializer
+    serializer_class = LostobjectSerializer
     permission_classes = [AllowAny]
 
 class LostObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Lostobject.objects.all()
-    serializer_class = LostObjectSerializer
+    serializer_class = LostobjectSerializer
 
 # Ver histórico dos seus objetos perdidos
 class LostObjectHistoryListAPIView(generics.ListAPIView):
-    serializer_class = LostObjectSerializer
+    serializer_class = LostobjectSerializer
 
     def get_queryset(self):
         user = self.request.user
@@ -68,7 +73,7 @@ class LostObjectHistoryListAPIView(generics.ListAPIView):
         return lost_objects
 
 class SimilarLostObjectListAPIView(generics.ListAPIView): #REFAZER
-    serializer_class = LostObjectSerializer
+    serializer_class = LostobjectSerializer
 
     def get_queryset(self):
         reported_lost_object = self.request.data.get('reported_lost_object')
@@ -77,15 +82,15 @@ class SimilarLostObjectListAPIView(generics.ListAPIView): #REFAZER
 
 class FoundObjectListCreateAPIView(generics.ListCreateAPIView):
     queryset = Foundobject.objects.all()
-    serializer_class = FoundObjectSerializer
+    serializer_class = FoundobjectSerializer
     permission_classes = [AllowAny]
 
 class FoundObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Foundobject.objects.all()
-    serializer_class = FoundObjectSerializer
+    serializer_class = FoundobjectSerializer
 
 class LostObjectSearchAPIView(generics.ListAPIView):
-    serializer_class = LostObjectSerializer
+    serializer_class = LostobjectSerializer
 
     def get_queryset(self):
         description = self.request.data.get('description')
@@ -93,7 +98,7 @@ class LostObjectSearchAPIView(generics.ListAPIView):
         return lost_objects
     
 class LostObjectSearchCategoryAPIView(generics.ListAPIView):
-    serializer_class = LostObjectSerializer
+    serializer_class = LostobjectSerializer
 
     def get_queryset(self):
         category = self.request.data.get('category')
@@ -101,7 +106,7 @@ class LostObjectSearchCategoryAPIView(generics.ListAPIView):
         return lost_objects
 
 class LostObjectCompareAPIView(generics.RetrieveAPIView):
-    serializer_class = LostObjectSerializer
+    serializer_class = LostobjectSerializer
 
     def get_queryset(self):
         lost_object = self.request.data.get('lost_object')
@@ -110,7 +115,7 @@ class LostObjectCompareAPIView(generics.RetrieveAPIView):
         return lost_object
 
 class FoundObjectHistoryListAPIView(generics.ListAPIView):
-    serializer_class = FoundObjectSerializer
+    serializer_class = FoundobjectSerializer
 
     def get_queryset(self):
         user = self.request.user
@@ -119,11 +124,11 @@ class FoundObjectHistoryListAPIView(generics.ListAPIView):
 
 class FoundObjectPossibleOwner(generics.RetrieveUpdateDestroyAPIView):
     queryset = Foundobject.objects.all()
-    serializer_class = FoundObjectSerializer
+    serializer_class = FoundobjectSerializer
 
 class FoundObjectDelivered(generics.RetrieveUpdateDestroyAPIView):
     queryset = Foundobject.objects.all()
-    serializer_class = FoundObjectSerializer
+    serializer_class = FoundobjectSerializer
 
 class CategoryListCreateAPIView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
@@ -135,11 +140,11 @@ class CategoryRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView
 
 class CategoryAttributeListCreateAPIView(generics.ListCreateAPIView):
     queryset = CategoryAttribute.objects.all()
-    serializer_class = CategoryAtributesSerializer
+    serializer_class = CategoryAttributeSerializer
 
 class CategoryAttributeRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CategoryAttribute.objects.all()
-    serializer_class = CategoryAtributesSerializer
+    serializer_class = CategoryAttributeSerializer
 
 #---------------------------------------------------------
 #---------Leilões de objetos não reclamados---------------
@@ -147,22 +152,22 @@ class CategoryAttributeRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestr
 
 class AuctionListCreateAPIView(generics.ListCreateAPIView):
     queryset = Leilao.objects.all()
-    serializer_class = AuctionSerializer
+    serializer_class = LeilaoSerializer
 
 class AuctionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Leilao.objects.all()
-    serializer_class = AuctionSerializer
+    serializer_class = LeilaoSerializer
 
 class BidListCreateAPIView(generics.ListCreateAPIView):
     queryset = Licitacao.objects.all()
-    serializer_class = BidSerializer
+    serializer_class = LicitacaoSerializer
 
 class BidRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Licitacao.objects.all()
-    serializer_class = BidSerializer
+    serializer_class = LicitacaoSerializer
 
 class AuctionHistoryListAPIView(generics.ListAPIView):
-    serializer_class = AuctionSerializer
+    serializer_class = LeilaoSerializer
 
     def get_queryset(self):
         user = self.request.user
@@ -170,7 +175,7 @@ class AuctionHistoryListAPIView(generics.ListAPIView):
         return auctions
 
 class AuctionBoughtListAPIView(generics.ListAPIView):
-    serializer_class = AuctionSerializer
+    serializer_class = LeilaoSerializer
 
     def get_queryset(self):
         user = self.request.user
@@ -178,7 +183,7 @@ class AuctionBoughtListAPIView(generics.ListAPIView):
         return auctions
 
 class AuctionBidListAPIView(generics.ListAPIView):
-    serializer_class = BidSerializer
+    serializer_class = LicitacaoSerializer
 
     def get_queryset(self):
         auction = self.request.data.get('auction')
@@ -197,7 +202,11 @@ class SubscriptionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPI
 #---------------------Outras precisas---------------------
 #---------------------------------------------------------
 
-class AdressListCreateAPIView(generics.ListCreateAPIView):
+class AddressListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+
+class AddressRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
 
