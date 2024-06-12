@@ -4,11 +4,11 @@ export interface GeneralUser {
   firstname?: string;
   lastname?: string;
   email: string;
-  password?: string;
+  password?: string | null;
   gender?: string;
   birthday?: Date;
   status?: boolean;
-  address?: Address;
+  address?: number | Address;
   idcivil?: number;
   idfiscal?: number;
   phoneNumber?: number;

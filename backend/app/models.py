@@ -180,11 +180,11 @@ class Generaluser(models.Model):
     password = models.CharField(max_length=255, blank=True, null=True)
     gender = models.CharField(max_length=50, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE,db_column='address', blank=True, null=True)
     phonenumber = models.IntegerField(unique=True, blank=True, null=True)
     status = models.BooleanField(blank=True, null=True)
-    idCivil = models.IntegerField(unique=True, blank=True, null=True)
-    idFiscal = models.IntegerField(unique=True, blank=True, null=True)
+    idcivil = models.IntegerField(unique=True, blank=True, null=True)
+    idfiscal = models.IntegerField(unique=True, blank=True, null=True)
 
     class Meta:
         managed = False

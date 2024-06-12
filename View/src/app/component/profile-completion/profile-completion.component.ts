@@ -12,7 +12,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile-completion.component.css']
 })
 export class ProfileCompletionComponent {
-  name: string = '';
+  firstname: string = '';
+  lastname: string = '';
+  password: string = '';
   gender: string = '';
   birthday: string = '';
   street: string = '';
@@ -42,10 +44,13 @@ export class ProfileCompletionComponent {
         this.masterService.createAddress(address).subscribe(
           (addressResponse) => {
             const userData: Partial<GeneralUser> = {
-              firstname: this.name,
+              firstname: this.firstname,
+              lastname: this.lastname,
+              password: null, // Default password
               gender: this.gender,
               birthday: new Date(this.birthday),
-              address: addressResponse,
+              status: true,
+              address: addressResponse.id, // Usar o ID do endereço criado
               idcivil: parseInt(this.nif),
               idfiscal: parseInt(this.cc),
               email: user.email,

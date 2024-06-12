@@ -1,9 +1,13 @@
 <div class="profile-completion-container">
   <h2>Complete o Seu Perfil</h2>
   <form (ngSubmit)="onCompleteProfile()">
-    <label for="name">Nome</label>
-    <input type="text" id="name" [(ngModel)]="name" name="name" required>
-    <div *ngIf="name && !isNameValid(name)" class="error-message">Por favor, insira um nome válido.</div>
+    <label for="firstname">Nome</label>
+    <input type="text" id="firstname" [(ngModel)]="firstname" name="firstname" required>
+    <div *ngIf="firstname && !isNameValid(firstname)" class="error-message">Por favor, insira um nome válido.</div>
+
+    <label for="lastname">Apelido</label>
+    <input type="text" id="lastname" [(ngModel)]="lastname" name="lastname" required>
+    <div *ngIf="lastname && !isNameValid(lastname)" class="error-message">Por favor, insira um nome válido.</div>
     
     <label for="gender">Género</label>
     <select id="gender" [(ngModel)]="gender" name="gender" required>
