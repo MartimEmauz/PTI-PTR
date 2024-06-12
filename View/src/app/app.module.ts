@@ -22,6 +22,7 @@ import { LoginPopUpComponent } from './login-pop-up/login-pop-up.component';
 import { RegisterPopUpComponent } from './register-pop-up/register-pop-up.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { ProfileCompletionComponent } from './component/profile-completion/profile-completion.component';
+import { PoliticaPrivacidadeComponent } from './component/politica-privacidade/politica-privacidade.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ProfileCompletionComponent } from './component/profile-completion/profi
     FooterComponent,
     LoginPopUpComponent,
     RegisterPopUpComponent,
-    ProfileCompletionComponent
+    ProfileCompletionComponent,
+    PoliticaPrivacidadeComponent
   ],
   imports: [
     BrowserModule,

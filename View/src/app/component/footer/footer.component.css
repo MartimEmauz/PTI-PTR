@@ -1,7 +1,7 @@
 footer {
   background-color: #333;
   color: #fff;
-  padding: 20px 0;
+  padding: 3px 0; /* Reduced padding */
   text-align: center;
   position: fixed;
   bottom: 0;
@@ -11,12 +11,16 @@ footer {
 
 footer p {
   margin: 0;
+  font-size: 11px; /* Further reduced font size */
 }
 
-a:link {
+a:link, a:visited {
   color: #fff;
+  font-size: 11px; /* Further reduced font size */
+  margin: 0 3px; /* Reduced margin for spacing between links */
 }
 
-a:visited {
-  color: #fff;
+.footer-title a {
+  display: inline-block; /* Ensures links are displayed inline */
+  margin: 0 3px; /* Reduced margin for better spacing */
 }
