@@ -210,7 +210,7 @@ class Lostobject(models.Model):
     description = models.TextField(blank=True, null=True)
     category = models.IntegerField(blank=True, null=True)
     address = models.IntegerField(blank=True, null=True)
-    generaluser = models.ForeignKey(Generaluser, models.DO_NOTHING, db_column='id', blank=True, null=True)
+    generaluser = models.ForeignKey(Generaluser, models.DO_NOTHING, db_column='generaluser', blank=True, null=True)
 
     class Meta:
         managed = False

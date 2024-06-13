@@ -17,10 +17,14 @@ export class MyLeiloesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   newLostObject: LostObject = {
-    title:"",
-    date: '',
-    description: '',
+    title: "",
+    specific_date: "",
+    start_date: "",
+    end_date: "",
+    description: "",
     category: null,
+    adress: null,
+    generaluser: null
   };
   showAddObjectForm: boolean = false;
 
@@ -56,14 +60,6 @@ export class MyLeiloesComponent implements OnInit {
     this.dataSource.filter = value;
   }
 
-  editCustomer(code: any) {
-    // Lógica para editar cliente
-  }
-
-  detailCustomer(code: any) {
-    // Lógica para detalhar cliente
-  }
-
   addLostObject() {                                      
     console.log(this.newLostObject)
     this.service.addLostObject(this.newLostObject).subscribe(() => {
@@ -76,7 +72,7 @@ export class MyLeiloesComponent implements OnInit {
   cancelAddObject() {
     this.newLostObject = {
       title:"",
-      date: '',
+      specific_date: '',
       description: '',
       category: null,
     };

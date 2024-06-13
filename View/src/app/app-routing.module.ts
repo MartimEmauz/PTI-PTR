@@ -9,16 +9,17 @@ import { LoginComponent } from './component/login/login.component';
 import { EntrarRegistarComponent } from './component/entrar-registar/entrar-registar.component';
 import { ProfileCompletionComponent } from './component/profile-completion/profile-completion.component';
 import { PoliticaPrivacidadeComponent } from './component/politica-privacidade/politica-privacidade.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'slider', component: SliderComponent },
-  { path: 'leiloes', component: LeiloesComponent },
-  { path: 'myleiloes', component: MyLeiloesComponent },
+  { path: 'slider', component: SliderComponent, canActivate: [AuthGuard]},
+  { path: 'leiloes', component: LeiloesComponent, canActivate: [AuthGuard]},
+  { path: 'myleiloes', component: MyLeiloesComponent, canActivate: [AuthGuard]},
   { path: 'myaccount', component: MyAccountComponent },
   { path: 'login', component: LoginComponent },
   { path: 'entrar-registar', component: EntrarRegistarComponent },
-  { path: 'profile-completion', component: ProfileCompletionComponent },
+  { path: 'profile-completion', component: ProfileCompletionComponent, canActivate: [AuthGuard]},
   { path: 'politica-privacidade', component: PoliticaPrivacidadeComponent } // Added route for privacy policy
 ];
 

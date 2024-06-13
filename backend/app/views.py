@@ -11,7 +11,7 @@ from utils.utils import find_similar_objects, compare_objects
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
 #---------------------------------------------------------
@@ -68,6 +68,7 @@ class LostObjectListCreateAPIView(generics.ListCreateAPIView):
 class LostObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Lostobject.objects.all()
     serializer_class = LostobjectSerializer
+    permission_classes = [AllowAny]
 
 # Ver histórico dos seus objetos perdidos
 class LostObjectHistoryListAPIView(generics.ListAPIView):

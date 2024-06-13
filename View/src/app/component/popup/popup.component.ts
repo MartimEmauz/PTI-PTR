@@ -63,7 +63,7 @@ export class PopupComponent implements OnInit {
     // Ensure that form values are of the correct types
     const newLostObject: LostObject = {
       title: formValue.title as string | null,
-      date: formValue.date as string | null, // Cast to string | null
+      specific_date: formValue.date as string | null, // Cast to string | null
       description: formValue.description as string | null, // Cast to string | null
       category: typeof formValue.category === 'string' && formValue.category !== '' ? parseInt(formValue.category, 10) : null, // Parse as number or null
     };
