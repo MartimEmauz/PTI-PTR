@@ -1,0 +1,212 @@
+[
+    {
+        "title": "Computador",
+        "id": 1542,
+        "date": "2022-02-28",
+        "description": "Um objecto lindo",
+        "local": {
+            "address": {
+                "street": "Rua das Flores",
+                "country": "Portugal",
+                "city": "Lisboa",
+                "zip": "1000-100",
+                "longitude": 38.7071,
+                "latitude": -9.13549,
+                "radius": 0,
+                "id": 1
+            }
+        },
+        "category": {
+            "category": {
+                "id": 1,
+                "name": "Tecnologia"
+            }
+        },
+        "atributes": [
+            {
+                "category": [
+                    {
+                        "id": 1,
+                        "name": "Tecnologia"
+                    }
+                ],
+                "atribute": "brand"
+            }
+        ]
+    },
+    {
+        "title": "Bolsa",
+        "id": 1543,
+        "date": "2022-03-01",
+        "description": "Uma bolsa vermelha",
+        "local": {
+            "address": {
+                "street": "Avenida da Liberdade",
+                "country": "Portugal",
+                "city": "Lisboa",
+                "zip": "1250-096",
+                "longitude": 38.7223,
+                "latitude": -9.1393,
+                "radius": 0,
+                "id": 2
+            }
+        },
+        "category": {
+            "category": {
+                "id": 3,
+                "name": "Acessórios"
+            }
+        },
+        "atributes": [
+            {
+                "category": [
+                    {
+                        "id": 3,
+                        "name": "Acessórios"
+                    }
+                ],
+                "atribute": "color"
+            }
+        ]
+    },
+    {
+        "title": "Oculos",
+        "id": 1544,
+        "date": "2022-03-02",
+        "description": "Um par de óculos",
+        "local": {
+            "address": {
+                "street": "Praça do Comércio",
+                "country": "Portugal",
+                "city": "Lisboa",
+                "zip": "1100-148",
+                "longitude": 38.7071,
+                "latitude": -9.13549,
+                "radius": 0,
+                "id": 3
+            }
+        },
+        "category": {
+            "category": {
+                "id": 2,
+                "name": "Moda"
+            }
+        },
+        "atributes": [
+            {
+                "category": [
+                    {
+                        "id": 2,
+                        "name": "Moda"
+                    }
+                ],
+                "atribute": "brand"
+            }
+        ]
+    },
+    {
+        "title": "Smartphone",
+        "id": 1545,
+        "date": "2022-03-03",
+        "description": "Um smartphone",
+        "local": {
+            "address": {
+                "street": "Rua Augusta",
+                "country": "Portugal",
+                "city": "Lisboa",
+                "zip": "1100-048",
+                "longitude": 38.7169,
+                "latitude": -9.1399,
+                "radius": 0,
+                "id": 4
+            }
+        },
+        "category": {
+            "category": {
+                "id": 1,
+                "name": "Tecnologia"
+            }
+        },
+        "atributes": [
+            {
+                "category": [
+                    {
+                        "id": 1,
+                        "name": "Tecnologia"
+                    }
+                ],
+                "atribute": "model"
+            }
+        ]
+    },
+    {
+        "title": "Bola",
+        "id": 1546,
+        "date": "2022-03-04",
+        "description": "Uma bola de futebol",
+        "local": {
+            "address": {
+                "street": "Estádio da Luz",
+                "country": "Portugal",
+                "city": "Lisboa",
+                "zip": "1500-313",
+                "longitude": 38.7526,
+                "latitude": -9.1847,
+                "radius": 0,
+                "id": 5
+            }
+        },
+        "category": {
+            "category": {
+                "id": 4,
+                "name": "Esportes"
+            }
+        },
+        "atributes": [
+            {
+                "category": [
+                    {
+                        "id": 4,
+                        "name": "Esportes"
+                    }
+                ],
+                "atribute": "brand"
+            }
+        ]
+    },
+    {
+        "title": "Teste",
+        "id": 1546,
+        "date": "2022-03-04",
+        "description": "Teste agora",
+        "local": {
+            "address": {
+                "street": "Estádio da Luz",
+                "country": "Portugal",
+                "city": "Lisboa",
+                "zip": "1500-313",
+                "longitude": 38.7526,
+                "latitude": -9.1847,
+                "radius": 0,
+                "id": 5
+            }
+        },
+        "category": {
+            "category": {
+                "id": 4,
+                "name": "Esportes"
+            }
+        },
+        "atributes": [
+            {
+                "category": [
+                    {
+                        "id": 4,
+                        "name": "Esportes"
+                    }
+                ],
+                "atribute": "brand"
+            }
+        ]
+    }
+]

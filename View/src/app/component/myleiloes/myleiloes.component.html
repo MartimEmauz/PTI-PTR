@@ -1,17 +1,21 @@
 <mat-card>
-  <mat-card-header>
-    <mat-form-field>
-      <input matInput (keyup)="filterChange($event)" placeholder="Enter the text" />
-    </mat-form-field>
-    <button style="margin-left: 60%;" (click)="showAddObjectForm = true" mat-raised-button color="primary">Adicionar Objeto</button>
-  </mat-card-header>
+  
+  <div class="search-container">
+    <input class="searchbar" [(ngModel)]="searchText" (input)="onSearch()" placeholder="Pesquisar Objeto">
+    <button  (click)="showAddObjectForm = true" mat-raised-button color="primary">Adicionar Objeto</button>
+  </div>
+
   <mat-card-content>
     <!-- Formulário para adicionar objeto -->
     <div *ngIf="showAddObjectForm">
       <form (ngSubmit)="addLostObject()">
         <mat-form-field>
+          <mat-label>Title</mat-label>
+          <input matInput [(ngModel)]="newLostObject.title" name="title" type="text" required>
+        </mat-form-field>
+        <mat-form-field>
           <mat-label>Date</mat-label>
-          <input matInput [(ngModel)]="newLostObject.date" name="date" required>
+          <input matInput [(ngModel)]="newLostObject.date" name="date" type="date" required>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Description</mat-label>
@@ -21,26 +25,32 @@
           <mat-label>Category</mat-label>
           <input matInput [(ngModel)]="newLostObject.category" name="category" required>
         </mat-form-field>
-        <mat-form-field>
-          <mat-label>Address</mat-label>
-          <input matInput [(ngModel)]="newLostObject.address" name="address" required>
-        </mat-form-field>
         <button mat-raised-button type="submit" color="primary">Save</button>
         <button mat-raised-button (click)="cancelAddObject()">Cancel</button>
       </form>
     </div>
-    <!-- Tabela de leilões -->
-    <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <!-- Definição das colunas -->
-      <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </th>
-        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+
+    <ul class="cards">
+      <li *ngFor="let lostObject of filteredObjects">
+        <a class="card" *ngIf="lostObject.title.toLowerCase().includes(searchText.toLowerCase())">
+          <img [src]="getCardImagePath(lostObject.category.category.id)" class="card__image" alt="" />
+          <div class="card__overlay">
+            <div class="card__header">
+              <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
+                <path />
+              </svg>
+              <div class="card__header-text">
+                <h3 class="card__title">{{lostObject.title}}</h3>
+                <span class="card__status">{{lostObject.date}}</span>
+              </div>
+            </div>
+            <p class="card__description">{{lostObject.description}}</p>
+            <p class="card__description">(Opções vão aparecer nesta zona)</p>
+          </div>
+        </a>
+      </li>
+    </ul>
+
   </mat-card-content>
-  <mat-card-footer>
-    <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
-  </mat-card-footer>
+
 </mat-card>
