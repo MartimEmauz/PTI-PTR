@@ -1,55 +1,31 @@
-<div class="container">
-    <h1>Bem-vindo à Página Inicial</h1>
-  <!-- Carrossel de imagens -->
-  <div class="carousel">
-    <div><img src="imagem1.jpg" alt="Imagem 1"></div>
-    <div><img src="imagem2.jpg" alt="Imagem 2"></div>
-    <div><img src="imagem3.jpg" alt="Imagem 3"></div>
-  </div>
-  <!-- Barra de pesquisa -->
-  <div class="search-bar">
-    <input type="text" placeholder="Pesquisar leilões...">
-    <button>Pesquisar</button>
-  </div>
-
-  <!-- Filtros -->
-  <div class="filters">
-    <!-- Aqui vão os filtros -->
-    <label>Categoria:</label>
-    <select>
-      <option>Todas</option>
-      <option>Perdidos</option>
-      <option>Achados</option>
-      <option>Leilões</option>
-      <!-- Adicione mais opções conforme necessário -->
-    </select>
-    <label>Preço Mínimo:</label>
-    <input type="number">
-    <label>Preço Máximo:</label>
-    <input type="number">
-    <button>Aplicar Filtros</button>
-  </div>
-
-  <!-- Seção para os leilões -->
-  <div class="leiloes-section">
-    <h2>Leilões em Andamento</h2>
-    <!-- Lista de leilões com paginação -->
-    <div class="leiloes-container">
-      <!-- Lista de leilões -->
-      <div class="leilao-box" *ngFor="let leilao of leiloes">
-        <img src="{{ leilao.imagem }}" alt="{{ leilao.nome }}">
-        <h3>{{ leilao.nome }}</h3>
-        <p class="preco">Preço atual: R$ {{ leilao.precoAtual.toFixed(2) }}</p>
-        <p class="descricao">{{ leilao.descricao }}</p>
-        <button class="ver-mais-button">Ver Mais</button>
-      </div>
-    </div>
-    <!-- Paginação -->
-    <div class="pagination">
-      <!-- Botões de páginação -->
-      <button>Anterior</button>
-      <span>Página 1 de 3</span>
-      <button>Próxima</button>
-    </div>
-  </div>
+<div class="hero-section">
+</div>
+<div class="title-section">
+  <h1 class="title-text">Bem Vindo!</h1>
+</div>
+<div class="cards-section">
+  <a href="/leiloes" class="card">
+    <img src="/assets/auctions.jpg" alt="balloon with an emoji face" class="card__img">
+    <span class="card__footer">
+      <span>Leilões</span>
+    </span>
+    <span class="card__action">
+      <svg viewBox="0 0 448 512" title="play">
+        <path
+          d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" />
+      </svg>
+    </span>
+  </a>
+  <a href="myleiloes" class="card">
+    <img src="/assets/objects.webp" alt="balloon with an emoji face" class="card__img">
+    <span class="card__footer">
+      <span>Objetos</span>
+    </span>
+    <span class="card__action">
+      <svg viewBox="0 0 448 512" title="play">
+        <path
+          d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" />
+      </svg>
+    </span>
+  </a>
 </div>

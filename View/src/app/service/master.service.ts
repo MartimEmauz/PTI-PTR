@@ -56,19 +56,30 @@ export class MasterService {
 
   private apiUrl = 'http://127.0.0.1:8000/'; // Your Django API URL
 
+
+  private jsonUrl = 'assets/lost_objects.json';
+
+
   // Example function to fetch data from Django API
   getData(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/endpoint`);
   }
+
+  getLostObjects(): Observable<any[]> {
+    return this.http.get<any[]>(this.jsonUrl); //para aqui tem de vir o URL do endpoint, para o get objects
+  }
+
 
   // Example function to send data to Django API
   sendData(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/endpoint`, data);
   }
 
-  addLostObject(newLostObject: LostObject): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/lostobjects/`, newLostObject);
-  }
+  addLostObject(newLostObject: LostObject): Observable<any> {         // garantir que isto funciona bem
+    return this.http.post<any>(`${this.apiUrl}/lostobjects/`, newLostObject); 
+  } 
+
+    
 
   createUser(user: GeneralUser): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}generalusers/`, user);
@@ -88,3 +99,5 @@ export class MasterService {
 
 
 }
+
+

@@ -93,11 +93,12 @@ mat-drawer-content {
 /* Ensure the main content takes full width and height */
 mat-drawer-content div {
     width: 100%;
-    height: calc(100vh - 64px); /* Adjust height based on your header/footer size */
     box-sizing: border-box;
 }
 
 /* Optional: Set background color to match the rest of the page */
 mat-drawer-content {
     background-color: #f8f9fa; /* Change to your desired background color */
+    z-index: 1;
+    min-height: 100vh;
 }
