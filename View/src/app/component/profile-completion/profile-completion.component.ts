@@ -43,12 +43,16 @@ export class ProfileCompletionComponent {
 
         this.masterService.createAddress(address).subscribe(
           (addressResponse) => {
+            // Converte a string de data para o formato 'YYYY-MM-DD'
+            const formattedDate = this.birthday.split('T')[0];
+            console.log('Formatted date:', formattedDate);
+
             const userData: Partial<GeneralUser> = {
               firstname: this.firstname,
               lastname: this.lastname,
               password: null, // Default password
               gender: this.gender,
-              birthday: new Date(this.birthday),
+              birthday: formattedDate, // Passa o objeto Date formatado
               status: true,
               address: addressResponse.id, // Usar o ID do endereço criado
               idcivil: parseInt(this.nif),
@@ -57,10 +61,12 @@ export class ProfileCompletionComponent {
               phoneNumber: parseInt(this.phoneNumber),
             };
 
+            console.log('Updating user with data:', userData); // Log dos dados do usuário
+
             this.masterService.updateUser(user.email!, userData).subscribe(
               (response) => {
                 console.log('Profile updated successfully:', response);
-                this.router.navigate(['/profile']);
+                this.router.navigate(['/home']);
               },
               (error) => {
                 console.error('Error updating profile:', error);

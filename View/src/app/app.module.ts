@@ -23,6 +23,7 @@ import { RegisterPopUpComponent } from './register-pop-up/register-pop-up.compon
 import { AuthModule } from '@auth0/auth0-angular';
 import { ProfileCompletionComponent } from './component/profile-completion/profile-completion.component';
 import { PoliticaPrivacidadeComponent } from './component/politica-privacidade/politica-privacidade.component';
+import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,7 @@ import { PoliticaPrivacidadeComponent } from './component/politica-privacidade/p
       }
     })
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

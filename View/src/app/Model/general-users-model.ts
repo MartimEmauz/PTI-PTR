@@ -6,7 +6,7 @@ export interface GeneralUser {
   email: string;
   password?: string | null;
   gender?: string;
-  birthday?: Date;
+  birthday?: Date | null | string;
   status?: boolean;
   address?: number | Address;
   idcivil?: number;
