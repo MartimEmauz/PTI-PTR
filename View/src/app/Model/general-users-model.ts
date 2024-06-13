@@ -11,5 +11,5 @@ export interface GeneralUser {
   address?: number | Address;
   idcivil?: number;
   idfiscal?: number;
-  phoneNumber?: number;
+  phonenumber?: number;
 }

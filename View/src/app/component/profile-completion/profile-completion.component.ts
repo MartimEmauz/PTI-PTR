@@ -58,7 +58,7 @@ export class ProfileCompletionComponent {
               idcivil: parseInt(this.nif),
               idfiscal: parseInt(this.cc),
               email: user.email,
-              phoneNumber: parseInt(this.phoneNumber),
+              phonenumber: parseInt(this.phoneNumber),
             };
 
             console.log('Updating user with data:', userData); // Log dos dados do usuário
@@ -66,7 +66,7 @@ export class ProfileCompletionComponent {
             this.masterService.updateUser(user.email!, userData).subscribe(
               (response) => {
                 console.log('Profile updated successfully:', response);
-                this.router.navigate(['/home']);
+                this.router.navigate(['']);
               },
               (error) => {
                 console.error('Error updating profile:', error);
