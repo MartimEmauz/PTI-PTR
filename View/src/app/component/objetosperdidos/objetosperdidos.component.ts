@@ -8,10 +8,10 @@ import { LostObject } from 'src/app/Model/lost-object.model';
 
 @Component({
   selector: 'app-table',
-  templateUrl: './myleiloes.component.html',
-  styleUrls: ['./myleiloes.component.css']
+  templateUrl: './objetosperdidos.component.html',
+  styleUrls: ['./objetosperdidos.component.css']
 })
-export class MyLeiloesComponent implements OnInit {
+export class ObjetosperdidosComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ["code", "name", "email", "phone", "status", "action"];

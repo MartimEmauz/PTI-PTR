@@ -27,9 +27,7 @@ import { LoginPopUpComponent } from './login-pop-up/login-pop-up.component';
 import { RegisterPopUpComponent } from './register-pop-up/register-pop-up.component';
 import { ProfileCompletionComponent } from './component/profile-completion/profile-completion.component';
 import { PoliticaPrivacidadeComponent } from './component/politica-privacidade/politica-privacidade.component';
-
-// Interceptor
-import { AuthInterceptor } from './auth.interceptor';
+import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosperdidos.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +46,8 @@ import { AuthInterceptor } from './auth.interceptor';
     LoginPopUpComponent,
     RegisterPopUpComponent,
     ProfileCompletionComponent,
-    PoliticaPrivacidadeComponent
+    PoliticaPrivacidadeComponent,
+    ObjetosperdidosComponent
   ],
   imports: [
     BrowserModule,

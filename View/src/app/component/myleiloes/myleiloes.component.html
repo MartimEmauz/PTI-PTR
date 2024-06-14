@@ -1,39 +1,42 @@
 <mat-card>
-  
   <div class="search-container">
-    <input class="searchbar" [(ngModel)]="searchText" (input)="onSearch()" placeholder="Pesquisar Objeto">
-    <button  (click)="showAddObjectForm = true" mat-raised-button color="primary">Adicionar Objeto</button>
+    <input class="searchbar" [(ngModel)]="searchText" (input)="onSearch()" placeholder="Pesquisar Objeto" aria-label="Search Objects">
+    <button (click)="showAddObjectForm = true" mat-raised-button color="primary">Adicionar Objeto</button>
   </div>
 
   <mat-card-content>
     <!-- Formulário para adicionar objeto -->
     <div *ngIf="showAddObjectForm">
-      <form (ngSubmit)="addLostObject()">
+      <form (ngSubmit)="addLostObject()" [formGroup]="lostObjectForm">
         <mat-form-field>
           <mat-label>Title</mat-label>
-          <input matInput [(ngModel)]="newLostObject.title" name="title" type="text" required>
+          <input matInput formControlName="title" required>
+          <mat-error *ngIf="lostObjectForm.controls['title'].invalid">Title is required</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Date</mat-label>
-          <input matInput [(ngModel)]="newLostObject.specific_date" name="date" type="date" required>
+          <input matInput formControlName="specific_date" type="date" required>
+          <mat-error *ngIf="lostObjectForm.controls['specific_date'].invalid">Date is required</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Description</mat-label>
-          <input matInput [(ngModel)]="newLostObject.description" name="description" required>
+          <input matInput formControlName="description" required>
+          <mat-error *ngIf="lostObjectForm.controls['description'].invalid">Description is required</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Category</mat-label>
-          <input matInput [(ngModel)]="newLostObject.category" name="category" required>
+          <input matInput formControlName="category" required>
+          <mat-error *ngIf="lostObjectForm.controls['category'].invalid">Category is required</mat-error>
         </mat-form-field>
-        <button mat-raised-button type="submit" color="primary">Save</button>
-        <button mat-raised-button (click)="cancelAddObject()">Cancel</button>
+        <button mat-raised-button type="submit" color="primary" [disabled]="lostObjectForm.invalid">Save</button>
+        <button mat-raised-button type="button" (click)="cancelAddObject()">Cancel</button>
       </form>
     </div>
 
     <ul class="cards">
       <li *ngFor="let lostObject of filteredObjects">
-        <a class="card" *ngIf="lostObject.title.toLowerCase().includes(searchText.toLowerCase())">
-          <img [src]="getCardImagePath(lostObject.category.category.id)" class="card__image" alt="" />
+        <a class="card">
+          <img [src]="getCardImagePath(lostObject.category.category.id)" class="card__image" alt="Image of {{lostObject.title}}">
           <div class="card__overlay">
             <div class="card__header">
               <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
@@ -41,7 +44,7 @@
               </svg>
               <div class="card__header-text">
                 <h3 class="card__title">{{lostObject.title}}</h3>
-                <span class="card__status">{{lostObject.date}}</span>
+                <span class="card__status">{{lostObject.specific_date | date}}</span>
               </div>
             </div>
             <p class="card__description">{{lostObject.description}}</p>
@@ -50,7 +53,5 @@
         </a>
       </li>
     </ul>
-
   </mat-card-content>
-
 </mat-card>

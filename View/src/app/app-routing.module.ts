@@ -10,6 +10,7 @@ import { EntrarRegistarComponent } from './component/entrar-registar/entrar-regi
 import { ProfileCompletionComponent } from './component/profile-completion/profile-completion.component';
 import { PoliticaPrivacidadeComponent } from './component/politica-privacidade/politica-privacidade.component';
 import { AuthGuard } from './auth.guard';
+import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosperdidos.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'entrar-registar', component: EntrarRegistarComponent },
   { path: 'profile-completion', component: ProfileCompletionComponent, canActivate: [AuthGuard]},
-  { path: 'politica-privacidade', component: PoliticaPrivacidadeComponent } // Added route for privacy policy
+  { path: 'politica-privacidade', component: PoliticaPrivacidadeComponent },
+  { path: 'objetosperdidos', component: ObjetosperdidosComponent }
 ];
 
 @NgModule({
