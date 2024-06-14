@@ -1,0 +1,51 @@
+.profile-card {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #f0f5f9;  /* Azul claro suave */
+  }
+  
+  .profile-avatar {
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+  }
+  
+  .mat-card-header {
+    background-color: #54acb4;  /* Azul mais forte */
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  .mat-card-title,
+  .mat-card-subtitle {
+    color: white;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  button[type="submit"] {
+    background-color: #2b7a78;  /* Azul mais escuro */
+  }
+  
+  button[type="submit"]:hover,
+  button[type="button"]:hover {
+    background-color: #3c9d9b;  /* Azul mais escuro mais claro no hover */
+    color: white;
+  }
+  

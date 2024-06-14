@@ -11,6 +11,8 @@ import { ProfileCompletionComponent } from './component/profile-completion/profi
 import { PoliticaPrivacidadeComponent } from './component/politica-privacidade/politica-privacidade.component';
 import { AuthGuard } from './auth.guard';
 import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosperdidos.component';
+import { MyAccountLogadoComponent } from './component/my-account-logado/my-account-logado.component';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,7 +24,8 @@ const routes: Routes = [
   { path: 'entrar-registar', component: EntrarRegistarComponent },
   { path: 'profile-completion', component: ProfileCompletionComponent, canActivate: [AuthGuard]},
   { path: 'politica-privacidade', component: PoliticaPrivacidadeComponent },
-  { path: 'objetosperdidos', component: ObjetosperdidosComponent }
+  { path: 'objetosperdidos', component: ObjetosperdidosComponent },
+  {path: 'my-account-logado', component: MyAccountLogadoComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
