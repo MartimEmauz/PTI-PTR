@@ -1,9 +1,9 @@
 -- Drop tables without dependencies or with dependencies that are also being dropped
+DROP TABLE IF EXISTS Subscription;
+DROP TABLE IF EXISTS Licitacao;
+DROP TABLE IF EXISTS Leilao;
 DROP TABLE IF EXISTS FoundObject;
 DROP TABLE IF EXISTS LostObject;
-DROP TABLE IF EXISTS Subscription;
-DROP TABLE IF EXISTS Leilao;
-DROP TABLE IF EXISTS Licitacao;
 DROP TABLE IF EXISTS GeneralUser;
 DROP TABLE IF EXISTS UserPolice;
 DROP TABLE IF EXISTS PolicePost;
@@ -13,8 +13,6 @@ DROP TABLE IF EXISTS Objeto;
 DROP TABLE IF EXISTS Category;
 DROP TABLE IF EXISTS Address;
 
--- Enable PostGIS (if not already enabled)
-CREATE EXTENSION IF NOT EXISTS postgis;
 
 -- Creating Address table with PostGIS
 CREATE TABLE Address (
@@ -23,16 +21,16 @@ CREATE TABLE Address (
     country VARCHAR(255),
     city VARCHAR(255),
     zip VARCHAR(20),
-    -- Use the geography type for longitude and latitude
     location VARCHAR(255),
-    -- location GEOGRAPHY(Point, 4326),
+        UNIQUE (location),
     radius INTEGER
 );
 
 -- Creating Category table
 CREATE TABLE Category (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255)
+    name VARCHAR(255),
+        UNIQUE (name)
 );
 
 -- Creating Objeto table
@@ -77,6 +75,7 @@ CREATE TABLE PolicePost (
     id SERIAL PRIMARY KEY,
     location INTEGER,
     stationnumber INTEGER,
+        UNIQUE (stationnumber),
     	FOREIGN KEY (location) REFERENCES Address(id)
 );
 
@@ -109,8 +108,8 @@ CREATE TABLE GeneralUser (
     phoneNumber INTEGER,
         UNIQUE (phoneNumber),
     status BOOLEAN,
-    idCivil INTEGER,
-    idFiscal INTEGER,
+    idCivil VARCHAR(255),
+    idFiscal VARCHAR(255),
 		UNIQUE (idCivil),
 		UNIQUE (idFiscal)
 );
@@ -121,8 +120,8 @@ CREATE TABLE FoundObject (
     lastName VARCHAR(255),
     genero VARCHAR(50),
     birthday DATE,
-    idFiscal INTEGER,
-    idCivil INTEGER,
+    idCivil VARCHAR(255),
+    idFiscal VARCHAR(255),
     phoneNumber INTEGER,
     police INTEGER,
     	FOREIGN KEY (police) REFERENCES UserPolice(internalId),
@@ -137,26 +136,28 @@ CREATE TABLE LostObject (
     	FOREIGN KEY (generalUser) REFERENCES GeneralUser(id)
 ) INHERITS (Objeto);
 
--- Creating Licitação table
-CREATE TABLE Licitacao (
-    id SERIAL PRIMARY KEY,
-    valor_licitacao NUMERIC,
-    data DATE,
-    id_user INTEGER,
-        FOREIGN KEY (id_user) REFERENCES GeneralUser(id)
-);
 
 -- Creating Leilao table
 CREATE TABLE Leilao (
     id SERIAL PRIMARY KEY,
     valor_base NUMERIC,
-    data_inicio DATE,
-    data_fim DATE,
+    data_inicio TIMESTAMP,
+    data_fim TIMESTAMP,
     maior_licitacao NUMERIC,
-    id_licitacao INTEGER,
-        FOREIGN KEY (id_licitacao) REFERENCES Licitacao(id),
     objeto INTEGER,
         FOREIGN KEY (objeto) REFERENCES Objeto(id)
+);
+
+-- Creating Licitação table
+CREATE TABLE Licitacao (
+    id SERIAL PRIMARY KEY,
+    valor_licitacao NUMERIC,
+    data TIMESTAMP,
+    id_user INTEGER,
+        FOREIGN KEY (id_user) REFERENCES GeneralUser(id),
+    leilao INTEGER,
+        FOREIGN KEY (leilao) REFERENCES Leilao(id),
+        UNIQUE(leilao, id_user, valor_licitacao)
 );
 
 -- Creating Subscription table

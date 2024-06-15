@@ -70,7 +70,6 @@ class LostObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVi
     serializer_class = LostobjectSerializer
     permission_classes = [AllowAny]
 
-# Ver histórico dos seus objetos perdidos
 class LostObjectHistoryListAPIView(generics.ListAPIView):
     serializer_class = LostobjectSerializer
     permission_classes = [AllowAny]
