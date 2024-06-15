@@ -6,6 +6,8 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator, EmailValidator
 #from django.contrib.gis.db.models import models
 
 
@@ -16,7 +18,6 @@ class Address(models.Model):
     city = models.CharField(max_length=255, blank=True, null=True)
     zip = models.CharField(max_length=20, blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True)
-    #location = models.PointField(geography=True, blank=True, null=True)
     radius = models.IntegerField(blank=True, null=True)
 
     class Meta:
@@ -113,7 +114,7 @@ class Category(models.Model):
 class CategoryAttribute(models.Model):
     id = models.AutoField(primary_key=True)
     attribute = models.CharField(max_length=255, blank=True, null=True)
-    category = models.ForeignKey(Category, models.DO_NOTHING, blank=True, null=True)
+    category = models.ForeignKey(Category, models.DO_NOTHING, db_column="category", blank=True, null=True)
 
     class Meta:
         managed = False
@@ -176,46 +177,73 @@ class Generaluser(models.Model):
     id = models.AutoField(primary_key=True)
     firstname = models.CharField(max_length=255, blank=True, null=True)
     lastname = models.CharField(max_length=255, blank=True, null=True)
-    email = models.CharField(max_length=255, unique=True)
+    email = models.CharField(
+        max_length=255,
+        unique=True,
+        validators=[EmailValidator(message="Enter a valid email address.")]
+    )
     password = models.CharField(max_length=255, blank=True, null=True)
     gender = models.CharField(max_length=50, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
-    phonenumber = models.IntegerField(unique=True, blank=True, null=True)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, db_column='address', blank=True, null=True)
+    phonenumber = models.CharField(
+        max_length=15,
+        unique=True,
+        blank=True,
+        null=True,
+        validators=[RegexValidator(regex=r'^(2\d{8}|9\d{8})$', message="Enter a valid phone number.")]
+    )
     status = models.BooleanField(blank=True, null=True)
-    idCivil = models.IntegerField(unique=True, blank=True, null=True)
-    idFiscal = models.IntegerField(unique=True, blank=True, null=True)
+    idcivil = models.CharField(
+        max_length=9,
+        unique=True,
+        blank=True,
+        null=True,
+        validators=[RegexValidator(regex=r'^\d{8}[A-Z]$', message="Enter a valid Portuguese Civil ID.")]
+    )
+    idfiscal = models.CharField(
+        max_length=9,
+        unique=True,
+        blank=True,
+        null=True,
+        validators=[RegexValidator(regex=r'^[1-3|5]\d{8}$', message="Enter a valid Fiscal Number (NIF).")]
+    )
 
     class Meta:
-        managed = False
-        db_table = 'generaluser'
-        app_label = 'app'
+            managed = False
+            db_table = 'generaluser'
+            app_label = 'app'
 
-
-class Licitacao(models.Model):
-    id = models.AutoField(primary_key=True)
-    valor_licitacao = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
-    data = models.DateField(blank=True, null=True)
-    id_user = models.ForeignKey(Generaluser, models.DO_NOTHING, to_field='id', db_column='id', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'licitacao'
-        app_label = 'app'
+    def save(self, *args, **kwargs):
+                if self.email and '@' not in self.email:
+                    raise ValidationError("Email must contain @ symbol.")
+                super().save(*args, **kwargs)
 
 
 class Lostobject(models.Model):
     id = models.AutoField(primary_key=True)
-    date = models.DateField(blank=True, null=True)
+    title = models.CharField(max_length=255, blank=True, null=True)
+    specific_date = models.DateTimeField(blank=True, null=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    category = models.IntegerField(blank=True, null=True)
-    address = models.IntegerField(blank=True, null=True)
-    generaluser = models.ForeignKey(Generaluser, models.DO_NOTHING, db_column='id', blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE,db_column='category', blank=True, null=True)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, db_column='address', blank=True, null=True)
+    generaluser = models.ForeignKey(Generaluser, models.DO_NOTHING, db_column='generaluser', blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'lostobject'
         app_label = 'app'
+        constraints = [
+            models.CheckConstraint(
+                check=(
+                    models.Q(specific_date__isnull=False, start_date__isnull=True, end_date__isnull=True) |
+                    models.Q(specific_date__isnull=True, start_date__isnull=False, end_date__isnull=False)
+                ),
+                name='valid_date_constraints'
+            )
+        ]
 
 
 class Objeto(models.Model):
@@ -225,8 +253,8 @@ class Objeto(models.Model):
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE,db_column='category', blank=True, null=True)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE,db_column='address', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -241,19 +269,6 @@ class Objeto(models.Model):
                 name='valid_date_constraints'
             )
         ]
-
-class Leilao(models.Model):
-    valor_base = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
-    data_inicio = models.DateField(blank=True, null=True)
-    data_fim = models.DateField(blank=True, null=True)
-    maior_licitacao = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
-    id_licitacao = models.ForeignKey(Licitacao, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
-    objeto = models.ForeignKey(Objeto, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'leilao'
-        app_label = 'app'
 
 class AtributesObject(models.Model):
     object_id = models.ForeignKey(Objeto, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
@@ -282,7 +297,7 @@ class SpatialRefSys(models.Model):
 
 class PolicePost(models.Model):
     id = models.AutoField(primary_key=True)
-    location = models.ForeignKey(Address, on_delete=models.CASCADE, db_column='id', blank=True, null=True)
+    location = models.ForeignKey(Address, on_delete=models.CASCADE, db_column='address', blank=True, null=True)
     stationnumber = models.IntegerField(max_length=9, blank=True, null=True)
 
     class Meta:
@@ -297,7 +312,7 @@ class Userpolice(models.Model):
     email = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255, blank=True, null=True)
     internalid = models.IntegerField(unique=True)
-    postopolice = models.ForeignKey('PolicePost', on_delete=models.CASCADE, db_column='id', blank=True, null=True)
+    postopolice = models.ForeignKey(PolicePost, on_delete=models.CASCADE, db_column='policepost', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -307,27 +322,67 @@ class Userpolice(models.Model):
 
 class Foundobject(models.Model):
     id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=255, blank=True, null=True)
+    specific_date = models.DateTimeField(blank=True, null=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
     firstname = models.CharField(max_length=255, blank=True, null=True)
     lastname = models.CharField(max_length=255, blank=True, null=True)
     genero = models.CharField(max_length=50, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
-    idFiscal = models.IntegerField(blank=True, null=True)
-    idCivil = models.IntegerField(blank=True, null=True)
+    idfiscal = models.IntegerField(blank=True, null=True)
+    idcivil = models.IntegerField(blank=True, null=True)
     phoneNumber = models.IntegerField(blank=True, null=True)
-    police = models.ForeignKey(Userpolice, on_delete=models.CASCADE, db_column='id', blank=True, null=True)
-    possibleOwner = models.ForeignKey(Generaluser, on_delete=models.CASCADE, db_column='id', blank=True, null=True)
+    police = models.ForeignKey(Userpolice, on_delete=models.CASCADE, db_column='userpolice', blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE,db_column='category', blank=True, null=True)
+    possibleOwner = models.ForeignKey(Generaluser, on_delete=models.CASCADE, db_column='generaluser', blank=True, null=True)
     delivered = models.BooleanField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'foundobject'
         app_label = 'app'
+        constraints = [
+            models.CheckConstraint(
+                check=(
+                    models.Q(specific_date__isnull=False, start_date__isnull=True, end_date__isnull=True) |
+                    models.Q(specific_date__isnull=True, start_date__isnull=False, end_date__isnull=False)
+                ),
+                name='valid_date_constraints'
+            )
+        ]
 
+class Leilao(models.Model):
+    id = models.AutoField(primary_key=True)
+    valor_base = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+    data_inicio = models.DateField(blank=True, null=True)
+    data_fim = models.DateField(blank=True, null=True)
+    maior_licitacao = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+    objeto = models.ForeignKey(Foundobject, on_delete=models.CASCADE, db_column='foundobject', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'leilao'
+        app_label = 'app'
+
+
+class Licitacao(models.Model):
+    id = models.AutoField(primary_key=True)
+    valor_licitacao = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+    data = models.DateField(blank=True, null=True)
+    id_user = models.ForeignKey(Generaluser, models.DO_NOTHING, to_field='id', db_column='generaluser', blank=True, null=True)
+    leilao = models.ForeignKey(Leilao, on_delete=models.CASCADE, db_column='leilao', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'licitacao'
+        app_label = 'app'
+        unique_together = (('leilao', 'id_user', 'valor_licitacao'),)
 
 class Subscription(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(Generaluser, models.DO_NOTHING, db_column='id', blank=True, null=True)
-    category = models.ForeignKey(Category, models.DO_NOTHING, db_column='id', blank=True, null=True)
+    user = models.ForeignKey(Generaluser, models.DO_NOTHING, db_column='generaluser', blank=True, null=True)
+    category = models.ForeignKey(Category, models.DO_NOTHING, db_column='category', blank=True, null=True)
 
     class Meta:
         managed = False

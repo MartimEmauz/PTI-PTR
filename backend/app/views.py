@@ -69,7 +69,6 @@ class LostObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVi
     queryset = Lostobject.objects.all()
     serializer_class = LostobjectSerializer
 
-# Ver histórico dos seus objetos perdidos
 class LostObjectHistoryListAPIView(generics.ListAPIView):
     serializer_class = LostobjectSerializer
     permission_classes = [AllowAny]
