@@ -1,42 +1,78 @@
 <mat-card>
   <div class="search-container">
-    <input class="searchbar" [(ngModel)]="searchText" (input)="onSearch()" placeholder="Pesquisar Objeto" aria-label="Search Objects">
+    <input class="searchbar" [(ngModel)]="searchText" (input)="onSearch()" placeholder="Pesquisar Objeto" aria-label="Pesquisar Objetos">
     <button (click)="showAddObjectForm = true" mat-raised-button color="primary">Adicionar Objeto</button>
   </div>
 
   <mat-card-content>
     <!-- Formulário para adicionar objeto -->
-    <div *ngIf="showAddObjectForm">
-      <form (ngSubmit)="addLostObject()" [formGroup]="lostObjectForm">
-        <mat-form-field>
-          <mat-label>Title</mat-label>
+    <div *ngIf="showAddObjectForm" class="add-object-form">
+      <form (ngSubmit)="addLostObject()" [formGroup]="lostObjectForm" class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Título</mat-label>
           <input matInput formControlName="title" required>
-          <mat-error *ngIf="lostObjectForm.controls['title'].invalid">Title is required</mat-error>
+          <mat-error *ngIf="lostObjectForm.controls['title'].invalid">Título é obrigatório</mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <mat-label>Date</mat-label>
-          <input matInput formControlName="specific_date" type="date" required>
-          <mat-error *ngIf="lostObjectForm.controls['specific_date'].invalid">Date is required</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Description</mat-label>
+        
+        <div class="full-width">
+          <mat-slide-toggle (change)="toggleDateInput()" [checked]="useSpecificDate">Usar Data Específica</mat-slide-toggle>
+        </div>
+
+        <ng-container *ngIf="useSpecificDate; else dateRange">
+          <mat-form-field appearance="outline">
+            <mat-label>Data Específica</mat-label>
+            <input matInput formControlName="specific_date" type="date">
+            <mat-error *ngIf="lostObjectForm.controls['specific_date'].invalid">Data Específica é obrigatória se o intervalo de datas não for fornecido</mat-error>
+          </mat-form-field>
+        </ng-container>
+
+        <ng-template #dateRange>
+          <mat-form-field appearance="outline">
+            <mat-label>Data de Início</mat-label>
+            <input matInput formControlName="start_date" type="date">
+            <mat-error *ngIf="lostObjectForm.controls['start_date'].invalid">Data de Início é obrigatória se a Data Específica não for fornecida</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Data de Fim</mat-label>
+            <input matInput formControlName="end_date" type="date">
+            <mat-error *ngIf="lostObjectForm.controls['end_date'].invalid">Data de Fim é obrigatória se a Data Específica não for fornecida</mat-error>
+          </mat-form-field>
+        </ng-template>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Descrição</mat-label>
           <input matInput formControlName="description" required>
-          <mat-error *ngIf="lostObjectForm.controls['description'].invalid">Description is required</mat-error>
+          <mat-error *ngIf="lostObjectForm.controls['description'].invalid">Descrição é obrigatória</mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <mat-label>Category</mat-label>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Categoria</mat-label>
           <input matInput formControlName="category" required>
-          <mat-error *ngIf="lostObjectForm.controls['category'].invalid">Category is required</mat-error>
+          <mat-error *ngIf="lostObjectForm.controls['category'].invalid">Categoria é obrigatória</mat-error>
         </mat-form-field>
-        <button mat-raised-button type="submit" color="primary" [disabled]="lostObjectForm.invalid">Save</button>
-        <button mat-raised-button type="button" (click)="cancelAddObject()">Cancel</button>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Endereço</mat-label>
+          <input matInput formControlName="address" required>
+          <mat-error *ngIf="lostObjectForm.controls['address'].invalid">Endereço é obrigatório</mat-error>
+        </mat-form-field>
+        
+        <div class="full-width">
+          <mat-error *ngIf="lostObjectForm.errors?.['dateRangeInvalid']">Por favor, forneça uma data específica ou um intervalo de datas válido</mat-error>
+        </div>
+
+        <div class="button-group">
+          <button mat-raised-button type="submit" color="primary" [disabled]="lostObjectForm.invalid">Guardar</button>
+          <button mat-raised-button type="button" (click)="cancelAddObject()">Cancelar</button>
+        </div>
       </form>
     </div>
 
     <ul class="cards">
       <li *ngFor="let lostObject of filteredObjects">
         <a class="card">
-          <img [src]="getCardImagePath(lostObject.category.category.id)" class="card__image" alt="Image of {{lostObject.title}}">
+          <img [src]="getCardImagePath(lostObject.category.category.id)" class="card__image" alt="Imagem de {{lostObject.title}}">
           <div class="card__overlay">
             <div class="card__header">
               <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">

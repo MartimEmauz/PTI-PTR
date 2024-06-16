@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MasterService } from 'src/app/service/master.service';
-import { LostObject } from 'src/app/Model/lost-object.model';
 
 @Component({
   selector: 'app-table',
@@ -19,6 +18,7 @@ export class MyLeiloesComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   lostObjectForm: FormGroup;
   showAddObjectForm: boolean = false;
+  useSpecificDate: boolean = true;
 
   searchText: string = '';
   lostObjects: any[] = [];
@@ -28,10 +28,13 @@ export class MyLeiloesComponent implements OnInit {
     this.dataSource = new MatTableDataSource<any>();
     this.lostObjectForm = this.fb.group({
       title: ['', Validators.required],
-      specific_date: ['', Validators.required],
+      specific_date: [{ value: '', disabled: !this.useSpecificDate }],
+      start_date: [{ value: '', disabled: this.useSpecificDate }],
+      end_date: [{ value: '', disabled: this.useSpecificDate }],
       description: ['', Validators.required],
-      category: ['', Validators.required]
-    });
+      category: ['', Validators.required],
+      address: ['', Validators.required]
+    }, { validators: this.dateRangeValidator });
   }
 
   ngOnInit(): void {
@@ -89,5 +92,29 @@ export class MyLeiloesComponent implements OnInit {
       default:
         return "assets/default.jpg"; // Provide a default image path
     }
+  }
+
+  toggleDateInput() {
+    this.useSpecificDate = !this.useSpecificDate;
+    if (this.useSpecificDate) {
+      this.lostObjectForm.controls['specific_date'].enable();
+      this.lostObjectForm.controls['start_date'].disable();
+      this.lostObjectForm.controls['end_date'].disable();
+    } else {
+      this.lostObjectForm.controls['specific_date'].disable();
+      this.lostObjectForm.controls['start_date'].enable();
+      this.lostObjectForm.controls['end_date'].enable();
+    }
+  }
+
+  dateRangeValidator(group: AbstractControl): ValidationErrors | null {
+    const specificDate = group.get('specific_date')?.value;
+    const startDate = group.get('start_date')?.value;
+    const endDate = group.get('end_date')?.value;
+
+    if ((specificDate && (startDate || endDate)) || (!specificDate && (!startDate || !endDate))) {
+      return { dateRangeInvalid: true };
+    }
+    return null;
   }
 }
