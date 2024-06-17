@@ -8,6 +8,7 @@ from .serializers import (
 )
 from utils.utils import find_similar_objects, compare_objects
 
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -208,6 +209,10 @@ class SubscriptionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPI
 #---------------------------------------------------------
 #---------------------Outras precisas---------------------
 #---------------------------------------------------------
+
+class AddressViewSet(viewsets.ModelViewSet):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
 
 class AddressListCreateAPIView(generics.ListCreateAPIView):
     queryset = Address.objects.all()

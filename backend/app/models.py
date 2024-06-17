@@ -7,7 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator, EmailValidator
+from django.core.validators import RegexValidator, EmailValidator, MinLengthValidator, MaxLengthValidator
 #from django.contrib.gis.db.models import models
 
 
@@ -239,6 +239,10 @@ class Lostobject(models.Model):
         app_label = 'app'
         constraints = [
             models.CheckConstraint(
+                check=models.Q(start_date__lt=models.F('end_date')),
+                name='start_date_before_end_date'
+            ),
+            models.CheckConstraint(
                 check=(
                     models.Q(specific_date__isnull=False, start_date__isnull=True, end_date__isnull=True) |
                     models.Q(specific_date__isnull=True, start_date__isnull=False, end_date__isnull=False)
@@ -332,13 +336,35 @@ class Foundobject(models.Model):
     lastname = models.CharField(max_length=255, blank=True, null=True)
     genero = models.CharField(max_length=50, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
-    idfiscal = models.IntegerField(blank=True, null=True)
-    idcivil = models.IntegerField(blank=True, null=True)
-    phoneNumber = models.IntegerField(blank=True, null=True)
-    police = models.ForeignKey(Userpolice, on_delete=models.CASCADE, db_column='userpolice', blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE,db_column='category', blank=True, null=True)
-    possibleOwner = models.ForeignKey(Generaluser, on_delete=models.CASCADE, db_column='generaluser', blank=True, null=True)
+    idcivil = models.CharField(
+        max_length=9,
+        unique=True,
+        blank=True,
+        null=True,
+        validators=[RegexValidator(regex=r'^\d{8}[A-Z]$', message="Enter a valid Portuguese Civil ID.")]
+    )
+    idfiscal = models.CharField(
+        max_length=9,
+        unique=True,
+        blank=True,
+        null=True,
+        validators=[RegexValidator(regex=r'^[1-3|5]\d{8}$', message="Enter a valid Fiscal Number (NIF).")]
+    )
+    phonenumber = models.CharField(
+        max_length=15,
+        unique=True,
+        blank=True,
+        null=True,
+        validators=[RegexValidator(regex=r'^(2\d{8}|9\d{8})$', message="Enter a valid phone number.")]
+    )
+    police = models.ForeignKey('Userpolice', on_delete=models.CASCADE, db_column='userpolice', blank=True, null=True)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, db_column='category', blank=True, null=True)
+    possibleOwner = models.ForeignKey('Generaluser', on_delete=models.CASCADE, db_column='generaluser', blank=True, null=True)
     delivered = models.BooleanField(blank=True, null=True)
+
+    def clean(self):
+        if not self.specific_date and not self.start_date and not self.end_date:
+            raise ValidationError('At least one of specific_date, start_date, or end_date must be set.')
 
     class Meta:
         managed = False
@@ -354,6 +380,7 @@ class Foundobject(models.Model):
             )
         ]
 
+
 class Leilao(models.Model):
     id = models.AutoField(primary_key=True)
     valor_base = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
@@ -366,6 +393,16 @@ class Leilao(models.Model):
         managed = False
         db_table = 'leilao'
         app_label = 'app'
+        constraints = [
+            models.CheckConstraint(
+                check=models.Q(data_inicio__lt=models.F('data_fim')),
+                name='start_date_before_end_date'
+            ),
+            models.CheckConstraint(
+                check=models.Q(valor_base__gte=0),
+                name='valor_base_positive'
+            )
+        ]
 
 
 class Licitacao(models.Model):

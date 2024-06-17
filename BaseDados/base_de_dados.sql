@@ -168,3 +168,48 @@ CREATE TABLE Subscription (
     id_leilao INTEGER,
         FOREIGN KEY (id_leilao) REFERENCES Leilao(id)
 );
+
+
+INSERT INTO Category (name) VALUES
+('Eletrónicos'),
+('Documentos'),
+('Chaves'),
+('Acessórios'),
+('Roupas'),
+('Outros');
+
+INSERT INTO Category_attribute (attribute, category_id) VALUES
+('Marca', 1),
+('Modelo', 1),
+
+-- Inserir atributos para Documentos
+INSERT INTO Category_attribute (attribute, category_id) VALUES
+('Tipo', 2),
+('Emissor', 2),
+('Data de Emissão', 2);
+
+-- Inserir atributos para Chaves
+INSERT INTO Category_attribute (attribute, category_id) VALUES
+('Tipo', 3),
+('Material', 3),
+('Quantidade de Dentes', 3);
+
+-- Inserir atributos para Acessórios
+INSERT INTO Category_attribute (attribute, category_id) VALUES
+('Tipo', 4),
+('Material', 4),
+('Cor', 4);
+
+-- Inserir atributos para Roupas
+INSERT INTO Category_attribute (attribute, category_id) VALUES
+('Tamanho', 5),
+('Cor', 5),
+('Marca', 5);
+
+-- Inserindo registros na tabela PolicePost sem especificar a localização
+INSERT INTO PolicePost (location, stationnumber) VALUES (NULL, 101);
+INSERT INTO PolicePost (location, stationnumber) VALUES (NULL, 102);
+INSERT INTO PolicePost (location, stationnumber) VALUES (NULL, 103);
+INSERT INTO PolicePost (location, stationnumber) VALUES (NULL, 104);
+INSERT INTO PolicePost (location, stationnumber) VALUES (NULL, 105);
+INSERT INTO PolicePost (location, stationnumber) VALUES (NULL, 106);

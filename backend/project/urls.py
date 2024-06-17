@@ -1,6 +1,9 @@
 from django.urls import path # type: ignore
 from app import views
 from app.views import ProtectedView
+from rest_framework.routers import DefaultRouter
+
+
 
 urlpatterns = [
 
