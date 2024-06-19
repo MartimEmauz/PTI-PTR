@@ -180,7 +180,7 @@ INSERT INTO Category (name) VALUES
 
 INSERT INTO Category_attribute (attribute, category_id) VALUES
 ('Marca', 1),
-('Modelo', 1),
+('Modelo', 1);
 
 -- Inserir atributos para Documentos
 INSERT INTO Category_attribute (attribute, category_id) VALUES
