@@ -7,7 +7,6 @@ declare var google: any;
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.css']
 })
-<<<<<<< HEAD
 export class SliderComponent implements AfterViewInit {
   @ViewChild('mapContainer', {static: false}) gmap = ElementRef<any>;
   map = google.maps.Map;
@@ -48,19 +47,3 @@ export class SliderComponent implements AfterViewInit {
       title: 'Marker'
     });
   }
-=======
-export class SliderComponent {
-  selectedvalue=25;
-  startvalue=30;
-  endvalue=70;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 6b1419d (fixing)
-=======
->>>>>>> parent of 6b1419d (fixing)
-=======
->>>>>>> parent of 6b1419d (fixing)
-=======
->>>>>>> parent of 6b1419d (fixing)
-}
