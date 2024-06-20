@@ -45,6 +45,12 @@ class UserPoliceRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVi
     serializer_class = UserpoliceSerializer
     permission_classes = [AllowAny]
 
+class UserPoliceRetrieveUpdateDestroyAPIView_Email(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Userpolice.objects.all()
+    serializer_class = UserpoliceSerializer
+    permission_classes = [AllowAny]
+    lookup_field = 'email'
+
 class PolicePostListCreateAPIView(generics.ListCreateAPIView):
     queryset = PolicePost.objects.all()
     serializer_class = PolicePostSerializer

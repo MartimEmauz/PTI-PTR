@@ -24,11 +24,11 @@ export class MenubarComponent implements OnInit {
     this._auth.user$.subscribe((user: User | null | undefined) => {
       if (user !== null && user !== undefined) {
         const userId = user.sub || ''; // Provide a default value if user.sub is undefined
-        this.checkUser(user.email);
+        //this.checkUser(user.email);
       }
     });
   }
-
+/*
   checkUser(email: string | undefined) {
     if (email) {
       this.apiService.getUserByEmail(email).subscribe(
@@ -61,6 +61,7 @@ export class MenubarComponent implements OnInit {
     }
   }
 
+  
   signUp() {
     this._auth.user$.subscribe((user: User | null | undefined) => {
       if (user !== null && user !== undefined) {
@@ -86,11 +87,13 @@ export class MenubarComponent implements OnInit {
       }
     });
   }
+*/
 
   badgevisibility() {
     this.badgevisible = true;
   }
 
+  /*
   isProfileCompleted(email: string): Observable<boolean> {
     return this.apiService.getUserByEmail(email).pipe(
       map((user: GeneralUser | null) => {
@@ -107,5 +110,22 @@ export class MenubarComponent implements OnInit {
       })
     );
   }
+
+  logoutPolice(): void {
+    this._auth.logout();
+    this.authSwitchService.clearRoles().subscribe({
+      next: () => console.log('Roles cleared on police user logout'),
+      error: (err) => console.error('Error clearing roles:', err),
+    });
+  }
+
+  logoutGeneral(): void {
+    this._auth.logout();
+    this.authSwitchService.clearRoles().subscribe({
+      next: () => console.log('Roles cleared on general user logout'),
+      error: (err) => console.error('Error clearing roles:', err),
+    });
+  }
   
+  */
 }

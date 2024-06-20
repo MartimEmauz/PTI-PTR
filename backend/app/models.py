@@ -303,7 +303,7 @@ class SpatialRefSys(models.Model):
 
 class PolicePost(models.Model):
     id = models.AutoField(primary_key=True)
-    location = models.ForeignKey(Address, on_delete=models.CASCADE, db_column='address', blank=True, null=True)
+    location = models.ForeignKey(Address, on_delete=models.CASCADE, db_column='id', blank=True, null=True)
     stationnumber = models.IntegerField(max_length=9, blank=True, null=True)
 
     class Meta:
@@ -318,7 +318,7 @@ class Userpolice(models.Model):
     email = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255, blank=True, null=True)
     internalid = models.IntegerField(unique=True)
-    postopolice = models.ForeignKey(PolicePost, on_delete=models.CASCADE, db_column='policepost', blank=True, null=True)
+    postopolice = models.ForeignKey(PolicePost, on_delete=models.CASCADE, db_column='id', blank=True, null=True)
 
     class Meta:
         managed = False

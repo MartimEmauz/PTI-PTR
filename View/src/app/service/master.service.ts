@@ -6,6 +6,8 @@ import { Country, Customer } from '../Model/Customer';
 import { LostObject } from '../Model/lost-object.model';
 import { GeneralUser } from '../Model/general-users-model';
 import { Address } from '../Model/address.model';
+import { PoliceUser } from '../Model/police-users-model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -93,6 +95,18 @@ export class MasterService {
 
   createAddress(address: Address): Observable<Address> {
     return this.http.post<Address>(`${this.apiUrl}addresses/`, address);
+  }
+
+  createPoliceUser(pUser: PoliceUser): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}policeusers/`, pUser);
+  }
+
+  updatePoliceUser(email: string, pUserData: Partial<PoliceUser>): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}policeusers/${email}/`, pUserData);
+  }
+
+  getPoliceUserByEmail(email: string): Observable<PoliceUser | null> {
+    return this.http.get<GeneralUser | null>(`${this.apiUrl}policeusers/${email}/`);
   }
 
 
