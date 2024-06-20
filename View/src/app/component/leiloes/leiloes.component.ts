@@ -1,76 +1,72 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { BidService } from 'src/app/service/bid.service'; // Commented out until implemented
+import { Customer } from 'src/app/Model/Customer';
+import { MasterService } from 'src/app/service/master.service';
+import { PopupComponent } from '../popup/popup.component';
+import { UserdetailComponent } from '../userdetail/userdetail.component';
 
 @Component({
-  selector: 'app-leiloes',
+  selector: 'app-table',
   templateUrl: './leiloes.component.html',
   styleUrls: ['./leiloes.component.css']
 })
-export class LeiloesComponent implements OnInit {
-  dataSource: MatTableDataSource<any>;
-  displayedColumns: string[] = ["nome", "estado", "valorAtual", "seguir"];
-  addBidForm: FormGroup;
-  showAddBidForm = false;
+export class LeiloesComponent {
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  customerlist !: Customer[];
+  dataSource: any;
+  displayedColumns: string[] = ["Item", "Nome", "Estado", "Licitador","action"];
+  @ViewChild(MatPaginator) paginatior !: MatPaginator;
+  @ViewChild(MatSort) sort !: MatSort;
 
-  constructor(
-    // private bidService: BidService, // Commented out until implemented
-    private fb: FormBuilder
-  ) {
-    this.dataSource = new MatTableDataSource<any>();
-    this.addBidForm = this.fb.group({
-      nome: ['', Validators.required],
-      estado: ['', Validators.required],
-      valorAtual: ['', [Validators.required, Validators.min(0)]]
+  constructor(private service: MasterService, private dialog: MatDialog) {
+    this.loadcustomer();
+  }
+
+  loadcustomer() {
+    this.service.GetCustomer().subscribe(res => {
+      this.customerlist = res;
+      this.dataSource = new MatTableDataSource<Customer>(this.customerlist);
+      this.dataSource.paginator = this.paginatior;
+      this.dataSource.sort = this.sort;
     });
   }
 
-  ngOnInit(): void {
-    this.loadBids();
+  Filterchange(data: Event) {
+    const value = (data.target as HTMLInputElement).value;
+    this.dataSource.filter = value;
   }
 
-  loadBids() {
-    // Placeholder data to display the structure
-    const bids = [
-      { nome: 'Bola', estado: 'A decorrer', valorAtual: 5, id: 1 },
-      // Add more sample data as needed
-    ];
-    this.dataSource.data = bids;
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  editcustomer(code: any) {
+    this.Openpopup(code, 'Edit Customer',PopupComponent);
   }
 
-  filterChange(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = value.trim().toLowerCase();
+  detailcustomer(code: any) {
+    this.Openpopup(code, 'Customer Detail',UserdetailComponent);
   }
 
-  toggleAddBidForm() {
-    this.showAddBidForm = !this.showAddBidForm;
+  
+
+  addcustomer(){
+    this.Openpopup(0, 'Adicionar Leilão',PopupComponent);
   }
 
-  addBid() {
-    if (this.addBidForm.valid) {
-      // this.bidService.addBid(this.addBidForm.value).subscribe(() => {
-      //   this.loadBids();
-      //   this.addBidForm.reset();
-      //   this.showAddBidForm = false;
-      // });
-      console.log("Bid added:", this.addBidForm.value);
-      this.loadBids(); // Reload data
-      this.addBidForm.reset();
-      this.showAddBidForm = false;
-    }
+  Openpopup(code: any, title: any,component:any) {
+    var _popup = this.dialog.open(component, {
+      width: '40%',
+      enterAnimationDuration: '1000ms',
+      exitAnimationDuration: '1000ms',
+      data: {
+        title: title,
+        code: code
+      }
+    });
+    _popup.afterClosed().subscribe(item => {
+      // console.log(item)
+      this.loadcustomer();
+    })
   }
 
-  followBid(bidId: number) {
-    // Implement follow bid logic here
-    console.log(`Following bid with ID: ${bidId}`);
-  }
 }
