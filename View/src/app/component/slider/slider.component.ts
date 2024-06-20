@@ -6,7 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./slider.component.css']
 })
 export class SliderComponent {
-  selectedvalue=25;
-  startvalue=30;
-  endvalue=70;
+  
 }
