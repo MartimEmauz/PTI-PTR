@@ -28,6 +28,7 @@ import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosper
 import { MyAccountLogadoComponent } from './component/my-account-logado/my-account-logado.component';
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'; // Import MatSlideToggleModule
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'; // Import
         redirectUri: window.location.origin,
       }
     }),
-    MatSlideToggleModule // Add MatSlideToggleModule to imports
+    MatSlideToggleModule, // Add MatSlideToggleModule to imports
+    GoogleMapsModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

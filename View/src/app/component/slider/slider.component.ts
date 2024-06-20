@@ -6,7 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./slider.component.css']
 })
 export class SliderComponent {
-  selectedvalue=25;
-  startvalue=30;
-  endvalue=70;
+  center: google.maps.LatLngLiteral = { lat: -34.397, lng: 150.644 };
+  zoom = 8;
+  options: google.maps.MapOptions = {
+    mapTypeId: 'roadmap',
+    disableDefaultUI: true,
+    maxZoom: 18,
+    minZoom: 8,
+  };
 }

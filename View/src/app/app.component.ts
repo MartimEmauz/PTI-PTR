@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angularmaterial';
+  lat = -34.397;
+  lng = 150.644;
 }
