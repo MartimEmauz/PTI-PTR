@@ -54,6 +54,9 @@ export class SliderComponent {
   startvalue=30;
   endvalue=70;
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 6b1419d (fixing)
+=======
 >>>>>>> parent of 6b1419d (fixing)
 =======
 >>>>>>> parent of 6b1419d (fixing)
