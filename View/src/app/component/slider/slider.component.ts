@@ -47,3 +47,4 @@ export class SliderComponent implements AfterViewInit {
       title: 'Marker'
     });
   }
+}
