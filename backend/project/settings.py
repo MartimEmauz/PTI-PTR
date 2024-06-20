@@ -89,6 +89,10 @@ API_IDENTIFIER = 'http://127.0.0.1:8000/'
 PUBLIC_KEY = None
 JWT_ISSUER = None
 
+AUTH0_POLICE_DOMAIN = 'your-police-auth0-domain'
+AUTH0_POLICE_API_AUDIENCE = 'your-police-api-audience'
+AUTH0_POLICE_CLIENT_ID = 'your-police-client-id'
+
 if AUTH0_DOMAIN and API_IDENTIFIER:
     JWT_ISSUER = f'https://{AUTH0_DOMAIN}/'
     PUBLIC_KEY = f'https://{AUTH0_DOMAIN}/.well-known/jwks.json'
