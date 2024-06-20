@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-!1%9ny38%*jkz(9um@@)a6%@(p$mf_ebtw7um-039zm!nlvq!(
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.12.0.0/24', 'localhost', '127.0.0.1', '[::1]']
 
 #GDAL_LIBRARY_PATH = 'caminho/para/sua/biblioteca/gdal'
 
