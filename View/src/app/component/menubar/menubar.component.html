@@ -9,7 +9,7 @@
     </h1>
     <span class="example-spacer"></span>
     <!-- <button routerLink="/login" class="login-button">Login</button> -->
-    <button (click)="_auth.loginWithPopup()" class="login-button" *ngIf="!(_auth.isAuthenticated$ | async)">Login</button>
+    <button routerLink="myaccount" class="login-button" *ngIf="!(_auth.isAuthenticated$ | async)">Login</button>
     <button (click)="_auth.logout()" class="logout-button" *ngIf="_auth.isAuthenticated$ | async">Logout</button>
     <button (click)="badgevisibility()" mat-icon-button>
         <mat-icon matBadgeColor="accent" matBadge="15" [matBadgeHidden]="badgevisible" matBadgeSize="small">notifications</mat-icon>
