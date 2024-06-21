@@ -109,8 +109,8 @@ export class MapaComponent implements OnInit, AfterViewInit {
     directionsRenderer.setMap(this.mapa);
 
     const request = {
-      origin: 'Quilpué, Chile',
-      destination: 'Viña del Mar, Chile',
+      origin: 'Campo Grande, Lisboa',
+      destination: 'Odivelas, Lisboa',
       travelMode: google.maps.TravelMode.DRIVING
     };
 
