@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './component/home/home.component';
-import { SliderComponent } from './component/slider/slider.component';
+import { MapaComponent } from './component/mapa/mapa.component';
 import { LeiloesComponent } from './component/leiloes/leiloes.component';
 import { MyLeiloesComponent } from './component/myleiloes/myleiloes.component';
 import { MyAccountComponent } from './component/my-account/my-account.component';
@@ -13,10 +13,9 @@ import { AuthGuard } from './auth.guard';
 import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosperdidos.component';
 import { MyAccountLogadoComponent } from './component/my-account-logado/my-account-logado.component';
 
-
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'slider', component: SliderComponent, canActivate: [AuthGuard]},
+  { path: 'mapa', component: MapaComponent, canActivate: [AuthGuard]},
   { path: 'leiloes', component: LeiloesComponent, canActivate: [AuthGuard]},
   { path: 'myleiloes', component: MyLeiloesComponent, canActivate: [AuthGuard]},
   { path: 'myaccount', component: MyAccountComponent },

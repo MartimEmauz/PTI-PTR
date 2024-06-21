@@ -8,7 +8,7 @@ import { MaterialModule } from './material-module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenubarComponent } from './component/menubar/menubar.component';
 import { HomeComponent } from './component/home/home.component';
-import { SliderComponent } from './component/slider/slider.component';
+import { MapaComponent } from './component/mapa/mapa.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PopupComponent } from './component/popup/popup.component';
 import { UserdetailComponent } from './component/userdetail/userdetail.component';
@@ -26,14 +26,13 @@ import { PoliticaPrivacidadeComponent } from './component/politica-privacidade/p
 import { DatePipe } from '@angular/common';
 import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosperdidos.component';
 import { MyAccountLogadoComponent } from './component/my-account-logado/my-account-logado.component';
-
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 @NgModule({
   declarations: [
     AppComponent,
     MenubarComponent,
     HomeComponent,
-    SliderComponent,
+    MapaComponent,
     PopupComponent,
     UserdetailComponent,
     LeiloesComponent,
