@@ -1,8 +1,8 @@
 import { PolicePost } from './postopolice.model'; // Importe o modelo correto para PolicePost, se necessário
 
 export interface PoliceUser {
-  firstname?: string | null;
-  lastname?: string | null;
+  firstname?: string;
+  lastname?: string;
   email: string;
   password?: string | null;
   internalid?: string | null;

@@ -30,7 +30,7 @@ export class ProfileCompletionPolicemanComponent {
           firstname: this.firstname,
           lastname: this.lastname,
           password: null, // Default password
-          internalid: parseInt(this.internalid),
+          internalid: this.internalid,
           postopolice: parseInt(this.postopolice),
           email: user.email,
         };
