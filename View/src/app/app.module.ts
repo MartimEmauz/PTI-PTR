@@ -27,8 +27,7 @@ import { DatePipe } from '@angular/common';
 import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosperdidos.component';
 import { MyAccountLogadoComponent } from './component/my-account-logado/my-account-logado.component';
 
-import { MatSlideToggleModule } from '@angular/material/slide-toggle'; // Import MatSlideToggleModule
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +47,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'; // Import
     ProfileCompletionComponent,
     PoliticaPrivacidadeComponent,
     ObjetosperdidosComponent,
-    MyAccountLogadoComponent
+    MyAccountLogadoComponent,
   ],
   imports: [
     BrowserModule,

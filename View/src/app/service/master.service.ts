@@ -24,41 +24,39 @@ export class MasterService {
     ]
   }
 
-  GetCustomer():Observable<Customer[]>{
+  GetCustomer(): Observable<Customer[]> {
     return this.http.get<Customer[]>("http://localhost:3000/customer");
   }
 
-  Savecustomer(data:any){
+  Savecustomer(data: any) {
     console.log(data)
-    return this.http.post("http://localhost:3000/customer",data);
+    return this.http.post("http://localhost:3000/customer", data);
   }
 
-  GetCustomerbycode(code:any){
-    return this.http.get("http://localhost:3000/customer/"+code);
+  GetCustomerbycode(code: any) {
+    return this.http.get("http://localhost:3000/customer/" + code);
   }
 
-  GetAssociate(){
+  GetAssociate() {
     return this.http.get('http://localhost:3000/associate');
   }
-  GetAssociatebycode(code:any){
-    return this.http.get('http://localhost:3000/associate/'+code);
+
+  GetAssociatebycode(code: any) {
+    return this.http.get('http://localhost:3000/associate/' + code);
   }
-  GetCountry():Observable<Country[]>{
+
+  GetCountry(): Observable<Country[]> {
     return this.http.get<Country[]>('http://localhost:3000/country');
   }
 
-  SaveAssociate(data:any,code:any){
-    return this.http.put('http://localhost:3000/associate/'+code,data);
+  SaveAssociate(data: any, code: any) {
+    return this.http.put('http://localhost:3000/associate/' + code, data);
   }
-
 
   //API ------------------------------------------------------------------
 
   private apiUrl = 'http://127.0.0.1:8000/'; // Your Django API URL
-
-
   private jsonUrl = 'assets/lost_objects.json';
-
 
   getLostObjects(): Observable<any[]> {
     return this.http.get<any[]>(this.jsonUrl); //para aqui tem de vir o URL do endpoint, para o get objects
@@ -75,7 +73,7 @@ export class MasterService {
     return this.http.post<any>(`${this.apiUrl}/endpoint`, data);
   }
 
-  addLostObject(newLostObject: LostObject): Observable<any> {         // garantir que isto funciona bem
+  addLostObject(newLostObject: LostObject): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/lostobjects/`, newLostObject); 
   } 
 
