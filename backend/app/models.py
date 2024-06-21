@@ -185,7 +185,6 @@ class Generaluser(models.Model):
     password = models.CharField(max_length=255, blank=True, null=True)
     gender = models.CharField(max_length=50, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE,db_column='address', blank=True, null=True)
     phonenumber = models.IntegerField(unique=True, blank=True, null=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, db_column='address', blank=True, null=True)
     phonenumber = models.CharField(
@@ -201,14 +200,14 @@ class Generaluser(models.Model):
         unique=True,
         blank=True,
         null=True,
-        validators=[RegexValidator(regex=r'^\d{8}[A-Z]$', message="Enter a valid Portuguese Civil ID.")]
+        #validators=[RegexValidator(regex=r'^\d{8}[A-Z]$', message="Enter a valid Portuguese Civil ID.")]
     )
     idfiscal = models.CharField(
         max_length=9,
         unique=True,
         blank=True,
         null=True,
-        validators=[RegexValidator(regex=r'^[1-3|5]\d{8}$', message="Enter a valid Fiscal Number (NIF).")]
+        #validators=[RegexValidator(regex=r'^[1-3|5]\d{8}$', message="Enter a valid Fiscal Number (NIF).")]
     )
 
     class Meta:
@@ -312,18 +311,27 @@ class PolicePost(models.Model):
         app_label = 'app'
 
 class Userpolice(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.AutoField (primary_key=True)
     firstname = models.CharField(max_length=255, blank=True, null=True)
     lastname = models.CharField(max_length=255, blank=True, null=True)
-    email = models.CharField(max_length=255, unique=True)
+    email = models.CharField(
+        max_length=255,
+        unique=True,
+        validators=[EmailValidator(message="Enter a valid email address.")]
+    )
     password = models.CharField(max_length=255, blank=True, null=True)
-    internalid = models.IntegerField(unique=True)
-    postopolice = models.ForeignKey(PolicePost, on_delete=models.CASCADE, db_column='id', blank=True, null=True)
+    internalid = models.CharField(max_length=9, blank=True, null=True)
+    postopolice = models.ForeignKey(PolicePost, on_delete=models.CASCADE, db_column='postopolice', blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'userpolice'
         app_label = 'app'
+
+    def save(self, *args, **kwargs):
+            if self.email and '@' not in self.email:
+                raise ValidationError("Email must contain @ symbol.")
+            super().save(*args, **kwargs)
 
 
 class Foundobject(models.Model):

@@ -74,7 +74,7 @@ CREATE TABLE atributes_object (
 CREATE TABLE PolicePost (
     id SERIAL PRIMARY KEY,
     location INTEGER,
-    stationnumber INTEGER,
+    stationnumber VARCHAR(255),
         UNIQUE (stationnumber),
     	FOREIGN KEY (location) REFERENCES Address(id)
 );
@@ -87,7 +87,7 @@ CREATE TABLE UserPolice (
     email VARCHAR(255),
         UNIQUE (email),
     password VARCHAR(255),
-    internalId INTEGER,
+    internalId VARCHAR(255),
     postoPolice INTEGER,
 		UNIQUE (internalId),
         FOREIGN KEY (postoPolice) REFERENCES PolicePost(id)
@@ -124,7 +124,7 @@ CREATE TABLE FoundObject (
     idFiscal VARCHAR(255),
     phoneNumber INTEGER,
     police INTEGER,
-    	FOREIGN KEY (police) REFERENCES UserPolice(internalId),
+    	FOREIGN KEY (police) REFERENCES UserPolice(id),
     possibleOwner INTEGER,
     	FOREIGN KEY (possibleOwner) REFERENCES GeneralUser(id),
     delivered BOOLEAN

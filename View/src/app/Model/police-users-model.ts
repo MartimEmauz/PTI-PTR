@@ -1,11 +1,11 @@
-import { PolicePost } from './postopolice.model';
+import { PolicePost } from './postopolice.model'; // Importe o modelo correto para PolicePost, se necessário
 
 export interface PoliceUser {
-  id?: number;
-  firstname?: string;
-  lastname?: string;
+  firstname?: string | null;
+  lastname?: string | null;
   email: string;
   password?: string | null;
-  internalid?: number | null;
-  postopolice?: number | PolicePost;
+  internalid?: string | null;
+  postopolice?: number | PolicePost | null; // Pode ser do tipo number ou do tipo PolicePost
 }
+

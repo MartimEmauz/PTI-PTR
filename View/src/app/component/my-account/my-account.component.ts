@@ -170,7 +170,6 @@ export class MyAccountComponent {
         if (user.email) {
           const policeUser: PoliceUser = {
             email: user.email,
-            internalid: 1,
           };
           this.apiService.createPoliceUser(policeUser).subscribe(
             (response) => {
