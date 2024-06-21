@@ -51,6 +51,8 @@ export class ObjetosperdidosComponent implements OnInit {
     );
   }
 
+  
+
   loadCustomer() {
     this.service.GetCustomer().subscribe(res => {
       this.dataSource.data = res;
@@ -67,9 +69,8 @@ export class ObjetosperdidosComponent implements OnInit {
   addLostObject() {
     if (this.lostObjectForm.valid) {
       this.service.addLostObject(this.lostObjectForm.value).subscribe(() => {
-        this.loadCustomer();
-        this.cancelAddObject();
-        window.location.reload();
+        this.loadLostObjects(); // Recarrega a lista de objetos perdidos após adicionar
+        this.cancelAddObject(); // Limpa o formulário de adição
       });
     }
   }
