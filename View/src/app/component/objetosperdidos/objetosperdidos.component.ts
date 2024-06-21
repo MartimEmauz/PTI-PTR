@@ -35,11 +35,20 @@ export class ObjetosperdidosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadCustomer();
-    this.service.getLostObjects().subscribe((data: any[]) => {
-      this.lostObjects = data;
-      this.filteredObjects = data;
-    });
+    this.loadLostObjects();
+  }
+
+  loadLostObjects() {
+    this.service.getLostObjects().subscribe(
+      (data: LostObject[]) => {
+        this.lostObjects = data;
+        this.filteredObjects = data; // Inicialmente, exibe todos os objetos perdidos
+      },
+      (error) => {
+        console.error('Erro ao carregar objetos perdidos:', error);
+        // Trate o erro conforme necessário, como exibir uma mensagem de erro na interface
+      }
+    );
   }
 
   loadCustomer() {

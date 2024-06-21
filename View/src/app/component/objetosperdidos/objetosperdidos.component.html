@@ -36,7 +36,7 @@
       <ul class="cards">
         <li *ngFor="let lostObject of filteredObjects">
           <a class="card">
-            <img [src]="getCardImagePath(lostObject.category.category.id)" class="card__image" alt="Image of {{lostObject.title}}">
+            <img [src]="getCardImagePath(lostObject.category)" class="card__image" alt="Image of {{lostObject.title}}">
             <div class="card__overlay">
               <div class="card__header">
                 <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">

@@ -14,6 +14,7 @@ import { PoliceUser } from '../Model/police-users-model';
 })
 export class MasterService {
 
+  private apiUrl = 'http://127.0.0.1:8000/';
   constructor(private http: HttpClient) { }
 
   GetColorList(): colorentity[] {
@@ -27,41 +28,39 @@ export class MasterService {
   }
 
   GetCustomer(): Observable<Customer[]> {
-    return this.http.get<Customer[]>("http://localhost:3000/customer");
+    return this.http.get<Customer[]>("http://localhost:8000/customer");
   }
 
   Savecustomer(data: any) {
     console.log(data)
-    return this.http.post("http://localhost:3000/customer", data);
+    return this.http.post("http://localhost:8000/customer", data);
   }
 
   GetCustomerbycode(code: any) {
-    return this.http.get("http://localhost:3000/customer/" + code);
+    return this.http.get("http://localhost:8000/customer/" + code);
   }
 
   GetAssociate() {
-    return this.http.get('http://localhost:3000/associate');
+    return this.http.get('http://localhost:8000/associate');
   }
 
   GetAssociatebycode(code: any) {
-    return this.http.get('http://localhost:3000/associate/' + code);
+    return this.http.get('http://localhost:8000/associate/' + code);
   }
 
   GetCountry(): Observable<Country[]> {
-    return this.http.get<Country[]>('http://localhost:3000/country');
+    return this.http.get<Country[]>('http://localhost:8000/country');
   }
 
   SaveAssociate(data: any, code: any) {
-    return this.http.put('http://localhost:3000/associate/' + code, data);
+    return this.http.put('http://localhost:8000/associate/' + code, data);
   }
 
   //API ------------------------------------------------------------------
-
-  private apiUrl = 'http://127.0.0.1:8000/'; // Your Django API URL
   private jsonUrl = 'assets/lost_objects.json';
 
   getLostObjects(): Observable<any[]> {
-    return this.http.get<any[]>(this.jsonUrl); //para aqui tem de vir o URL do endpoint, para o get objects
+    return this.http.get<LostObject[]>(`${this.apiUrl}/lostobjects/`);
   }
 
   /*
@@ -78,7 +77,6 @@ export class MasterService {
   addLostObject(newLostObject: LostObject): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/lostobjects/`, newLostObject); 
   } 
-
   createUser(user: GeneralUser): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}generalusers/`, user);
   }
