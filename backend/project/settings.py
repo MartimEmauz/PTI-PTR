@@ -7,13 +7,15 @@ SECRET_KEY = 'django-insecure-!1%9ny38%*jkz(9um@@)a6%@(p$mf_ebtw7um-039zm!nlvq!(
 
 DEBUG = True
 
-def generate_allowed_hosts():
-    base_ip = '10.12.0.'
-    start = 12
-    end = 255
-    return [base_ip + str(i) for i in range(start, end + 1)]
+ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = generate_allowed_hosts() + ['localhost', '127.0.0.1', '[::1]']
+#def generate_allowed_hosts():
+    #base_ip = '10.12.0.'
+    #start = 12
+    #end = 255
+    #return [base_ip + str(i) for i in range(start, end + 1)]
+
+#ALLOWED_HOSTS = generate_allowed_hosts() + ['localhost', '127.0.0.1', '[::1]']
 
 #GDAL_LIBRARY_PATH = 'caminho/para/sua/biblioteca/gdal'
 
@@ -63,16 +65,30 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
+#DATABASES = {
+    #'default': {
+       # 'ENGINE': 'django.db.backends.postgresql',
+       # 'NAME': 'pti_ptr_db',
+       # 'USER': 'pti_ptr_user',
+       # 'PASSWORD': 'grupo05',
+       # 'HOST': '10.11.0.4',
+       # 'PORT': '5432',
+   # }
+#}
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pti_ptr_db',
-        'USER': 'pti_ptr_user',
+        'NAME': 'grupo05',
+        'USER': 'postgres',
         'PASSWORD': 'grupo05',
-        'HOST': '10.11.0.4',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
+
+
 
 LANGUAGE_CODE = 'en-us'
 

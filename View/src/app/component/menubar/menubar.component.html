@@ -6,7 +6,7 @@
         <a routerLink="" class="title-link">Tesouros Perdidos</a>
     </h1>
     <span class="example-spacer"></span>
-    <button (click)="_auth.loginWithPopup()" class="login-button" *ngIf="!(_auth.isAuthenticated$ | async)">Login</button>
+    <button routerLink="myaccount" class="login-button" *ngIf="!(_auth.isAuthenticated$ | async)">Login</button>
     <div routerLink="my-account-logado" class="profile-container" *ngIf="_auth.isAuthenticated$ | async">
         <img *ngIf="profileImage" [src]="profileImage" class="profile-image" alt="Profile Image">
         <div *ngIf="!profileImage" class="profile-initials">{{ initials }}</div>
