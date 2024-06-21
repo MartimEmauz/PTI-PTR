@@ -1,6 +1,6 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAII7gRPRLt1Appw2ARRGhXOu5rWric3K8&libraries=places,directions"> </script>
 <h1>Mapa Angular</h1>
-<button (click)="mapRuta()">Calcular ruta</button>
+<button (click)="mapRuta()">Calcular rota</button>
 <h1>La distancia es: {{distancia}}</h1>
 <div class="formulario">
     <form [formGroup]="formMapas" (ngSubmit)="onSubmit()">
@@ -14,9 +14,9 @@
             alt="">
         </div>
   
-        <input type="text" placeholder="Direccion" formControlName="direccion" />
-        <input type="text" placeholder="Edificio, departamento, piso (opcional)" formControlName="referencia" />
-        <input type="text" placeholder="Ciudad" class="ciudad" formControlName="ciudad" />
+        <input type="text" placeholder="Direção" formControlName="direccion" />
+        <input type="text" placeholder="Edificio, Apartamento, piso (opcional)" formControlName="referencia" />
+        <input type="text" placeholder="Cidade" class="ciudad" formControlName="ciudad" />
         <input type="text" placeholder="Provincia" formControlName="provincia" />
         <div class="half-input-container">
           <input type="text" class="half-input" placeholder="Region" formControlName="region" />
