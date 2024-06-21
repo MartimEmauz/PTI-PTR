@@ -8,6 +8,7 @@ import { MyAccountComponent } from './component/my-account/my-account.component'
 import { LoginComponent } from './component/login/login.component';
 import { EntrarRegistarComponent } from './component/entrar-registar/entrar-registar.component';
 import { ProfileCompletionComponent } from './component/profile-completion/profile-completion.component';
+import { ProfileCompletionPolicemanComponent } from './component/profile-completion-policeman/profile-completion-policeman.component';
 import { PoliticaPrivacidadeComponent } from './component/politica-privacidade/politica-privacidade.component';
 import { AuthGuard } from './auth.guard';
 import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosperdidos.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'entrar-registar', component: EntrarRegistarComponent },
   { path: 'profile-completion', component: ProfileCompletionComponent, canActivate: [AuthGuard]},
+  { path: 'profile-completion-policeman', component: ProfileCompletionPolicemanComponent, canActivate: [AuthGuard]},
   { path: 'politica-privacidade', component: PoliticaPrivacidadeComponent },
   { path: 'objetosperdidos', component: ObjetosperdidosComponent },
   {path: 'my-account-logado', component: MyAccountLogadoComponent, canActivate: [AuthGuard]}
