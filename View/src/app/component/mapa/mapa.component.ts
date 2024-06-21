@@ -49,7 +49,7 @@ export class MapaComponent implements OnInit, AfterViewInit {
   private loadGoogleMapsScript(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       const script = document.createElement('script');
-      script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBwZypniHn2fnh4XGmjuBQpVHDlT6XOt1w';
+      script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAII7gRPRLt1Appw2ARRGhXOu5rWric3K8&libraries=places,directions';
       script.onload = () => resolve();
       script.onerror = (error) => reject(error);
       document.body.appendChild(script);
@@ -57,34 +57,47 @@ export class MapaComponent implements OnInit, AfterViewInit {
   }
 
   private initMap(): void {
-    const opciones = {
-      center: { lat: -33.45, lng: -70.66 }, // Coordenadas iniciais
-      zoom: 12,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    this.mapa = new google.maps.Map(this.divMap.nativeElement, opciones);
-
-    // Exemplo de adição de marcador
-    const markerPosition = new google.maps.Marker({
-      position: { lat: -33.45, lng: -70.66 }, // Coordenadas do marcador
-      title: 'Marcador'
-    });
-    markerPosition.setMap(this.mapa);
-    this.markers.push(markerPosition);
-
-    // Exemplo de evento de clique no mapa
-    google.maps.event.addListener(this.mapa, 'click', (evento: google.maps.MapMouseEvent) => {
-      const marker = new google.maps.Marker({
-        position: evento.latLng,
-        animation: google.maps.Animation.DROP
-      });
-      marker.setMap(this.mapa);
-
-      google.maps.event.addListener(marker, 'click', () => {
-        marker.setMap(null);
-      });
-    });
+    // Verificar se o navegador suporta geolocalização
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const opciones = {
+            center: { lat: position.coords.latitude, lng: position.coords.longitude }, // Usar a localização atual
+            zoom: 12,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+          this.mapa = new google.maps.Map(this.divMap.nativeElement, opciones);
+  
+          // Exemplo de adição de marcador na posição atual
+          const markerPosition = new google.maps.Marker({
+            position: { lat: position.coords.latitude, lng: position.coords.longitude },
+            title: 'Você está aqui'
+          });
+          markerPosition.setMap(this.mapa);
+          this.markers.push(markerPosition);
+        },
+        (error) => {
+          console.error('Erro ao obter a localização atual: ', error);
+          // Caso haja erro na geolocalização, centro padrão
+          this.setDefaultMap();
+        }
+      );
+    } else {
+      console.error('Geolocalização não é suportada pelo navegador.');
+      // Caso o navegador não suporte geolocalização, centro padrão
+      this.setDefaultMap();
+    }
   }
+
+  private setDefaultMap(): void {
+  // Centro padrão se não for possível obter a localização atual
+  const opciones = {
+    center: { lat: -33.45, lng: -70.66 }, // Coordenadas iniciais (Santiago do Chile como exemplo)
+    zoom: 12,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  this.mapa = new google.maps.Map(this.divMap.nativeElement, opciones);
+}
 
   onSubmit() {
     console.log('Dados do formulário: ', this.formMapas.value);
