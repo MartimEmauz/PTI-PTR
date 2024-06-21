@@ -65,7 +65,7 @@ export class PopupComponent implements OnInit {
       title: formValue.title as string | null,
       specific_date: formValue.date as string | null, // Cast to string | null
       description: formValue.description as string | null, // Cast to string | null
-      category: typeof formValue.category === 'string' && formValue.category !== '' ? parseInt(formValue.category, 10) : null, // Parse as number or null
+     // category: typeof formValue.category === 'number' && formValue.category !== '' ? parseInt(formValue.category, 10) : null, // Parse as number or null
     };
   
     this.service.addLostObject(newLostObject)

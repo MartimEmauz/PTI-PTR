@@ -7,7 +7,7 @@
     </h1>
     <span class="example-spacer"></span>
     <button routerLink="myaccount" class="login-button" *ngIf="!(_auth.isAuthenticated$ | async)">Login</button>
-    <div routerLink="my-account-logado" class="profile-container" *ngIf="_auth.isAuthenticated$ | async">
+    <div routerLink="my-account-logado" class="profile-container" *ngIf="_auth.isAuthenticated$ | async" [matTooltip]="userName">
         <img *ngIf="profileImage" [src]="profileImage" class="profile-image" alt="Profile Image">
         <div *ngIf="!profileImage" class="profile-initials">{{ initials }}</div>
     </div>

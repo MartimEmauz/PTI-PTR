@@ -19,6 +19,7 @@ export class MyLeiloesComponent implements OnInit {
   lostObjectForm: FormGroup;
   showAddObjectForm: boolean = false;
   useSpecificDate: boolean = true;
+  categories: string[] = ['Eletrónicos', 'Documentos', 'Chaves', 'Acessórios', 'Roupas', 'Outros'];
 
   searchText: string = '';
   lostObjects: any[] = [];

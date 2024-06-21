@@ -1,35 +1,38 @@
 <mat-card>
-  <div class="search-container">
+  <mat-toolbar class="toolbar">
     <mat-form-field class="search-bar">
       <input matInput (keyup)="filterChange($event)" placeholder="Pesquisar Leilão">
     </mat-form-field>
+    <span class="spacer"></span>
     <button (click)="toggleAddBidForm()" mat-raised-button color="primary">Adicionar Leilão</button>
-  </div>
+  </mat-toolbar>
   
   <mat-card-content>
     <!-- Formulário para adicionar leilão -->
     <div *ngIf="showAddBidForm" class="add-bid-form">
       <form (ngSubmit)="addBid()" [formGroup]="addBidForm">
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Nome</mat-label>
           <input matInput formControlName="nome" required>
           <mat-error *ngIf="addBidForm.controls['nome'].invalid">Nome é obrigatório</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Estado</mat-label>
           <input matInput formControlName="estado" required>
           <mat-error *ngIf="addBidForm.controls['estado'].invalid">Estado é obrigatório</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Valor Atual</mat-label>
           <input matInput formControlName="valorAtual" type="number" required>
           <mat-error *ngIf="addBidForm.controls['valorAtual'].invalid">Valor Atual é obrigatório</mat-error>
         </mat-form-field>
 
-        <button mat-raised-button type="submit" color="primary" [disabled]="addBidForm.invalid">Salvar</button>
-        <button mat-raised-button type="button" (click)="toggleAddBidForm()">Cancelar</button>
+        <div class="button-group">
+          <button mat-raised-button type="submit" color="primary" [disabled]="addBidForm.invalid">Salvar</button>
+          <button mat-raised-button type="button" (click)="toggleAddBidForm()">Cancelar</button>
+        </div>
       </form>
     </div>
 
