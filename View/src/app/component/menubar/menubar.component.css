@@ -1,104 +1,157 @@
-.example-spacer {
-  flex: 1 1 auto;
+/* General layout styling */
+body {
+  font-family: 'Roboto', sans-serif;
 }
 
-.mat-toolbar {
+.toolbar {
   display: flex;
-  justify-content: space-between; /* Align items at the start and end */
+  justify-content: space-between;
   align-items: center;
   background-color: #54acb4;
+  padding: 0 10px;
+  position: relative;
 }
-
-.login-button{
-width:5%;
-height:45px;
-margin-right:7px;
-border:none;
-border-radius:5px;
-background-color:#e9ecf0;
-font-size:17px;
-font-weight:600;
-cursor:pointer;
-}
-
-.logout-button{
-  width:5%;
-  height:45px;
-  margin-right:7px;
-  border:none;
-  border-radius:5px;
-  color: #f8f9fa;
-  background-color:#FF5733;
-  font-size:17px;
-  font-weight:600;
-  cursor:pointer;
-  }
-
-
-.mat-nav-list.active{
-background-color: gray;
-
-}
-
-.mat-list-item.active{
-background-color: gray;
-
-}
-
-.lista.active{
-background-color: gray;
-}
-
 
 .example-spacer {
   flex: 1;
 }
 
 .title {
-  flex: 0;
   margin: 0;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  text-align: center;
 }
 
 .title-link {
   color: white;
   text-decoration: none;
+  font-size: 1.5em;
 }
 
 .title-link:hover {
   text-decoration: underline;
 }
 
-/* Add this to your global styles.css or component-specific CSS file */
-
-/* Ensure the mat-toolbar takes full width */
-mat-toolbar {
-    width: 100%;
+.login-button, .logout-button {
+  width: auto;
+  height: 45px;
+  margin-right: 7px;
+  border: none;
+  border-radius: 5px;
+  background-color: #e9ecf0;
+  color: #333;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0 15px;
 }
 
-/* Remove padding and margin from the main container */
+.logout-button {
+  background-color: #FF5733;
+  color: #fff;
+}
+
+.drawer {
+  background-color: #f8f9fa;
+}
+
+.mat-nav-list .mat-list-item {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.botao {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.main-content {
+  text-align: center;
+  min-height: 600px;
+  padding: 20px;
+}
+
+@media (max-width: 600px) {
+  .toolbar {
+      flex-wrap: wrap;
+  }
+
+  .title {
+      order: 2;
+      width: 100%;
+      margin: 10px 0;
+  }
+
+  .login-button, .logout-button {
+      order: 1;
+      height: 40px;
+      font-size: 14px;
+      margin-right: 5px;
+      padding: 0 10px;
+  }
+
+  .toolbar button mat-icon {
+      font-size: 20px;
+  }
+
+  .mat-nav-list .mat-list-item {
+      padding-left: 8px;
+  }
+}
+
+.mat-toolbar {
+  width: 100%;
+}
+
 mat-drawer-content {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .container {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
-/* Ensure the main content takes full width and height */
 mat-drawer-content div {
-    width: 100%;
-    box-sizing: border-box;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Optional: Set background color to match the rest of the page */
 mat-drawer-content {
-    background-color: #f8f9fa; /* Change to your desired background color */
-    z-index: 1;
-    min-height: 100vh;
+  background-color: #f8f9fa;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+
+.profile-container:hover {
+  cursor:pointer;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  
+}
+
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.profile-initials {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e9ecf0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
 }

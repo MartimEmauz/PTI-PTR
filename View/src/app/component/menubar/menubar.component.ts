@@ -13,6 +13,8 @@ import { Observable, catchError, map, of } from 'rxjs';
 })
 export class MenubarComponent implements OnInit {
   badgevisible = false;
+  profileImage: string | null = null;
+  initials: string = '';
 
   constructor(
     public _auth: AuthService,
@@ -24,7 +26,14 @@ export class MenubarComponent implements OnInit {
     this._auth.user$.subscribe((user: User | null | undefined) => {
       if (user !== null && user !== undefined) {
         const userId = user.sub || ''; // Provide a default value if user.sub is undefined
-        //this.checkUser(user.email);
+        //this.checkUser(user.email);                 //COMENTEI AQUI PQ TAVA A DAR ERRO
+
+        // Set profile image or initials
+        if (user.picture) {
+          this.profileImage = user.picture;
+        } else if (user.name) {
+         // this.initials = this.getInitials(user.name); //COMENTEI AQUI PQ TAVA A DAR ERRO
+        }
       }
     });
   }
@@ -111,21 +120,10 @@ export class MenubarComponent implements OnInit {
     );
   }
 
-  logoutPolice(): void {
-    this._auth.logout();
-    this.authSwitchService.clearRoles().subscribe({
-      next: () => console.log('Roles cleared on police user logout'),
-      error: (err) => console.error('Error clearing roles:', err),
-    });
-  }
-
-  logoutGeneral(): void {
-    this._auth.logout();
-    this.authSwitchService.clearRoles().subscribe({
-      next: () => console.log('Roles cleared on general user logout'),
-      error: (err) => console.error('Error clearing roles:', err),
-    });
-  }
-  
-  */
+  getInitials(name: string): string {
+    const nameParts = name.split(' ');
+    const firstNameInitial = nameParts[0] ? nameParts[0][0] : '';
+    const lastNameInitial = nameParts.length > 1 ? nameParts[nameParts.length - 1][0] : '';
+    return (firstNameInitial + lastNameInitial).toUpperCase();
+  }*/
 }
