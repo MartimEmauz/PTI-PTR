@@ -1,0 +1,24 @@
+<div class="profile-completion-container">
+    <h2>Complete o Seu Perfil</h2>
+    <form (ngSubmit)="onCompleteProfile()">
+      <label for="firstname">Nome</label>
+      <input type="text" id="firstname" [(ngModel)]="firstname" name="firstname" required>
+      <div *ngIf="firstname && !isNameValid(firstname)" class="error-message">Por favor, insira um nome válido.</div>
+  
+      <label for="lastname">Apelido</label>
+      <input type="text" id="lastname" [(ngModel)]="lastname" name="lastname" required>
+      <div *ngIf="lastname && !isNameValid(lastname)" class="error-message">Por favor, insira um nome válido.</div>
+      
+  
+      <label for="internalid">ID Interno</label>
+      <input type="text" id="internalid" [(ngModel)]="internalid" name="internalid" required>
+      <div *ngIf="internalid && !isInternalIdValid(internalid)" class="error-message">Por favor, insira um ID Interno válido.</div>
+      
+      <label for="postopolice">Posto de Polícia</label>
+      <input type="text" id="postopolice" [(ngModel)]="postopolice" name="postopolice" required>
+      <div *ngIf="postopolice && !isPostoPoliceValid(postopolice)" class="error-message">Por favor, insira um Posto de Polícia válido.</div>
+  
+      <button type="submit">Completar Perfil</button>
+    </form>
+  </div>
+  
