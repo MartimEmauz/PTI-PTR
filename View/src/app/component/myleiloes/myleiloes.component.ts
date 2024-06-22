@@ -39,11 +39,20 @@ export class MyLeiloesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadCustomer();
-    this.service.getLostObjects().subscribe((data: any[]) => {
-      this.lostObjects = data;
-      this.filteredObjects = data;
-    });
+    this.loadFoundObjects();
+  }
+
+  loadFoundObjects() {
+    this.service.getFoundObjects().subscribe(
+      (data: any) => {
+        this.lostObjects = data;
+        this.filteredObjects = data; // Inicialmente, exibe todos os objetos perdidos
+      },
+      (error) => {
+        console.error('Erro ao carregar objetos perdidos:', error);
+        // Trate o erro conforme necessário, como exibir uma mensagem de erro na interface
+      }
+    );
   }
 
   loadCustomer() {

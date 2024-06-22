@@ -8,7 +8,6 @@ import { GeneralUser } from '../Model/general-users-model';
 import { Address } from '../Model/address.model';
 import { PoliceUser } from '../Model/police-users-model';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -61,6 +60,10 @@ export class MasterService {
 
   getLostObjects(): Observable<any[]> {
     return this.http.get<LostObject[]>(`${this.apiUrl}/lostobjects/`);
+  }
+
+  getFoundObjects(): Observable<any[]> {
+    return this.http.get<any>(`${this.apiUrl}/foundobjects/`);
   }
 
   /*
