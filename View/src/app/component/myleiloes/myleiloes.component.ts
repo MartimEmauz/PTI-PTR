@@ -79,7 +79,7 @@ export class MyLeiloesComponent implements OnInit {
     }
   }
 
-  cancelAddObject() {
+  cancelAddObject() { 
     this.lostObjectForm.reset();
     this.showAddObjectForm = false;
   }
