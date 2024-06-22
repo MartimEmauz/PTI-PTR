@@ -1,12 +1,6 @@
-// lost-object.model.ts
+import { Objeto } from './object-model';
+import { GeneralUser } from './general-users-model';
 
-export interface LostObject {
-  title?: string | null;
-  specific_date?: Date | string | null;
-  start_date?: string | null;
-  end_date?: string | null;
-  description?: string | null;
-  category?: string | null;
-  adress?: number | null;
-  generaluser?: number | null;
+export interface LostObject extends Objeto {
+  generalUser: number | GeneralUser;
 }
