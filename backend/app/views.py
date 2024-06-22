@@ -102,9 +102,13 @@ class FoundObjectListCreateAPIView(generics.ListCreateAPIView):
 class FoundObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Foundobject.objects.all()
     serializer_class = FoundobjectSerializer
+    permission_classes = [AllowAny]
+
 
 class LostObjectSearchAPIView(generics.ListAPIView):
     serializer_class = LostobjectSerializer
+    permission_classes = [AllowAny]
+
 
     def get_queryset(self):
         description = self.request.data.get('description')
@@ -113,6 +117,8 @@ class LostObjectSearchAPIView(generics.ListAPIView):
     
 class LostObjectSearchCategoryAPIView(generics.ListAPIView):
     serializer_class = LostobjectSerializer
+    permission_classes = [AllowAny]
+
 
     def get_queryset(self):
         category = self.request.data.get('category')
@@ -121,6 +127,8 @@ class LostObjectSearchCategoryAPIView(generics.ListAPIView):
 
 class LostObjectCompareAPIView(generics.RetrieveAPIView):
     serializer_class = LostobjectSerializer
+    permission_classes = [AllowAny]
+
 
     def get_queryset(self):
         lost_object = self.request.data.get('lost_object')
@@ -130,6 +138,7 @@ class LostObjectCompareAPIView(generics.RetrieveAPIView):
 
 class FoundObjectHistoryListAPIView(generics.ListAPIView):
     serializer_class = FoundobjectSerializer
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         user = self.request.user
@@ -139,26 +148,36 @@ class FoundObjectHistoryListAPIView(generics.ListAPIView):
 class FoundObjectPossibleOwner(generics.RetrieveUpdateDestroyAPIView):
     queryset = Foundobject.objects.all()
     serializer_class = FoundobjectSerializer
+    permission_classes = [AllowAny]
+
 
 class FoundObjectDelivered(generics.RetrieveUpdateDestroyAPIView):
     queryset = Foundobject.objects.all()
     serializer_class = FoundobjectSerializer
+    permission_classes = [AllowAny]
 
 class CategoryListCreateAPIView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [AllowAny]
+
 
 class CategoryRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [AllowAny]
 
 class CategoryAttributeListCreateAPIView(generics.ListCreateAPIView):
     queryset = CategoryAttribute.objects.all()
     serializer_class = CategoryAttributeSerializer
+    permission_classes = [AllowAny]
+
 
 class CategoryAttributeRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CategoryAttribute.objects.all()
     serializer_class = CategoryAttributeSerializer
+    permission_classes = [AllowAny]
+
 
 #---------------------------------------------------------
 #---------Leilões de objetos não reclamados---------------
@@ -167,21 +186,28 @@ class CategoryAttributeRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestr
 class AuctionListCreateAPIView(generics.ListCreateAPIView):
     queryset = Leilao.objects.all()
     serializer_class = LeilaoSerializer
+    permission_classes = [AllowAny]
+
 
 class AuctionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Leilao.objects.all()
     serializer_class = LeilaoSerializer
+    permission_classes = [AllowAny]
 
 class BidListCreateAPIView(generics.ListCreateAPIView):
     queryset = Licitacao.objects.all()
     serializer_class = LicitacaoSerializer
+    permission_classes = [AllowAny]
 
 class BidRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Licitacao.objects.all()
     serializer_class = LicitacaoSerializer
+    permission_classes = [AllowAny]
+
 
 class AuctionHistoryListAPIView(generics.ListAPIView):
     serializer_class = LeilaoSerializer
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         user = self.request.user
@@ -190,6 +216,7 @@ class AuctionHistoryListAPIView(generics.ListAPIView):
 
 class AuctionBoughtListAPIView(generics.ListAPIView):
     serializer_class = LeilaoSerializer
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         user = self.request.user
@@ -198,6 +225,7 @@ class AuctionBoughtListAPIView(generics.ListAPIView):
 
 class AuctionBidListAPIView(generics.ListAPIView):
     serializer_class = LicitacaoSerializer
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         auction = self.request.data.get('auction')
@@ -207,10 +235,12 @@ class AuctionBidListAPIView(generics.ListAPIView):
 class SubscriptionListCreateAPIView(generics.ListCreateAPIView):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
+    permission_classes = [AllowAny]
 
 class SubscriptionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
+    permission_classes = [AllowAny]
 
 #---------------------------------------------------------
 #---------------------Outras precisas---------------------
@@ -219,6 +249,7 @@ class SubscriptionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPI
 class AddressViewSet(viewsets.ModelViewSet):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
+    permission_classes = [AllowAny]
 
 class AddressListCreateAPIView(generics.ListCreateAPIView):
     queryset = Address.objects.all()

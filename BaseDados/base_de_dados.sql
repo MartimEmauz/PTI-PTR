@@ -1,4 +1,20 @@
+-- Drop tables without dependencies or with dependencies that are also being dropped
+DROP TABLE IF EXISTS Subscription;
+DROP TABLE IF EXISTS Licitacao;
+DROP TABLE IF EXISTS Leilao;
+DROP TABLE IF EXISTS FoundObject;
+DROP TABLE IF EXISTS LostObject;
+DROP TABLE IF EXISTS GeneralUser;
+DROP TABLE IF EXISTS UserPolice;
+DROP TABLE IF EXISTS PolicePost;
+DROP TABLE IF EXISTS atributes_object;
+DROP TABLE IF EXISTS Category_attribute;
+DROP TABLE IF EXISTS Objeto;
+DROP TABLE IF EXISTS Category;
+DROP TABLE IF EXISTS Address;
 
+
+-- Creating Address table with PostGIS
 CREATE TABLE Address (
     id SERIAL PRIMARY KEY,
     street VARCHAR(255),
@@ -71,7 +87,7 @@ CREATE TABLE UserPolice (
     email VARCHAR(255),
         UNIQUE (email),
     password VARCHAR(255),
-    internalId VARCHAR(255),
+    internalId INTEGER,
     postoPolice INTEGER,
 		UNIQUE (internalId),
         FOREIGN KEY (postoPolice) REFERENCES PolicePost(id)
@@ -108,7 +124,7 @@ CREATE TABLE FoundObject (
     idFiscal VARCHAR(255),
     phoneNumber INTEGER,
     police INTEGER,
-    	FOREIGN KEY (police) REFERENCES UserPolice(id),
+    	FOREIGN KEY (police) REFERENCES UserPolice(internalId),
     possibleOwner INTEGER,
     	FOREIGN KEY (possibleOwner) REFERENCES GeneralUser(id),
     delivered BOOLEAN
@@ -152,7 +168,6 @@ CREATE TABLE Subscription (
     id_leilao INTEGER,
         FOREIGN KEY (id_leilao) REFERENCES Leilao(id)
 );
-
 
 INSERT INTO Category (name) VALUES
 ('Eletrónicos'),
