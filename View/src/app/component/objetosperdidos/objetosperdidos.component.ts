@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MasterService } from 'src/app/service/master.service';
 import { LostObject } from 'src/app/Model/lost-object.model';
+import { User } from '@auth0/auth0-spa-js';
 
 @Component({
   selector: 'app-table',
@@ -30,7 +31,7 @@ export class ObjetosperdidosComponent implements OnInit {
       title: ['', Validators.required],
       specific_date: ['', Validators.required],
       description: ['', Validators.required],
-      category: ['', Validators.required]
+      category: ['', Validators.required],
     });
   }
 
