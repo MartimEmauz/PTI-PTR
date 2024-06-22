@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MasterService } from 'src/app/service/master.service';
+import { Router } from '@angular/router'; // Import Router
 
 @Component({
   selector: 'app-table',
@@ -25,7 +26,7 @@ export class MyLeiloesComponent implements OnInit {
   lostObjects: any[] = [];
   filteredObjects: any[] = [];
 
-  constructor(private service: MasterService, private fb: FormBuilder) {
+  constructor(private service: MasterService, private fb: FormBuilder, private router: Router) { // Inject Router
     this.dataSource = new MatTableDataSource<any>();
     this.lostObjectForm = this.fb.group({
       title: ['', Validators.required],
@@ -127,5 +128,9 @@ export class MyLeiloesComponent implements OnInit {
       return { dateRangeInvalid: true };
     }
     return null;
+  }
+
+  viewDetails(lostObject: any) {
+    this.router.navigate(['/object-details', lostObject.id]); // Navigate to the details page
   }
 }

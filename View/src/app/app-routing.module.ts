@@ -13,6 +13,7 @@ import { PoliticaPrivacidadeComponent } from './component/politica-privacidade/p
 import { AuthGuard } from './auth.guard';
 import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosperdidos.component';
 import { MyAccountLogadoComponent } from './component/my-account-logado/my-account-logado.component';
+import { ObjectDetailsComponent } from './component/object-details/object-details.component'; // Import ObjectDetailsComponent
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: 'profile-completion-policeman', component: ProfileCompletionPolicemanComponent, canActivate: [AuthGuard]},
   { path: 'politica-privacidade', component: PoliticaPrivacidadeComponent },
   { path: 'objetosperdidos', component: ObjetosperdidosComponent },
-  {path: 'my-account-logado', component: MyAccountLogadoComponent, canActivate: [AuthGuard]}
+  { path: 'my-account-logado', component: MyAccountLogadoComponent, canActivate: [AuthGuard]},
+  { path: 'object-details/:id', component: ObjectDetailsComponent } // Add route for object details
 ];
 
 @NgModule({

@@ -66,12 +66,6 @@ export class MasterService {
     return this.http.get<any>(`${this.apiUrl}/foundobjects/`);
   }
 
-  /*
-  getLostObjects(): Observable<any[]> {
-    return this.http.get<any>(`${this.apiUrl}/lostobjects/`);
-  }
-  */
-
   // Example function to send data to Django API
   sendData(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/endpoint`, data);
@@ -113,5 +107,8 @@ export class MasterService {
     return this.http.get<GeneralUser | null>(`${this.apiUrl}policeusers/${email}/`);
   }
 
-
+  // Add method to fetch object details
+  getObjectDetails(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/object-details/${id}`);
+  }
 }
