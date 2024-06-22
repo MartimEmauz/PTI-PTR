@@ -8,7 +8,7 @@ export interface FoundObject {
   end_date?: string | null;
   description?: string | null;
   category?: string | null;
-  adress?: number | null;
+  address?: number | null;
   generaluser?: number | null;
   firstName: string;
   lastName: string;
@@ -21,3 +21,4 @@ export interface FoundObject {
   possibleOwner?: number | GeneralUser;
   delivered: boolean;
 }
+
