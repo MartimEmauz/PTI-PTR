@@ -8,10 +8,11 @@ from .serializers import (
 )
 from utils.utils import find_similar_objects, compare_objects
 
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
 #---------------------------------------------------------
@@ -44,6 +45,12 @@ class UserPoliceRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVi
     serializer_class = UserpoliceSerializer
     permission_classes = [AllowAny]
 
+class UserPoliceRetrieveUpdateDestroyAPIView_Email(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Userpolice.objects.all()
+    serializer_class = UserpoliceSerializer
+    permission_classes = [AllowAny]
+    lookup_field = 'email'
+
 class PolicePostListCreateAPIView(generics.ListCreateAPIView):
     queryset = PolicePost.objects.all()
     serializer_class = PolicePostSerializer
@@ -68,6 +75,7 @@ class LostObjectListCreateAPIView(generics.ListCreateAPIView):
 class LostObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Lostobject.objects.all()
     serializer_class = LostobjectSerializer
+    permission_classes = [AllowAny]
 
 class LostObjectHistoryListAPIView(generics.ListAPIView):
     serializer_class = LostobjectSerializer
@@ -94,9 +102,13 @@ class FoundObjectListCreateAPIView(generics.ListCreateAPIView):
 class FoundObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Foundobject.objects.all()
     serializer_class = FoundobjectSerializer
+    permission_classes = [AllowAny]
+
 
 class LostObjectSearchAPIView(generics.ListAPIView):
     serializer_class = LostobjectSerializer
+    permission_classes = [AllowAny]
+
 
     def get_queryset(self):
         description = self.request.data.get('description')
@@ -105,6 +117,8 @@ class LostObjectSearchAPIView(generics.ListAPIView):
     
 class LostObjectSearchCategoryAPIView(generics.ListAPIView):
     serializer_class = LostobjectSerializer
+    permission_classes = [AllowAny]
+
 
     def get_queryset(self):
         category = self.request.data.get('category')
@@ -113,6 +127,8 @@ class LostObjectSearchCategoryAPIView(generics.ListAPIView):
 
 class LostObjectCompareAPIView(generics.RetrieveAPIView):
     serializer_class = LostobjectSerializer
+    permission_classes = [AllowAny]
+
 
     def get_queryset(self):
         lost_object = self.request.data.get('lost_object')
@@ -122,6 +138,7 @@ class LostObjectCompareAPIView(generics.RetrieveAPIView):
 
 class FoundObjectHistoryListAPIView(generics.ListAPIView):
     serializer_class = FoundobjectSerializer
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         user = self.request.user
@@ -131,26 +148,36 @@ class FoundObjectHistoryListAPIView(generics.ListAPIView):
 class FoundObjectPossibleOwner(generics.RetrieveUpdateDestroyAPIView):
     queryset = Foundobject.objects.all()
     serializer_class = FoundobjectSerializer
+    permission_classes = [AllowAny]
+
 
 class FoundObjectDelivered(generics.RetrieveUpdateDestroyAPIView):
     queryset = Foundobject.objects.all()
     serializer_class = FoundobjectSerializer
+    permission_classes = [AllowAny]
 
 class CategoryListCreateAPIView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [AllowAny]
+
 
 class CategoryRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [AllowAny]
 
 class CategoryAttributeListCreateAPIView(generics.ListCreateAPIView):
     queryset = CategoryAttribute.objects.all()
     serializer_class = CategoryAttributeSerializer
+    permission_classes = [AllowAny]
+
 
 class CategoryAttributeRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CategoryAttribute.objects.all()
     serializer_class = CategoryAttributeSerializer
+    permission_classes = [AllowAny]
+
 
 #---------------------------------------------------------
 #---------Leilões de objetos não reclamados---------------
@@ -159,21 +186,28 @@ class CategoryAttributeRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestr
 class AuctionListCreateAPIView(generics.ListCreateAPIView):
     queryset = Leilao.objects.all()
     serializer_class = LeilaoSerializer
+    permission_classes = [AllowAny]
+
 
 class AuctionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Leilao.objects.all()
     serializer_class = LeilaoSerializer
+    permission_classes = [AllowAny]
 
 class BidListCreateAPIView(generics.ListCreateAPIView):
     queryset = Licitacao.objects.all()
     serializer_class = LicitacaoSerializer
+    permission_classes = [AllowAny]
 
 class BidRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Licitacao.objects.all()
     serializer_class = LicitacaoSerializer
+    permission_classes = [AllowAny]
+
 
 class AuctionHistoryListAPIView(generics.ListAPIView):
     serializer_class = LeilaoSerializer
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         user = self.request.user
@@ -182,6 +216,7 @@ class AuctionHistoryListAPIView(generics.ListAPIView):
 
 class AuctionBoughtListAPIView(generics.ListAPIView):
     serializer_class = LeilaoSerializer
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         user = self.request.user
@@ -190,6 +225,7 @@ class AuctionBoughtListAPIView(generics.ListAPIView):
 
 class AuctionBidListAPIView(generics.ListAPIView):
     serializer_class = LicitacaoSerializer
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         auction = self.request.data.get('auction')
@@ -199,14 +235,21 @@ class AuctionBidListAPIView(generics.ListAPIView):
 class SubscriptionListCreateAPIView(generics.ListCreateAPIView):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
+    permission_classes = [AllowAny]
 
 class SubscriptionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
+    permission_classes = [AllowAny]
 
 #---------------------------------------------------------
 #---------------------Outras precisas---------------------
 #---------------------------------------------------------
+
+class AddressViewSet(viewsets.ModelViewSet):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+    permission_classes = [AllowAny]
 
 class AddressListCreateAPIView(generics.ListCreateAPIView):
     queryset = Address.objects.all()

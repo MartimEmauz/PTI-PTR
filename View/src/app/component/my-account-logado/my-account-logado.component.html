@@ -1,0 +1,33 @@
+<mat-card class="profile-card">
+    <mat-card-header>
+      <div mat-card-avatar class="profile-avatar" [style.background-image]="'url(' + user.avatarUrl + ')'"></div>
+      <mat-card-title>{{ user.name }}</mat-card-title>
+      <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
+    </mat-card-header>
+  
+    <mat-card-content>
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Phone</mat-label>
+          <input matInput formControlName="phone" type="tel" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Address</mat-label>
+          <textarea matInput formControlName="address" required></textarea>
+        </mat-form-field>
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">Save</button>
+          <button mat-raised-button color="accent" type="button" (click)="onCancel()">Repor</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

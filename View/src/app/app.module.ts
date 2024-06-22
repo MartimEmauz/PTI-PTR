@@ -5,10 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material-module';
+import { MatTooltipModule } from '@angular/material/tooltip'; // Import MatTooltipModule
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenubarComponent } from './component/menubar/menubar.component';
 import { HomeComponent } from './component/home/home.component';
-import { SliderComponent } from './component/slider/slider.component';
+import { MapaComponent } from './component/mapa/mapa.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PopupComponent } from './component/popup/popup.component';
 import { UserdetailComponent } from './component/userdetail/userdetail.component';
@@ -22,13 +23,18 @@ import { LoginPopUpComponent } from './login-pop-up/login-pop-up.component';
 import { RegisterPopUpComponent } from './register-pop-up/register-pop-up.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { ProfileCompletionComponent } from './component/profile-completion/profile-completion.component';
-
+import { PoliticaPrivacidadeComponent } from './component/politica-privacidade/politica-privacidade.component';
+import { DatePipe } from '@angular/common';
+import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosperdidos.component';
+import { MyAccountLogadoComponent } from './component/my-account-logado/my-account-logado.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ProfileCompletionPolicemanComponent } from './component/profile-completion-policeman/profile-completion-policeman.component';
 @NgModule({
   declarations: [
     AppComponent,
     MenubarComponent,
     HomeComponent,
-    SliderComponent,
+    MapaComponent,
     PopupComponent,
     UserdetailComponent,
     LeiloesComponent,
@@ -39,12 +45,17 @@ import { ProfileCompletionComponent } from './component/profile-completion/profi
     FooterComponent,
     LoginPopUpComponent,
     RegisterPopUpComponent,
-    ProfileCompletionComponent
+    ProfileCompletionComponent,
+    PoliticaPrivacidadeComponent,
+    ObjetosperdidosComponent,
+    MyAccountLogadoComponent,
+    ProfileCompletionPolicemanComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule, // Certifique-se de que isso está correto
+    AppRoutingModule,
     BrowserAnimationsModule,
+    MatTooltipModule,
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
@@ -52,13 +63,13 @@ import { ProfileCompletionComponent } from './component/profile-completion/profi
     AuthModule.forRoot({
       domain: 'dev-7ety36lrjtchzs5o.us.auth0.com',
       clientId: 'QtBbOFF8p3ObAlrfl8NvoARtRysybsAi',
-      //audience: 'your-auth0-api-identifier', // Optional, only if you are using API authorization
-      authorizationParams:{
+      authorizationParams: {
         redirectUri: window.location.origin,
       }
-    })
+    }),
+    MatSlideToggleModule // Add MatSlideToggleModule to imports
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

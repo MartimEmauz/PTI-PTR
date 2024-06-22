@@ -7,7 +7,7 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator, EmailValidator
+from django.core.validators import RegexValidator, EmailValidator, MinLengthValidator, MaxLengthValidator
 #from django.contrib.gis.db.models import models
 
 
@@ -185,6 +185,7 @@ class Generaluser(models.Model):
     password = models.CharField(max_length=255, blank=True, null=True)
     gender = models.CharField(max_length=50, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
+    phonenumber = models.IntegerField(unique=True, blank=True, null=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, db_column='address', blank=True, null=True)
     phonenumber = models.CharField(
         max_length=15,
@@ -199,14 +200,14 @@ class Generaluser(models.Model):
         unique=True,
         blank=True,
         null=True,
-        validators=[RegexValidator(regex=r'^\d{8}[A-Z]$', message="Enter a valid Portuguese Civil ID.")]
+        #validators=[RegexValidator(regex=r'^\d{8}[A-Z]$', message="Enter a valid Portuguese Civil ID.")]
     )
     idfiscal = models.CharField(
         max_length=9,
         unique=True,
         blank=True,
         null=True,
-        validators=[RegexValidator(regex=r'^[1-3|5]\d{8}$', message="Enter a valid Fiscal Number (NIF).")]
+        #validators=[RegexValidator(regex=r'^[1-3|5]\d{8}$', message="Enter a valid Fiscal Number (NIF).")]
     )
 
     class Meta:
@@ -236,6 +237,10 @@ class Lostobject(models.Model):
         db_table = 'lostobject'
         app_label = 'app'
         constraints = [
+            models.CheckConstraint(
+                check=models.Q(start_date__lt=models.F('end_date')),
+                name='start_date_before_end_date'
+            ),
             models.CheckConstraint(
                 check=(
                     models.Q(specific_date__isnull=False, start_date__isnull=True, end_date__isnull=True) |
@@ -306,10 +311,14 @@ class PolicePost(models.Model):
         app_label = 'app'
 
 class Userpolice(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.AutoField (primary_key=True)
     firstname = models.CharField(max_length=255, blank=True, null=True)
     lastname = models.CharField(max_length=255, blank=True, null=True)
-    email = models.CharField(max_length=255, unique=True)
+    email = models.CharField(
+        max_length=255,
+        unique=True,
+        validators=[EmailValidator(message="Enter a valid email address.")]
+    )
     password = models.CharField(max_length=255, blank=True, null=True)
     internalid = models.IntegerField(unique=True)
     postopolice = models.ForeignKey(PolicePost, on_delete=models.CASCADE, db_column='postopolice', blank=True, null=True)
@@ -318,6 +327,11 @@ class Userpolice(models.Model):
         managed = False
         db_table = 'userpolice'
         app_label = 'app'
+
+    def save(self, *args, **kwargs):
+            if self.email and '@' not in self.email:
+                raise ValidationError("Email must contain @ symbol.")
+            super().save(*args, **kwargs)
 
 
 class Foundobject(models.Model):
@@ -369,6 +383,16 @@ class Leilao(models.Model):
         managed = False
         db_table = 'leilao'
         app_label = 'app'
+        constraints = [
+            models.CheckConstraint(
+                check=models.Q(data_inicio__lt=models.F('data_fim')),
+                name='start_date_before_end_date'
+            ),
+            models.CheckConstraint(
+                check=models.Q(valor_base__gte=0),
+                name='valor_base_positive'
+            )
+        ]
 
 
 class Licitacao(models.Model):

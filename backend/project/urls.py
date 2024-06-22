@@ -1,6 +1,9 @@
 from django.urls import path # type: ignore
 from app import views
 from app.views import ProtectedView
+from rest_framework.routers import DefaultRouter
+
+
 
 urlpatterns = [
 
@@ -22,6 +25,7 @@ urlpatterns = [
     # User Police URLs
     path('policeusers/', views.UserPoliceListCreateAPIView.as_view(), name='userpolice-list-create'),
     path('policeusers/<int:pk>/', views.UserPoliceRetrieveUpdateDestroyAPIView.as_view(), name='userpolice-retrieve-update-destroy'),
+    path('policeusers/<int:email>/', views.UserPoliceRetrieveUpdateDestroyAPIView_Email.as_view(), name='userpolice-retrieve-update-destroy-email'),
 
     # Auth0 URLs
     path('protected/', ProtectedView.as_view(), name='protected'),

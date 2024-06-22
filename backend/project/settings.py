@@ -9,6 +9,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#def generate_allowed_hosts():
+    #base_ip = '10.12.0.'
+    #start = 12
+    #end = 255
+    #return [base_ip + str(i) for i in range(start, end + 1)]
+
+#ALLOWED_HOSTS = generate_allowed_hosts() + ['localhost', '127.0.0.1', '[::1]']
+
 #GDAL_LIBRARY_PATH = 'caminho/para/sua/biblioteca/gdal'
 
 INSTALLED_APPS = [
@@ -57,6 +65,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
+#DATABASES = {
+    #'default': {
+       # 'ENGINE': 'django.db.backends.postgresql',
+       # 'NAME': 'pti_ptr_db',
+       # 'USER': 'pti_ptr_user',
+       # 'PASSWORD': 'grupo05',
+       # 'HOST': '10.11.0.4',
+       # 'PORT': '5432',
+   # }
+#}
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -67,6 +87,8 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+
 
 LANGUAGE_CODE = 'en-us'
 
@@ -88,6 +110,10 @@ AUTH0_DOMAIN = 'dev-7ety36lrjtchzs5o.us.auth0.com'
 API_IDENTIFIER = 'http://127.0.0.1:8000/'
 PUBLIC_KEY = None
 JWT_ISSUER = None
+
+AUTH0_POLICE_DOMAIN = 'your-police-auth0-domain'
+AUTH0_POLICE_API_AUDIENCE = 'your-police-api-audience'
+AUTH0_POLICE_CLIENT_ID = 'your-police-client-id'
 
 if AUTH0_DOMAIN and API_IDENTIFIER:
     JWT_ISSUER = f'https://{AUTH0_DOMAIN}/'

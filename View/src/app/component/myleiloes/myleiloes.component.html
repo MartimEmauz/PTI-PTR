@@ -1,46 +1,96 @@
 <mat-card>
-  <mat-card-header>
-    <mat-form-field>
-      <input matInput (keyup)="filterChange($event)" placeholder="Enter the text" />
-    </mat-form-field>
-    <button style="margin-left: 60%;" (click)="showAddObjectForm = true" mat-raised-button color="primary">Adicionar Objeto</button>
-  </mat-card-header>
+  <div class="search-container">
+    <input class="searchbar" [(ngModel)]="searchText" (input)="onSearch()" placeholder="Pesquisar Objeto" aria-label="Pesquisar Objetos">
+    <button (click)="showAddObjectForm = true" mat-raised-button color="primary">Adicionar Objeto</button>
+  </div>
+
   <mat-card-content>
     <!-- Formulário para adicionar objeto -->
-    <div *ngIf="showAddObjectForm">
-      <form (ngSubmit)="addLostObject()">
-        <mat-form-field>
-          <mat-label>Date</mat-label>
-          <input matInput [(ngModel)]="newLostObject.date" name="date" required>
+    <div *ngIf="showAddObjectForm" class="add-object-form">
+      <form (ngSubmit)="addLostObject()" [formGroup]="lostObjectForm" class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Título</mat-label>
+          <input matInput formControlName="title" required>
+          <mat-error *ngIf="lostObjectForm.controls['title'].invalid && lostObjectForm.controls['title'].touched">Título é obrigatório</mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <mat-label>Description</mat-label>
-          <input matInput [(ngModel)]="newLostObject.description" name="description" required>
+    
+        <div class="full-width">
+          <mat-slide-toggle (change)="toggleDateInput()" [checked]="useSpecificDate">Usar Data Específica</mat-slide-toggle>
+        </div>
+    
+        <ng-container *ngIf="useSpecificDate; else dateRange">
+          <mat-form-field appearance="outline">
+            <mat-label>Data Específica</mat-label>
+            <input matInput formControlName="specific_date" type="date">
+            <mat-error *ngIf="lostObjectForm.controls['specific_date'].invalid && lostObjectForm.controls['specific_date'].touched">Data Específica é obrigatória se o intervalo de datas não for fornecido</mat-error>
+          </mat-form-field>
+        </ng-container>
+    
+        <ng-template #dateRange>
+          <mat-form-field appearance="outline">
+            <mat-label>Data de Início</mat-label>
+            <input matInput formControlName="start_date" type="date">
+            <mat-error *ngIf="lostObjectForm.controls['start_date'].invalid && lostObjectForm.controls['start_date'].touched">Data de Início é obrigatória se a Data Específica não for fornecida</mat-error>
+          </mat-form-field>
+    
+          <mat-form-field appearance="outline">
+            <mat-label>Data de Fim</mat-label>
+            <input matInput formControlName="end_date" type="date">
+            <mat-error *ngIf="lostObjectForm.controls['end_date'].invalid && lostObjectForm.controls['end_date'].touched">Data de Fim é obrigatória se a Data Específica não for fornecida</mat-error>
+          </mat-form-field>
+        </ng-template>
+    
+        <mat-form-field appearance="outline">
+          <mat-label>Descrição</mat-label>
+          <input matInput formControlName="description" required>
+          <mat-error *ngIf="lostObjectForm.controls['description'].invalid && lostObjectForm.controls['description'].touched">Descrição é obrigatória</mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <mat-label>Category</mat-label>
-          <input matInput [(ngModel)]="newLostObject.category" name="category" required>
+    
+        <mat-form-field appearance="outline">
+          <mat-label>Categoria</mat-label>
+          <mat-select formControlName="category" required>
+            <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="lostObjectForm.controls['category'].invalid && lostObjectForm.controls['category'].touched">Categoria é obrigatória</mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <mat-label>Address</mat-label>
-          <input matInput [(ngModel)]="newLostObject.address" name="address" required>
+    
+        <mat-form-field appearance="outline">
+          <mat-label>Endereço</mat-label>
+          <input matInput formControlName="address" required>
+          <mat-error *ngIf="lostObjectForm.controls['address'].invalid && lostObjectForm.controls['address'].touched">Endereço é obrigatório</mat-error>
         </mat-form-field>
-        <button mat-raised-button type="submit" color="primary">Save</button>
-        <button mat-raised-button (click)="cancelAddObject()">Cancel</button>
+    
+        <div class="full-width">
+          <mat-error *ngIf="lostObjectForm.errors?.['dateRangeInvalid'] && (lostObjectForm.controls['start_date'].touched || lostObjectForm.controls['end_date'].touched || lostObjectForm.controls['specific_date'].touched)">Por favor, forneça uma data específica ou um intervalo de datas válido</mat-error>
+        </div>
+    
+        <div class="button-group">
+          <button mat-raised-button type="submit" color="primary" [disabled]="lostObjectForm.invalid">Guardar</button>
+          <button mat-raised-button type="button" (click)="cancelAddObject()">Cancelar</button>
+        </div>
       </form>
     </div>
-    <!-- Tabela de leilões -->
-    <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <!-- Definição das colunas -->
-      <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </th>
-        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+    
+
+    <ul class="cards">
+      <li *ngFor="let lostObject of filteredObjects">
+        <a class="card">
+          <img [src]="getCardImagePath(lostObject.category)" class="card__image" alt="Imagem de {{lostObject.title}}">
+          <div class="card__overlay">
+            <div class="card__header">
+              <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
+                <path />
+              </svg>
+              <div class="card__header-text">
+                <h3 class="card__title">{{lostObject.title}}</h3>
+                <span class="card__status">{{lostObject.specific_date | date}}</span>
+              </div>
+            </div>
+            <p class="card__description">{{lostObject.description}}</p>
+            <p class="card__description">(Opções vão aparecer nesta zona)</p>
+          </div>
+        </a>
+      </li>
+    </ul>
   </mat-card-content>
-  <mat-card-footer>
-    <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
-  </mat-card-footer>
 </mat-card>

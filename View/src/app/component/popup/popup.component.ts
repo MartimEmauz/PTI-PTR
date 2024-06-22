@@ -30,10 +30,10 @@ export class PopupComponent implements OnInit {
     this.service.GetCustomerbycode(code).subscribe(item => {
       this.editdata = item;
       this.myForm.setValue({
+        title: "",
         date: '', 
         description: '', 
-        category: null, 
-        address: null
+        category: null,
       });
     });
   }
@@ -44,10 +44,10 @@ export class PopupComponent implements OnInit {
   }
 
   myForm = this.formBuilder.group({
+    title: [""],
     date: [''],
     description: [''],
     category: [''],
-    address: ['']
   });
 
 
@@ -62,16 +62,16 @@ export class PopupComponent implements OnInit {
   
     // Ensure that form values are of the correct types
     const newLostObject: LostObject = {
-      date: formValue.date as string | null, // Cast to string | null
+      title: formValue.title as string | null,
+      specific_date: formValue.date as string | null, // Cast to string | null
       description: formValue.description as string | null, // Cast to string | null
-      category: typeof formValue.category === 'string' && formValue.category !== '' ? parseInt(formValue.category, 10) : null, // Parse as number or null
-      address: typeof formValue.address === 'string' && formValue.address !== '' ? parseInt(formValue.address, 10) : null // Parse as number or null
+     // category: typeof formValue.category === 'number' && formValue.category !== '' ? parseInt(formValue.category, 10) : null, // Parse as number or null
     };
   
-    this.service.addLostObject(newLostObject).subscribe(() => {
-      this.closepopup();
-    });
+    this.service.addLostObject(newLostObject)
+    this.closepopup()
   }
   
+
   
 }   

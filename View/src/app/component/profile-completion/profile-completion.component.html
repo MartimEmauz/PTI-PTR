@@ -1,55 +1,59 @@
 <div class="profile-completion-container">
   <h2>Complete o Seu Perfil</h2>
-  <form (ngSubmit)="onCompleteProfile()">
-    <label for="name">Nome</label>
-    <input type="text" id="name" [(ngModel)]="name" name="name" required>
-    <div *ngIf="name && !isNameValid(name)" class="error-message">Por favor, insira um nome válido.</div>
+  <form [formGroup]="profileForm" (ngSubmit)="onCompleteProfile()">
+    <label for="firstname">Nome</label>
+    <input type="text" id="firstname" formControlName="firstname" required>
+    <div *ngIf="profileForm.controls['firstname'].invalid && profileForm.controls['firstname'].touched" class="error-message">Por favor, insira um nome válido.</div>
+
+    <label for="lastname">Apelido</label>
+    <input type="text" id="lastname" formControlName="lastname" required>
+    <div *ngIf="profileForm.controls['lastname'].invalid && profileForm.controls['lastname'].touched" class="error-message">Por favor, insira um nome válido.</div>
     
     <label for="gender">Género</label>
-    <select id="gender" [(ngModel)]="gender" name="gender" required>
+    <select id="gender" formControlName="gender" required>
       <option value="male">Masculino</option>
       <option value="female">Feminino</option>
       <option value="other">Outro</option>
     </select>
 
     <label for="birthday">Data de Nascimento</label>
-    <input type="date" id="birthday" [(ngModel)]="birthday" name="birthday" required>
-    <div *ngIf="birthday && !isDateValid(birthday)" class="error-message">Por favor, insira uma data de nascimento válida.</div>
+    <input type="date" id="birthday" formControlName="birthday" required>
+    <div *ngIf="profileForm.controls['birthday'].invalid && profileForm.controls['birthday'].touched" class="error-message">Por favor, insira uma data de nascimento válida.</div>
     
     <label for="street">Morada</label>
-    <input type="text" id="street" [(ngModel)]="street" name="street" required>
-    <div *ngIf="street && !isAddressValid(street)" class="error-message">Por favor, insira uma morada válida.</div>
+    <input type="text" id="street" formControlName="street" required>
+    <div *ngIf="profileForm.controls['street'].invalid && profileForm.controls['street'].touched" class="error-message">Por favor, insira uma morada válida.</div>
 
     <div class="address-fields">
       <div>
         <label for="country">País</label>
-        <input type="text" id="country" [(ngModel)]="country" name="country" required>
-        <div *ngIf="country && !isCountryValid(country)" class="error-message">Por favor, insira um país válido.</div>
+        <input type="text" id="country" formControlName="country" required>
+        <div *ngIf="profileForm.controls['country'].invalid && profileForm.controls['country'].touched" class="error-message">Por favor, insira um país válido.</div>
       </div>
       <div>
         <label for="city">Cidade</label>
-        <input type="text" id="city" [(ngModel)]="city" name="city" required>
-        <div *ngIf="city && !isCityValid(city)" class="error-message">Por favor, insira uma cidade válida.</div>
+        <input type="text" id="city" formControlName="city" required>
+        <div *ngIf="profileForm.controls['city'].invalid && profileForm.controls['city'].touched" class="error-message">Por favor, insira uma cidade válida.</div>
       </div>
       <div>
         <label for="zip">Código Postal</label>
-        <input type="text" id="zip" [(ngModel)]="zip" name="zip" required>
-        <div *ngIf="zip && !isZipCodeValid(zip)" class="error-message">Por favor, insira um código postal válido.</div>
+        <input type="text" id="zip" formControlName="zip" required>
+        <div *ngIf="profileForm.controls['zip'].invalid && profileForm.controls['zip'].touched" class="error-message">Por favor, insira um código postal válido.</div>
       </div>
     </div>
 
     <label for="nif">NIF</label>
-    <input type="text" id="nif" [(ngModel)]="nif" name="nif" required>
-    <div *ngIf="nif && !isNifValid(nif)" class="error-message">Por favor, insira um NIF válido.</div>
+    <input type="text" id="nif" formControlName="nif" required>
+    <div *ngIf="profileForm.controls['nif'].invalid && profileForm.controls['nif'].touched" class="error-message">Por favor, insira um NIF válido.</div>
     
     <label for="cc">CC</label>
-    <input type="text" id="cc" [(ngModel)]="cc" name="cc" required>
-    <div *ngIf="cc && !isCcValid(cc)" class="error-message">Por favor, insira um CC válido.</div>
+    <input type="text" id="cc" formControlName="cc" required>
+    <div *ngIf="profileForm.controls['cc'].invalid && profileForm.controls['cc'].touched" class="error-message">Por favor, insira um CC válido.</div>
     
     <label for="phoneNumber">Número de Telefone</label>
-    <input type="tel" id="phoneNumber" [(ngModel)]="phoneNumber" name="phoneNumber" required>
-    <div *ngIf="phoneNumber && !isPhoneNumberValid(phoneNumber)" class="error-message">Por favor, insira um número de telefone válido.</div>
+    <input type="tel" id="phoneNumber" formControlName="phoneNumber" required>
+    <div *ngIf="profileForm.controls['phoneNumber'].invalid && profileForm.controls['phoneNumber'].touched" class="error-message">Por favor, insira um número de telefone válido.</div>
 
-    <button type="submit">Completar Perfil</button>
+    <button type="submit" [disabled]="profileForm.invalid">Completar Perfil</button>
   </form>
 </div>

@@ -6,12 +6,14 @@ import { Country, Customer } from '../Model/Customer';
 import { LostObject } from '../Model/lost-object.model';
 import { GeneralUser } from '../Model/general-users-model';
 import { Address } from '../Model/address.model';
+import { PoliceUser } from '../Model/police-users-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MasterService {
 
+  private apiUrl = 'http://127.0.0.1:8000/';
   constructor(private http: HttpClient) { }
 
   GetColorList(): colorentity[] {
@@ -24,42 +26,51 @@ export class MasterService {
     ]
   }
 
-  GetCustomer():Observable<Customer[]>{
-    return this.http.get<Customer[]>("http://localhost:3000/customer");
+  GetCustomer(): Observable<Customer[]> {
+    return this.http.get<Customer[]>("http://localhost:8000/customer");
   }
 
-  Savecustomer(data:any){
+  Savecustomer(data: any) {
     console.log(data)
-    return this.http.post("http://localhost:3000/customer",data);
+    return this.http.post("http://localhost:8000/customer", data);
   }
 
-  GetCustomerbycode(code:any){
-    return this.http.get("http://localhost:3000/customer/"+code);
+  GetCustomerbycode(code: any) {
+    return this.http.get("http://localhost:8000/customer/" + code);
   }
 
-  GetAssociate(){
-    return this.http.get('http://localhost:3000/associate');
-  }
-  GetAssociatebycode(code:any){
-    return this.http.get('http://localhost:3000/associate/'+code);
-  }
-  GetCountry():Observable<Country[]>{
-    return this.http.get<Country[]>('http://localhost:3000/country');
+  GetAssociate() {
+    return this.http.get('http://localhost:8000/associate');
   }
 
-  SaveAssociate(data:any,code:any){
-    return this.http.put('http://localhost:3000/associate/'+code,data);
+  GetAssociatebycode(code: any) {
+    return this.http.get('http://localhost:8000/associate/' + code);
   }
 
+  GetCountry(): Observable<Country[]> {
+    return this.http.get<Country[]>('http://localhost:8000/country');
+  }
+
+  SaveAssociate(data: any, code: any) {
+    return this.http.put('http://localhost:8000/associate/' + code, data);
+  }
 
   //API ------------------------------------------------------------------
+  private jsonUrl = 'assets/lost_objects.json';
 
-  private apiUrl = 'http://127.0.0.1:8000/'; // Your Django API URL
-
-  // Example function to fetch data from Django API
-  getData(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/endpoint`);
+  getLostObjects(): Observable<any[]> {
+    return this.http.get<LostObject[]>(`${this.apiUrl}/lostobjects/`);
   }
+
+  getFoundObjects(): Observable<any[]> {
+    return this.http.get<any>(`${this.apiUrl}/foundobjects/`);
+  }
+
+  /*
+  getLostObjects(): Observable<any[]> {
+    return this.http.get<any>(`${this.apiUrl}/lostobjects/`);
+  }
+  */
 
   // Example function to send data to Django API
   sendData(data: any): Observable<any> {
@@ -67,9 +78,8 @@ export class MasterService {
   }
 
   addLostObject(newLostObject: LostObject): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/lostobjects/`, newLostObject);
-  }
-
+    return this.http.post<any>(`${this.apiUrl}/lostobjects/`, newLostObject); 
+  } 
   createUser(user: GeneralUser): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}generalusers/`, user);
   }
@@ -84,6 +94,18 @@ export class MasterService {
 
   createAddress(address: Address): Observable<Address> {
     return this.http.post<Address>(`${this.apiUrl}addresses/`, address);
+  }
+
+  createPoliceUser(pUser: PoliceUser): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}policeusers/`, pUser);
+  }
+
+  updatePoliceUser(email: string, pUserData: Partial<PoliceUser>): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}policeusers/${email}/`, pUserData);
+  }
+
+  getPoliceUserByEmail(email: string): Observable<PoliceUser | null> {
+    return this.http.get<GeneralUser | null>(`${this.apiUrl}policeusers/${email}/`);
   }
 
 
