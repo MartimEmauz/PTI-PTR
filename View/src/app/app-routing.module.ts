@@ -26,9 +26,9 @@ const routes: Routes = [
   { path: 'profile-completion', component: ProfileCompletionComponent, canActivate: [AuthGuard]},
   { path: 'profile-completion-policeman', component: ProfileCompletionPolicemanComponent, canActivate: [AuthGuard]},
   { path: 'politica-privacidade', component: PoliticaPrivacidadeComponent },
-  { path: 'objetosperdidos', component: ObjetosperdidosComponent },
+  { path: 'objetosperdidos', component: ObjetosperdidosComponent, canActivate: [AuthGuard] },
   { path: 'my-account-logado', component: MyAccountLogadoComponent, canActivate: [AuthGuard]},
-  { path: 'object-details/:id', component: ObjectDetailsComponent } // Add route for object details
+  { path: 'object-details/:id', component: ObjectDetailsComponent, canActivate: [AuthGuard] } // Add route for object details
 ];
 
 @NgModule({

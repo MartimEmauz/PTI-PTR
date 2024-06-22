@@ -142,7 +142,7 @@ export class MyAccountComponent {
             (profileCompleted) => {
               if (!profileCompleted) {
                 console.log('Profile is not completed');
-                this.router.navigate(['/my-account-logado']);
+                this.router.navigate(['/profile-completion-policeman']);
               }
             },
             (error) => {
@@ -170,12 +170,13 @@ export class MyAccountComponent {
         if (user.email) {
           const policeUser: PoliceUser = {
             email: user.email,
+            internalid: 0,
           };
           this.apiService.createPoliceUser(policeUser).subscribe(
             (response) => {
               console.log('User added to userpolice table:', response);
               // Redirect to profile completion page after sign-up
-              this.router.navigate(['/my-account-logado']);
+              this.router.navigate(['/profile-completion-policeman']);
             },
             (error) => {
               console.error('Error adding user to userpolice table:', error);
