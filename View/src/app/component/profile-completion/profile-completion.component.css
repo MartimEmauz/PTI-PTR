@@ -51,6 +51,11 @@ button:hover {
   background-color: #0056b3;
 }
 
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 .error-message {
   color: red;
   font-size: 0.9em;

@@ -106,6 +106,7 @@ export class MyLeiloesComponent implements OnInit {
       this.lostObjectForm.controls['start_date'].enable();
       this.lostObjectForm.controls['end_date'].enable();
     }
+    this.lostObjectForm.updateValueAndValidity(); // Update form validity after toggling
   }
 
   dateRangeValidator(group: AbstractControl): ValidationErrors | null {
