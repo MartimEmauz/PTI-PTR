@@ -29,6 +29,7 @@ import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosper
 import { MyAccountLogadoComponent } from './component/my-account-logado/my-account-logado.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ProfileCompletionPolicemanComponent } from './component/profile-completion-policeman/profile-completion-policeman.component';
+import { ObjectDetailsComponent } from './component/object-details/object-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +51,7 @@ import { ProfileCompletionPolicemanComponent } from './component/profile-complet
     ObjetosperdidosComponent,
     MyAccountLogadoComponent,
     ProfileCompletionPolicemanComponent,
+    ObjectDetailsComponent,
   ],
   imports: [
     BrowserModule,

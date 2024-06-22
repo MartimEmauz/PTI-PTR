@@ -11,3 +11,6 @@ export interface Objeto {
   category?: number | Category;
   address?: number | Address;
 }
+
+
+//INUTILIZADO ESTE MODEL
