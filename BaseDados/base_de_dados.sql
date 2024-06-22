@@ -124,7 +124,7 @@ CREATE TABLE FoundObject (
     idFiscal VARCHAR(255),
     phoneNumber INTEGER,
     police INTEGER,
-    	FOREIGN KEY (police) REFERENCES UserPolice(internalId),
+    	FOREIGN KEY (police) REFERENCES UserPolice(id),
     possibleOwner INTEGER,
     	FOREIGN KEY (possibleOwner) REFERENCES GeneralUser(id),
     delivered BOOLEAN
