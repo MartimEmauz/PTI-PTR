@@ -7,7 +7,7 @@ import { LostObject } from '../Model/lost-object.model';
 import { GeneralUser } from '../Model/general-users-model';
 import { Address } from '../Model/address.model';
 import { PoliceUser } from '../Model/police-users-model';
-import { FoundObject } from '../Model/found-object-model';
+import { FoundObject } from '../Model/found-object.model';
 
 @Injectable({
   providedIn: 'root'
