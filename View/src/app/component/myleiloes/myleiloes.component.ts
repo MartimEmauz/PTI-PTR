@@ -68,10 +68,10 @@ export class MyLeiloesComponent implements OnInit {
     this.dataSource.filter = value.trim().toLowerCase();
   }
 
-  addLostObject() {
+  addFoundObject() {
     if (this.lostObjectForm.valid) {
-      this.service.addLostObject(this.lostObjectForm.value).subscribe(() => {
-        this.loadCustomer();
+      this.service.addFoundObject(this.lostObjectForm.value).subscribe(() => {
+        this.loadFoundObjects();
         this.cancelAddObject();
         window.location.reload();
       });

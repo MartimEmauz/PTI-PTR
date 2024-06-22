@@ -7,7 +7,7 @@
   <mat-card-content>
     <!-- Formulário para adicionar objeto -->
     <div *ngIf="showAddObjectForm" class="add-object-form">
-      <form (ngSubmit)="addLostObject()" [formGroup]="lostObjectForm" class="form-grid">
+      <form (ngSubmit)="addFoundObject()" [formGroup]="lostObjectForm">
         <mat-form-field appearance="outline">
           <mat-label>Título</mat-label>
           <input matInput formControlName="title" required>

@@ -59,7 +59,7 @@ export class MasterService {
   private jsonUrl = 'assets/lost_objects.json';
 
   getLostObjects(): Observable<any[]> {
-    return this.http.get<LostObject[]>(`${this.apiUrl}/lostobjects/`);
+    return this.http.get<LostObject[]>(`${this.apiUrl}lostobjects/`);
   }
 
   getFoundObjects(): Observable<any[]> {
@@ -80,6 +80,11 @@ export class MasterService {
   addLostObject(newLostObject: LostObject): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/lostobjects/`, newLostObject); 
   } 
+
+  addFoundObject(newFoundObject: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/foundobjects/`, newFoundObject); 
+  } 
+
   createUser(user: GeneralUser): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}generalusers/`, user);
   }
