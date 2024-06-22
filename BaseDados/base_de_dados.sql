@@ -74,7 +74,7 @@ CREATE TABLE atributes_object (
 CREATE TABLE PolicePost (
     id SERIAL PRIMARY KEY,
     location INTEGER,
-    stationnumber INTEGER,
+    stationnumber VARCHAR(255),
         UNIQUE (stationnumber),
     	FOREIGN KEY (location) REFERENCES Address(id)
 );
