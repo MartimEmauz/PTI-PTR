@@ -49,6 +49,7 @@
               </div>
               <p class="card__description">{{lostObject.description}}</p>
               <p class="card__description">(Opções vão aparecer nesta zona)</p>
+              <button mat-button color="warn" (click)="removeLostObject(lostObject.id)">Remover</button>
             </div>
           </a>
         </li>

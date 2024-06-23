@@ -146,4 +146,20 @@ export class MyLeiloesComponent implements OnInit {
   viewDetails(lostObject: any) {
     this.router.navigate(['/object-details', lostObject.id]); // Navigate to the details page
   }
+
+  removeFoundObject(id: number) {
+    if (confirm('Tem certeza que deseja remover este objeto?')) {
+      this.service.deleteFoundObject(id).subscribe(
+        () => {
+          this.loadFoundObjects(); // Recarrega a lista de objetos encontrados após a remoção
+        },
+        error => {
+          console.error('Erro ao remover objeto encontrado:', error);
+          // Tratar erro aqui, como exibir uma mensagem na interface
+        }
+      );
+    }
+  }
+  
+  
 }

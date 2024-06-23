@@ -64,7 +64,7 @@ export class MasterService {
   }
 
   getFoundObjects(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}foundobjects/`);
+    return this.http.get<FoundObject[]>(`${this.apiUrl}foundobjects/`);
   }
 
   // Example function to send data to Django API
@@ -76,8 +76,8 @@ export class MasterService {
     return this.http.post<any>(`${this.apiUrl}/lostobjects/`, newLostObject); 
   } 
 
-  addFoundObject(newFoundObject: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}foundobjects/`, newFoundObject); 
+  addFoundObject(newFoundObject: FoundObject): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/foundobjects/`, newFoundObject); 
   } 
 
   createUser(user: GeneralUser): Observable<any> {
@@ -111,5 +111,11 @@ export class MasterService {
   // Add method to fetch object details
   getObjectDetails(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/object-details/${id}`);
+  }
+  deleteFoundObject(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}foundobjects/${id}/`);
+  }
+  deleteLostObject(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}lostobjects/${id}/`);
   }
 }

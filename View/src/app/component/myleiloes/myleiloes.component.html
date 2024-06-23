@@ -170,6 +170,7 @@
         </div>
         <p class="card__description">{{lostObject.description}}</p>
         <button mat-button color="accent" (click)="viewDetails(lostObject)">Ver Mais</button>
+        <button mat-button color="warn" (click)="removeFoundObject(lostObject.id)">Remover</button>
       </div>
     </a>
   </li>
