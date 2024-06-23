@@ -36,6 +36,7 @@ export class ObjetosperdidosComponent implements OnInit {
       description: ['', Validators.required],
       category: ['', Validators.required],
       generaluser: [null], // Initialize with null
+      objeto_id: [null], // Initialize with null
     });
   }
 
@@ -78,9 +79,22 @@ export class ObjetosperdidosComponent implements OnInit {
 
   addLostObject() {
     if (this.lostObjectForm.valid) {
-      this.service.addLostObject(this.lostObjectForm.value).subscribe(() => {
-        this.loadLostObjects(); // Recarrega a lista de objetos perdidos após adicionar
-        this.cancelAddObject(); // Limpa o formulário de adição
+      // Adiciona o objeto principal
+      this.service.addObject(this.lostObjectForm.value).subscribe((newObject: any) => {
+        const objeto_id = newObject.id; // Captura o id do objeto criado
+        
+        // Cria o objeto lostObject associado
+        const lostObjectData = {
+          id: 1, // O id do lostObject deve ser fornecido pelo backend ou incrementado
+          objeto_id: objeto_id,
+          generaluser: parseInt(this.userId || '0')
+        };
+  
+        // Adiciona o lostObject associado
+        this.service.addLostObject(lostObjectData).subscribe(() => {
+          this.loadLostObjects();
+          this.cancelAddObject();
+        });
       });
     }
   }
@@ -102,7 +116,7 @@ export class ObjetosperdidosComponent implements OnInit {
 
   removeLostObject(id: number) {
     if (confirm('Tem certeza que deseja remover este objeto?')) {
-      this.service.deleteLostObject(id).subscribe(
+      this.service.deleteObject(id).subscribe(
         () => {
           this.loadLostObjects(); // Recarrega a lista de objetos encontrados após a remoção
         },
