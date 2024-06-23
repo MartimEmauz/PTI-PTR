@@ -35,7 +35,7 @@
   
       <ul class="cards">
         <li *ngFor="let lostObject of filteredObjects">
-          <a class="card">
+          <a class="card" (click)="viewDetails(lostObject)">
             <img [src]="getCardImagePath(lostObject.category)" class="card__image" alt="Image of {{lostObject.title}}">
             <div class="card__overlay">
               <div class="card__header">
@@ -48,8 +48,7 @@
                 </div>
               </div>
               <p class="card__description">{{lostObject.description}}</p>
-              <p class="card__description">(Opções vão aparecer nesta zona)</p>
-              <button mat-button color="warn" (click)="removeLostObject(lostObject.id)">Remover</button>
+              <button mat-button color="warn" (click)="removeLostObject(lostObject.id); $event.stopPropagation()">Remover</button>
             </div>
           </a>
         </li>

@@ -2,7 +2,7 @@
 .mat-card {
   margin: 2%;
   width: calc(100% - 4%);
-  max-width: 1000px; /* Ajuste conforme necessário */
+  max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -21,17 +21,16 @@ th {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  margin: 4rem auto;
+  margin: 4rem 5vw;
   padding: 0;
   list-style-type: none;
-  width: calc(100% - 10vw); /* Ajuste conforme necessário */
 }
 
 .card {
   position: relative;
   display: block;
   height: 100%;
-  border-radius: 40px;
+  border-radius: calc(40 * 1px);
   overflow: hidden;
   text-decoration: none;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -48,7 +47,7 @@ th {
   left: 0;
   right: 0;
   z-index: 1;
-  border-radius: 40px;
+  border-radius: calc(40 * 1px);
   background-color: white;
   transform: translateY(100%);
   transition: .2s ease-in-out;
@@ -64,7 +63,7 @@ th {
   align-items: center;
   gap: 2em;
   padding: 2em;
-  border-radius: 40px 0 0 0;
+  border-radius: calc(40 * 1px) 0 0 0;
   background-color: white;
   transform: translateY(-100%);
   transition: .2s ease-in-out;
@@ -85,6 +84,7 @@ th {
 
 .card__arc path {
   fill: white;
+  d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
 }
 
 .card:hover .card__header {
@@ -131,9 +131,9 @@ th {
   height: 10vh;
   display: flex;
   align-items: center;
-  justify-content: center; /* Centraliza horizontalmente */
+  justify-content: center;
   gap: 30px;
-  margin-bottom: 20px; /* Adiciona um espaço abaixo do container */
+  margin-bottom: 20px;
 }
 
 .searchbar {
@@ -141,47 +141,45 @@ th {
   width: 300px;
   font-size: 15px;
   border-radius: 40px;
-  border-style: solid;
+  border: 1px solid #ccc;
   padding: 10px;
+  outline: none;
 }
 
 .add-object-form {
   margin-top: 20px;
-  width: 100%; /* Garante que o formulário ocupa toda a largura do cartão */
   padding: 20px;
-  box-sizing: border-box; /* Evita que o padding afete o tamanho total */
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 600px; /* Ajuste o tamanho máximo do formulário */
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+.form-group {
+  margin-bottom: 15px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-flex {
+  padding: 8px 12px;
+}
+
+.mat-error {
+  font-size: 0.875rem;
 }
 
 .full-width {
-  grid-column: span 2;
+  width: 100%;
 }
 
 .button-group {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-}
-
-/* Formulário específico */
-.mat-form-field {
-  width: 100%;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group .mat-slide-toggle {
-  display: flex;
-  align-items: center;
-}
-
-.form-group .mat-slide-toggle-label-content {
-  margin-left: 10px;
+  margin-top: 20px;
 }

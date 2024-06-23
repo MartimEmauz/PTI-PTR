@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MasterService } from 'src/app/service/master.service';
 import { LostObject } from 'src/app/Model/lost-object.model';
 import { User } from '@auth0/auth0-spa-js';
+import { Router } from '@angular/router'; // Import Router
 
 @Component({
   selector: 'app-table',
@@ -25,7 +26,7 @@ export class ObjetosperdidosComponent implements OnInit {
   lostObjects: any[] = [];
   filteredObjects: any[] = [];
 
-  constructor(private service: MasterService, private fb: FormBuilder) {
+  constructor(private service: MasterService, private fb: FormBuilder, private router: Router) {
     this.dataSource = new MatTableDataSource<any>();
     this.lostObjectForm = this.fb.group({
       title: ['', Validators.required],
@@ -85,6 +86,10 @@ export class ObjetosperdidosComponent implements OnInit {
     this.filteredObjects = this.searchText.trim() === '' ? [...this.lostObjects] : this.lostObjects.filter(obj =>
       obj.title.toLowerCase().includes(this.searchText.toLowerCase())
     );
+  }
+
+  viewDetails(FoundObject: any) {
+    this.router.navigate(['/object-details', FoundObject.id]); // Navigate to the details page
   }
 
   removeLostObject(id: number) {
