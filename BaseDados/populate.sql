@@ -1,10 +1,10 @@
 -- Populate Address table
 INSERT INTO Address (street, country, city, zip, location, radius) VALUES
-('Rua da Liberdade', 'Portugal', 'Lisboa', '1000-001', '38.71667,-9.13998', 50),
-('Avenida dos Aliados', 'Portugal', 'Porto', '4000-064', '41.14961,-8.61099', 50),
-('Rua de Santo António', 'Portugal', 'Coimbra', '3000-150', '40.20331,-8.41025', 50),
-('Praça do Comércio', 'Portugal', 'Lisboa', '1100-148', '38.70734,-9.13549', 50),
-('Rua de São Francisco', 'Portugal', 'Braga', '4700-329', '41.54983,-8.42732', 50);
+('Rua da Liberdade', 'Portugal', 'Lisboa', '1000-001', '38.71667,-9.13998', 0),
+('Avenida dos Aliados', 'Portugal', 'Porto', '4000-064', '41.14961,-8.61099', 0),
+('Rua de Santo António', 'Portugal', 'Coimbra', '3000-150', '40.20331,-8.41025', 0),
+('Praça do Comércio', 'Portugal', 'Lisboa', '1100-148', '38.70734,-9.13549', 0),
+('Rua de São Francisco', 'Portugal', 'Braga', '4700-329', '41.54983,-8.42732', 0);
 
 -- Populate PolicePost table with locations
 INSERT INTO PolicePost (location, stationnumber) VALUES (1, '101');
@@ -25,15 +25,15 @@ INSERT INTO UserPolice (firstName, lastName, email, password, internalId, postoP
 INSERT INTO GeneralUser (firstName, lastName, email, password, gender, birthday, address, phoneNumber, status, idCivil, idFiscal) VALUES
 ('Miguel', 'Oliveira', 'miguel.oliveira@gmail.com', 'password123', 'Masculino', '1990-05-12', 1, '912345678', TRUE, '123456789', '987654321'),
 ('Rita', 'Martins', 'rita.martins@gmail.com', 'password123', 'Feminino', '1985-09-25', 2, '923456789', TRUE, '223456789', '887654321'),
-('José', 'Rodrigues', 'jose.rodrigues@gmail.com', 'password123', 'Masculino', '1978-11-03', 3, '934567890', TRUE, '323456789', '787654321'),
+('José', 'Rodrigues', 'jose.rodrigues@gmail.com', 'password123', 'Outro', '1978-11-03', 3, '934567890', TRUE, '323456789', '787654321'),
 ('Sofia', 'Lopes', 'sofia.lopes@gmail.com', 'password123', 'Feminino', '1995-02-17', 4, '945678901', TRUE, '423456789', '687654321'),
 ('Bruno', 'Alves', 'bruno.alves@gmail.com', 'password123', 'Masculino', '1983-07-30', 5, '956789012', TRUE, '523456789', '587654321');
 
 -- Populate Objeto table
 INSERT INTO Objeto (title, specific_date, start_date, end_date, description, category, address) VALUES
 ('Telemóvel', '2024-01-10 14:30:00', '2024-01-01', '2024-01-31', 'Telemóvel preto perdido', 1, 1),
-('Carteira', '2024-01-12 09:00:00', '2024-01-01', '2024-01-31', 'Carteira de couro marrom', 2, 2),
-('Chaves de Carro', '2024-01-15 16:00:00', '2024-01-01', '2024-01-31', 'Chaves de carro com chaveiro azul', 3, 3),
+('Carteira', '2024-01-12 09:00:00', '2024-01-01', '2024-01-31', 'Carteira de couro castanha', 2, 2),
+('Chaves de Carro', '2024-01-15 16:00:00', '2024-01-01', '2024-01-31', 'Chaves de carro com porta chaves azul', 3, 3),
 ('Relógio', '2024-01-20 11:45:00', '2024-01-01', '2024-01-31', 'Relógio de pulso prateado', 4, 4),
 ('Casaco', '2024-01-25 18:00:00', '2024-01-01', '2024-01-31', 'Casaco de inverno vermelho', 5, 5);
 
@@ -124,7 +124,7 @@ INSERT INTO atributes_object (object_id, category_attribute_id, value) VALUES
 -- Populate atributes_object table for Carteira (Objeto ID = 2)
 INSERT INTO atributes_object (object_id, category_attribute_id, value) VALUES
 (2, 3, 'Carteira de Couro'),
-(2, 4, 'Marrom');
+(2, 4, 'Castanho');
 
 -- Populate atributes_object table for Chaves de Carro (Objeto ID = 3)
 INSERT INTO atributes_object (object_id, category_attribute_id, value) VALUES
@@ -141,4 +141,4 @@ INSERT INTO atributes_object (object_id, category_attribute_id, value) VALUES
 INSERT INTO atributes_object (object_id, category_attribute_id, value) VALUES
 (5, 10, 'M'),
 (5, 11, 'Vermelho'),
-(5, 12, 'Marca X');
+(5, 12, 'Zara');
