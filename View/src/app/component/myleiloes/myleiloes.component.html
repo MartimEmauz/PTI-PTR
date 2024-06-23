@@ -68,14 +68,14 @@
         <!-- Campos para os dados do proprietário -->
         <mat-form-field appearance="outline">
           <mat-label>Primeiro Nome</mat-label>
-          <input matInput formControlName="firstName" required>
-          <mat-error *ngIf="lostObjectForm.controls['firstName'].invalid && lostObjectForm.controls['firstName'].touched">Primeiro nome é obrigatório</mat-error>
+          <input matInput formControlName="firstname" required>
+          <mat-error *ngIf="lostObjectForm.controls['firstname'].invalid && lostObjectForm.controls['firstname'].touched">Primeiro nome é obrigatório</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Sobrenome</mat-label>
-          <input matInput formControlName="lastName" required>
-          <mat-error *ngIf="lostObjectForm.controls['lastName'].invalid && lostObjectForm.controls['lastName'].touched">Sobrenome é obrigatório</mat-error>
+          <input matInput formControlName="lastname" required>
+          <mat-error *ngIf="lostObjectForm.controls['lastname'].invalid && lostObjectForm.controls['lastname'].touched">Sobrenome é obrigatório</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -92,20 +92,20 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Identificação Civil</mat-label>
-          <input matInput formControlName="idCivil" required>
-          <mat-error *ngIf="lostObjectForm.controls['idCivil'].invalid && lostObjectForm.controls['idCivil'].touched">Identificação civil é obrigatória</mat-error>
+          <input matInput formControlName="idcivil" required>
+          <mat-error *ngIf="lostObjectForm.controls['idcivil'].invalid && lostObjectForm.controls['idcivil'].touched">Identificação civil é obrigatória</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Identificação Fiscal</mat-label>
-          <input matInput formControlName="idFiscal" required>
-          <mat-error *ngIf="lostObjectForm.controls['idFiscal'].invalid && lostObjectForm.controls['idFiscal'].touched">Identificação fiscal é obrigatória</mat-error>
+          <input matInput formControlName="idfiscal" required>
+          <mat-error *ngIf="lostObjectForm.controls['idfiscal'].invalid && lostObjectForm.controls['idfiscal'].touched">Identificação fiscal é obrigatória</mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width" appearance="outline">
           <mat-label>Número de Telefone</mat-label>
-          <input matInput formControlName="phoneNumber" type="number" required>
-          <mat-error *ngIf="lostObjectForm.controls['phoneNumber'].invalid && lostObjectForm.controls['phoneNumber'].touched">Número de telefone é obrigatório</mat-error>
+          <input matInput formControlName="phonenumber" type="number" required>
+          <mat-error *ngIf="lostObjectForm.controls['phonenumber'].invalid && lostObjectForm.controls['phonenumber'].touched">Número de telefone é obrigatório</mat-error>
         </mat-form-field>
 
         <!-- Campos para usuários policiais associados -->
@@ -138,10 +138,16 @@
               </div>
             </div>
             <p class="card__description">{{lostObject.description}}</p>
+            <p class="card__description">Delivered: 
+              <span [ngClass]="{'delivered': lostObject.delivered, 'not-delivered': !lostObject.delivered}">
+                {{ lostObject.delivered ? 'Entregue' : 'Não entregue' }}
+              </span>
+            </p>
             <button mat-button color="warn" (click)="removeFoundObject(lostObject.id); $event.stopPropagation()">Remover</button>
           </div>
         </a>
       </li>
     </ul>
+    
   </mat-card-content>
 </mat-card>

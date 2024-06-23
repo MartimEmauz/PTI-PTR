@@ -45,15 +45,15 @@ export class MyLeiloesComponent implements OnInit {
       description: ['', Validators.required],
       category: ['', Validators.required],
       address: ['', Validators.required],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
       genero: ['', Validators.required],
       birthday: ['', Validators.required],
-      idCivil: ['', Validators.required],
-      idFiscal: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
+      idcivil: ['', Validators.required],
+      idfiscal: ['', Validators.required],
+      phonenumber: ['', Validators.required],
       police: ['', Validators.required],
-      delivered: [false]
+      delivered: [1]
     }, { validators: this.dateRangeValidator });
   }
 
