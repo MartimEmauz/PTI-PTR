@@ -1,5 +1,6 @@
 import { PoliceUser } from './police-users-model';
 import { GeneralUser } from './general-users-model';
+import { Objeto } from './object-model';
 
 export interface FoundObject {
   title?: string | null;
@@ -10,15 +11,16 @@ export interface FoundObject {
   category?: string | null;
   address?: number | null;
   generaluser?: number | null;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   genero: string;
   birthday: Date;
-  idCivil: string;
-  idFiscal: string;
-  phoneNumber: number;
+  idcivil: string;
+  idfiscal: string;
+  phonenumber: number;
   police: number | PoliceUser;
-  possibleOwner?: number | GeneralUser;
+  possibleowner?: number | GeneralUser;
+  objeto_id?: number | Objeto;
   delivered: boolean;
 }
 

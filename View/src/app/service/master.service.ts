@@ -10,6 +10,7 @@ import { PoliceUser } from '../Model/police-users-model';
 import { FoundObject } from '../Model/found-object.model';
 import { Leilao } from '../Model/leilao-model';
 import { Licitacao } from '../Model/licitacao-model';
+import { Objeto } from '../Model/object-model';
 
 
 @Injectable({
@@ -28,6 +29,10 @@ export class MasterService {
       { code: 'c3', name: 'Yellow' },
       { code: 'c4', name: 'White' }
     ]
+  }
+
+  addObject(newObject: Objeto): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}objects/`, newObject);
   }
 
   GetCustomer(): Observable<Customer[]> {
@@ -63,11 +68,11 @@ export class MasterService {
   private jsonUrl = 'assets/lost_objects.json';
 
   getLostObjects(): Observable<any[]> {
-    return this.http.get<LostObject[]>(`${this.apiUrl}lostobjects/`);
+    return this.http.get<LostObject[]>(`${this.apiUrl}objects/`);
   }
 
   getFoundObjects(): Observable<any[]> {
-    return this.http.get<FoundObject[]>(`${this.apiUrl}foundobjects/`);
+    return this.http.get<FoundObject[]>(`${this.apiUrl}objects/`);
   }
 
   // Example function to send data to Django API
@@ -122,6 +127,10 @@ export class MasterService {
     return this.http.delete<void>(`${this.apiUrl}lostobjects/${id}/`);
   }
   
+  deleteObject(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}objects/${id}/`);
+  }
+
   getAuctions(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}auctions/`);
   }
