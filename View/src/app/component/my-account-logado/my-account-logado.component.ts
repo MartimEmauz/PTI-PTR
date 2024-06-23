@@ -30,6 +30,7 @@ export class MyAccountLogadoComponent implements OnInit {
 
   profileImage: string | null = null;
   userName: string = ''; // Initialize userName
+  isEditing: boolean = false; // Track if the user is editing the profile
 
   constructor(
     private fb: FormBuilder,
@@ -96,10 +97,26 @@ export class MyAccountLogadoComponent implements OnInit {
     if (this.profileForm.valid) {
       this.user = this.profileForm.value;
       console.log(this.user); // In a real application, update user data via a service
+      this.isEditing = false; // Exit edit mode after saving
     }
   }
 
   onCancel(): void {
     this.profileForm.patchValue(this.user);
+    this.isEditing = false; // Exit edit mode without saving
+  }
+
+  editProfile(): void {
+    this.isEditing = true; // Enter edit mode
+  }
+
+  deactivateAccount(): void {
+    // Implement account deactivation logic here
+    console.log('Account deactivated');
+  }
+
+  deleteAccount(): void {
+    // Implement account deletion logic here
+    console.log('Account deleted');
   }
 }

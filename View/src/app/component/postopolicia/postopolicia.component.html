@@ -1,0 +1,18 @@
+<div class="posto-policia-container">
+  <h2>Adicionar Posto Policial</h2>
+  <form [formGroup]="policePostForm">
+    <label for="id">ID do Posto</label>
+    <input type="text" id="id" formControlName="id" required>
+    <div *ngIf="policePostForm.controls['id'].invalid && policePostForm.controls['id'].touched" class="error-message">Por favor, insira um ID válido.</div>
+
+    <label for="stationNumber">Número do Posto</label>
+    <input type="text" id="stationNumber" formControlName="stationNumber" required>
+    <div *ngIf="policePostForm.controls['stationNumber'].invalid && policePostForm.controls['stationNumber'].touched" class="error-message">Por favor, insira um número de posto válido.</div>
+    
+    <label for="postAddress">Morada do Posto</label>
+    <input type="text" id="postAddress" formControlName="postAddress" required>
+    <div *ngIf="policePostForm.controls['postAddress'].invalid && policePostForm.controls['postAddress'].touched" class="error-message">Por favor, insira uma morada válida.</div>
+
+    <button type="submit" [disabled]="policePostForm.invalid">Adicionar Posto Policial</button>
+  </form>
+</div>
