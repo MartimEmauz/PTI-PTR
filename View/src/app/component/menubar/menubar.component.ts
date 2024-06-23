@@ -15,7 +15,7 @@ export class MenubarComponent implements OnInit {
   profileImage: string | null = null;
   initials: string = '';
   userName: string = ''; // Add this property
-
+  isAuthenticated$ = this._auth.isAuthenticated$;
   constructor(
     public _auth: AuthService,
     private router: Router,
@@ -48,5 +48,16 @@ export class MenubarComponent implements OnInit {
     const firstNameInitial = nameParts[0] ? nameParts[0][0] : '';
     const lastNameInitial = nameParts.length > 1 ? nameParts[nameParts.length - 1][0] : '';
     return (firstNameInitial + lastNameInitial).toUpperCase();
+  }
+
+
+  navigateToAccount() {
+    this.isAuthenticated$.subscribe(isAuthenticated => {
+      if (isAuthenticated) {
+        this.router.navigate(['/my-account-logado']);
+      } else {
+        this.router.navigate(['/myaccount']);
+      }
+    });
   }
 }
