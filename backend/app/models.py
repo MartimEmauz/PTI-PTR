@@ -295,7 +295,7 @@ class Userpolice(models.Model):
         validators=[EmailValidator(message="Enter a valid email address.")]
     )
     password = models.CharField(max_length=255, blank=True, null=True)
-    internalid = models.IntegerField(unique=True)
+    internalid = models.IntegerField(unique=True, null=True, blank=True)
     postopolice = models.ForeignKey(PolicePost, on_delete=models.CASCADE, db_column='postopolice', blank=True, null=True)
 
     class Meta:
