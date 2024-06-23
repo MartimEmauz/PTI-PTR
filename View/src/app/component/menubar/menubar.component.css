@@ -1,6 +1,7 @@
 /* General layout styling */
 body {
   font-family: 'Roboto', sans-serif;
+  margin: 0; /* Reset default body margin */
 }
 
 .toolbar {
@@ -10,6 +11,7 @@ body {
   background-color: #54acb4;
   padding: 0 10px;
   position: relative;
+  height: 60px; /* Adjust toolbar height as needed */
 }
 
 .example-spacer {
@@ -34,7 +36,6 @@ body {
 }
 
 .login-button, .logout-button {
-  width: auto;
   height: 45px;
   margin-right: 7px;
   border: none;
@@ -60,6 +61,12 @@ body {
   border-bottom: 1px solid #e0e0e0;
 }
 
+.mdc-list {
+  margin-top: calc((100vh - 200px) / 2); /* Adjust 200px to half of the element's height */
+  padding: 8px 0;
+  list-style-type: none;
+}
+
 .botao {
   width: 100%;
   justify-content: flex-start;
@@ -67,13 +74,15 @@ body {
 
 .main-content {
   text-align: center;
-  min-height: 600px;
+  min-height: calc(100vh - 60px); /* Adjust based on toolbar height */
   padding: 20px;
 }
 
 @media (max-width: 600px) {
   .toolbar {
       flex-wrap: wrap;
+      height: auto; /* Allow toolbar to expand based on content */
+      padding: 10px; /* Increase padding for smaller screens */
   }
 
   .title {
@@ -124,7 +133,6 @@ mat-drawer-content {
   min-height: 100vh;
 }
 
-
 .profile-container:hover {
   cursor:pointer;
 }
@@ -133,7 +141,6 @@ mat-drawer-content {
   display: flex;
   align-items: center;
   margin-right: 10px;
-  
 }
 
 .profile-image {

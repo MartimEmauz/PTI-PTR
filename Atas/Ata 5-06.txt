@@ -12,9 +12,9 @@ Registo do domínio, preparação dos webservers para dar host às páginas do f
 
 Esforço alocado (em horas):
 
-André Silva - 5
-Bernardo Caldas - 2
+André Silva - 10
+Bernardo Caldas - 4
 David Carreira - 10
 Martim Emauz - 8
-Miguel Martins - 3
+Miguel Martins - 10
 Tomás Alves - 8

@@ -13,9 +13,9 @@ Criação de página para objetos perdidos.
 
 Esforço alocado (em horas):
 
-André Silva - 10
-Bernardo Caldas - 5
-David Carreira - 10
-Martim Emauz - 18
-Miguel Martins - 7
-Tomás Alves - 18
+André Silva - 16
+Bernardo Caldas - 4
+David Carreira - 7
+Martim Emauz - 22
+Miguel Martins - 10
+Tomás Alves - 22

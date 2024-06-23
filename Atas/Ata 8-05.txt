@@ -13,8 +13,8 @@ Continuação de progresso do lado da API.
 Esforço alocado (em horas):
 
 André Silva - 7
-Bernardo Caldas - 7
-David Carreira - 7
-Martim Emauz - 10
-Miguel Martins - 7
-Tomás Alves - 10
+Bernardo Caldas - 5
+David Carreira - 3
+Martim Emauz - 6
+Miguel Martins - 3
+Tomás Alves - 6

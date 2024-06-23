@@ -11,9 +11,9 @@ Alteração da estrutura base do projeto do lado da api para garantir open sourc
 
 Esforço alocado (em horas):
 
-André Silva - 7
-Bernardo Caldas - 7
-David Carreira - 7
+André Silva - 4
+Bernardo Caldas - 3
+David Carreira - 5
 Martim Emauz - 10
-Miguel Martins - 7
+Miguel Martins - 6
 Tomás Alves - 10

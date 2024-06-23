@@ -10,9 +10,9 @@ Continuação de trabalho com o Auth0.
 
 Esforço alocado (em horas):
 
-André Silva - 5
-Bernardo Caldas - 2
-David Carreira - 2
+André Silva - 2
+Bernardo Caldas - 5
+David Carreira - 3
 Martim Emauz - 1
-Miguel Martins - 3
+Miguel Martins - 8
 Tomás Alves - 1

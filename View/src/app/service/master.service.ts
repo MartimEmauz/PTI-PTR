@@ -18,6 +18,10 @@ import { Objeto } from '../Model/object-model';
 })
 export class MasterService {
 
+  getObjects(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}objects/`);
+  }
+
   private apiUrl = 'http://127.0.0.1:8000/';
   constructor(private http: HttpClient) { }
 
@@ -68,11 +72,11 @@ export class MasterService {
   private jsonUrl = 'assets/lost_objects.json';
 
   getLostObjects(): Observable<any[]> {
-    return this.http.get<LostObject[]>(`${this.apiUrl}objects/`);
+    return this.http.get<LostObject[]>(`${this.apiUrl}lostobjects/`);
   }
 
   getFoundObjects(): Observable<any[]> {
-    return this.http.get<FoundObject[]>(`${this.apiUrl}objects/`);
+    return this.http.get<FoundObject[]>(`${this.apiUrl}foundobjects/`);
   }
 
   // Example function to send data to Django API

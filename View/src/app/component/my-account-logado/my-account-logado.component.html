@@ -6,7 +6,61 @@
     <mat-card-subtitle>{{ user.email }}</mat-card-subtitle> <!-- Display user's email -->
   </mat-card-header>
 
-  <mat-card-content>
+  <mat-card-content *ngIf="!isEditing">
+    <div class="profile-field">
+      <span class="profile-label">Nome:</span>
+      <span class="profile-value">{{ user.firstname }}</span>
+    </div>
+    <div class="profile-field">
+      <span class="profile-label">Apelido:</span>
+      <span class="profile-value">{{ user.lastname }}</span>
+    </div>
+    <div class="profile-field">
+      <span class="profile-label">Género:</span>
+      <span class="profile-value">{{ user.gender }}</span>
+    </div>
+    <div class="profile-field">
+      <span class="profile-label">Data de Nascimento:</span>
+      <span class="profile-value">{{ user.birthday }}</span>
+    </div>
+    <div class="profile-field">
+      <span class="profile-label">Morada:</span>
+      <span class="profile-value">{{ user.street }}</span>
+    </div>
+    <div class="address-fields">
+      <div class="profile-field">
+        <span class="profile-label">País:</span>
+        <span class="profile-value">{{ user.country }}</span>
+      </div>
+      <div class="profile-field">
+        <span class="profile-label">Cidade:</span>
+        <span class="profile-value">{{ user.city }}</span>
+      </div>
+      <div class="profile-field">
+        <span class="profile-label">Código Postal:</span>
+        <span class="profile-value">{{ user.zip }}</span>
+      </div>
+    </div>
+    <div class="profile-field">
+      <span class="profile-label">NIF:</span>
+      <span class="profile-value">{{ user.nif }}</span>
+    </div>
+    <div class="profile-field">
+      <span class="profile-label">CC:</span>
+      <span class="profile-value">{{ user.cc }}</span>
+    </div>
+    <div class="profile-field">
+      <span class="profile-label">Número de Telefone:</span>
+      <span class="profile-value">{{ user.phoneNumber }}</span>
+    </div>
+    <div class="button-container">
+      <button mat-raised-button color="primary" (click)="editProfile()">Editar Perfil</button>
+      <button mat-raised-button color="warn" (click)="deactivateAccount()">Desativar conta</button>
+      <button mat-raised-button color="warn" (click)="deleteAccount()">Apagar conta</button>
+    </div>
+  </mat-card-content>
+
+  <mat-card-content *ngIf="isEditing">
     <form [formGroup]="profileForm" (ngSubmit)="onSave()">
       <mat-form-field appearance="outline">
         <mat-label>Nome</mat-label>
@@ -65,7 +119,7 @@
         <input matInput type="tel" formControlName="phoneNumber" required>
       </mat-form-field>
       <div class="button-container">
-        <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid" (click)="onSave()">Guardar</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">Guardar</button>
         <button mat-raised-button color="accent" type="button" (click)="onCancel()">Cancelar</button>
       </div>
     </form>

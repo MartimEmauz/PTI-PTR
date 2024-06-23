@@ -50,13 +50,13 @@
         </mat-form-field>
         
         <mat-form-field appearance="outline">
-          <mat-label>Category</mat-label>
+          <mat-label>Categoria</mat-label>
           <mat-select formControlName="category" required>
             <mat-option *ngFor="let category of categories" [value]="category.id">
               {{ category.name }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="lostObjectForm.controls['category'].invalid">Category is required</mat-error>
+          <mat-error *ngIf="lostObjectForm.controls['category'].invalid">Categoria é obrigatória</mat-error>
         </mat-form-field>
         
         <mat-form-field class="full-width" appearance="outline">
@@ -124,30 +124,28 @@
     </div>
 
     <ul class="cards">
-      <li *ngFor="let lostObject of filteredObjects">
-        <a class="card" (click)="viewDetails(lostObject)">
-          <img [src]="getCardImagePath(lostObject.category)" class="card__image" alt="Imagem de {{lostObject.title}}">
+      <li *ngFor="let foundObject of filteredObjects">
+        <a class="card" (click)="viewDetails(foundObject)">
+          <img [src]="getCardImagePath(foundObject.category)" class="card__image" alt="Imagem de {{foundObject.title}}">
           <div class="card__overlay">
             <div class="card__header">
               <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
                 <path />
               </svg>
               <div class="card__header-text">
-                <h3 class="card__title">{{lostObject.title}}</h3>
-                <span class="card__status">{{lostObject.specific_date | date}}</span>
+                <h3 class="card__title">{{foundObject.title}}</h3>
+                <span class="card__status">{{foundObject.specific_date | date}}</span>
               </div>
             </div>
-            <p class="card__description">{{lostObject.description}}</p>
-            <p class="card__description">Delivered: 
-              <span [ngClass]="{'delivered': lostObject.delivered, 'not-delivered': !lostObject.delivered}">
-                {{ lostObject.delivered ? 'Entregue' : 'Não entregue' }}
-              </span>
-            </p>
-            <button mat-button color="warn" (click)="removeFoundObject(lostObject.id); $event.stopPropagation()">Remover</button>
+            <p class="card__description">{{foundObject.description}}</p>
+            <div class="delivery-status" [ngClass]="{'delivered': getDeliveredStatus(foundObject.id), 'not-delivered': !getDeliveredStatus(foundObject.id)}">
+              <span class="status-icon material-icons">{{ getDeliveredStatus(foundObject.id) ? 'check_circle' : 'cancel' }}</span>
+              <span class="status-label">{{ getDeliveredStatus(foundObject.id) ? 'Entregue' : 'Não entregue' }}</span>
+            </div>
+            <button mat-button color="warn" (click)="removeFoundObject(foundObject.id); $event.stopPropagation()">Remover</button>
           </div>
         </a>
       </li>
     </ul>
-    
   </mat-card-content>
 </mat-card>

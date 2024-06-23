@@ -11,9 +11,9 @@ Definição de metas até a próxima reunião
 
 Esforço alocado (em horas):
 
-André Silva - 7
-Bernardo Caldas - 7
-David Carreira - 7
-Martim Emauz - 10
-Miguel Martins - 7
-Tomás Alves - 10
+André Silva - 5
+Bernardo Caldas - 2
+David Carreira - 6
+Martim Emauz - 6
+Miguel Martins - 6
+Tomás Alves - 6

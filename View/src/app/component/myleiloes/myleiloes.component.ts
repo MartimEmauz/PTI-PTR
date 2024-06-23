@@ -8,8 +8,6 @@ import { Router } from '@angular/router'; // Import Router
 import { FoundObject } from 'src/app/Model/found-object.model';
 import { User } from '@auth0/auth0-spa-js';
 import { AuthService } from '@auth0/auth0-angular';
-import { first } from 'rxjs';
-
 
 @Component({
   selector: 'app-table',
@@ -33,12 +31,12 @@ export class MyLeiloesComponent implements OnInit {
     { id: 5, name: 'Roupas' },
     { id: 6, name: 'Outros' }
   ];
-  
 
   searchText: string = '';
   lostObjects: any[] = [];
   filteredObjects: any[] = [];
   userId: string | null = null; // Change the type to string | null
+  delivered: boolean = false;
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router, private _auth: AuthService) { // Inject Router
     this.dataSource = new MatTableDataSource<any>();
     this.lostObjectForm = this.fb.group({
@@ -57,7 +55,7 @@ export class MyLeiloesComponent implements OnInit {
       idfiscal: ['', Validators.required],
       phonenumber: ['', Validators.required],
       police: ['', Validators.required],
-      delivered: [0]
+      delivered: [false],
     }, { validators: this.dateRangeValidator });
   }
 
@@ -73,21 +71,35 @@ export class MyLeiloesComponent implements OnInit {
 
   loadFoundObjects() {
     this.service.getFoundObjects().subscribe(
-      (data: FoundObject[]) => {
-        this.lostObjects = data;
-        this.filteredObjects = data; // Inicialmente, exibe todos os objetos perdidos
+      (foundObjects: any[]) => {
+        this.lostObjects = foundObjects;
+        this.service.getObjects().subscribe(
+          (objects: any[]) => {
+            const associatedObjects = objects.filter(object => 
+              this.lostObjects.some(foundObject => foundObject.objeto_id === object.id)
+            );
+
+            this.filteredObjects = associatedObjects;
+            this.dataSource.data = this.filteredObjects;
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          },
+          (error) => {
+            console.error('Erro ao carregar objetos:', error);
+          }
+        );
       },
       (error) => {
-        console.error('Erro ao carregar objetos perdidos:', error);
-        // Trate o erro conforme necessário, como exibir uma mensagem de erro na interface
+        console.error('Erro ao carregar objetos encontrados:', error);
       }
     );
   }
 
-  filterChange(data: Event) {
-    const value = (data.target as HTMLInputElement).value;
-    this.dataSource.filter = value.trim().toLowerCase();
+  getDeliveredStatus(objectId: number): boolean | undefined {
+    const foundObject = this.lostObjects.find(obj => obj.objeto_id === objectId);
+    return foundObject.delivered;
   }
+  
 
   addFoundObject() {
     if (this.lostObjectForm.valid) {
@@ -95,8 +107,8 @@ export class MyLeiloesComponent implements OnInit {
       this.service.addObject(this.lostObjectForm.value).subscribe((newObject: any) => {
         const objeto_id = newObject.id; // Captura o id do objeto criado
         
-        // Cria o objeto lostObject associado
-        const FoundObjectData: FoundObject = {
+        // Cria o objeto foundObject associado
+        const foundObjectData: FoundObject = {
           title : this.lostObjectForm.value.title,
           specific_date: this.lostObjectForm.value.specific_date,
           start_date: this.lostObjectForm.value.start_date,
@@ -114,18 +126,17 @@ export class MyLeiloesComponent implements OnInit {
           phonenumber: this.lostObjectForm.value.phonenumber,
           police: this.lostObjectForm.value.police,
           objeto_id: objeto_id,
-          delivered: true,
+          delivered: false,
         };
   
-        // Adiciona o lostObject associado
-        this.service.addFoundObject(FoundObjectData).subscribe(() => {
+        // Adiciona o foundObject associado
+        this.service.addFoundObject(foundObjectData).subscribe(() => {
           this.loadFoundObjects();
           this.cancelAddObject();
         });
       });
     }
   }
-  
 
   cancelAddObject() { 
     this.lostObjectForm.reset();
@@ -136,6 +147,7 @@ export class MyLeiloesComponent implements OnInit {
     this.filteredObjects = this.searchText.trim() === '' ? [...this.lostObjects] : this.lostObjects.filter(obj =>
       obj.title.toLowerCase().includes(this.searchText.toLowerCase())
     );
+    this.dataSource.data = this.filteredObjects;
   }
 
   getCardImagePath(categoryId: number): string {
@@ -195,7 +207,7 @@ export class MyLeiloesComponent implements OnInit {
       );
     }
   }
-  
+
   getUserByEmail(email: string): void {
     this.service.getUserByEmail(email).subscribe(
       (data: any) => {
@@ -212,5 +224,4 @@ export class MyLeiloesComponent implements OnInit {
       }
     );
   }
-  
 }

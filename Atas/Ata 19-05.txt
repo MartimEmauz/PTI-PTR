@@ -13,9 +13,9 @@ Foi também decidido que será utilizado o Ansible para scripting.
 
 Esforço alocado (em horas):
 
-André Silva - 7
-Bernardo Caldas - 7
-David Carreira - 7
+André Silva - 14
+Bernardo Caldas - 3
+David Carreira - 6
 Martim Emauz - 10
-Miguel Martins - 7
+Miguel Martins - 4
 Tomás Alves - 10
