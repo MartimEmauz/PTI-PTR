@@ -60,12 +60,14 @@
         </div>
     
         <div class="form-group">
-          <mat-form-field appearance="outline">
-            <mat-label>Categoria</mat-label>
+          <mat-form-field>
+            <mat-label>Category</mat-label>
             <mat-select formControlName="category" required>
-              <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
+              <mat-option *ngFor="let category of categories" [value]="category.id">
+                {{ category.name }}
+              </mat-option>
             </mat-select>
-            <mat-error *ngIf="lostObjectForm.controls['category'].invalid && lostObjectForm.controls['category'].touched">Categoria é obrigatória</mat-error>
+            <mat-error *ngIf="lostObjectForm.controls['category'].invalid">Category is required</mat-error>
           </mat-form-field>
         </div>
     

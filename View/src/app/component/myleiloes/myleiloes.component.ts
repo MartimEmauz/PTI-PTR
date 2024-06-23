@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MasterService } from 'src/app/service/master.service';
 import { Router } from '@angular/router'; // Import Router
+import { FoundObject } from 'src/app/Model/found-object.model';
 
 @Component({
   selector: 'app-table',
@@ -20,7 +21,15 @@ export class MyLeiloesComponent implements OnInit {
   lostObjectForm: FormGroup;
   showAddObjectForm: boolean = false;
   useSpecificDate: boolean = true;
-  categories: string[] = ['Eletrónicos', 'Documentos', 'Chaves', 'Acessórios', 'Roupas', 'Outros'];
+  categories = [
+    { id: 1, name: 'Eletrónicos' },
+    { id: 2, name: 'Documentos' },
+    { id: 3, name: 'Chaves' },
+    { id: 4, name: 'Acessórios' },
+    { id: 5, name: 'Roupas' },
+    { id: 6, name: 'Outros' }
+  ];
+  
 
   searchText: string = '';
   lostObjects: any[] = [];
@@ -54,7 +63,7 @@ export class MyLeiloesComponent implements OnInit {
 
   loadFoundObjects() {
     this.service.getFoundObjects().subscribe(
-      (data: any) => {
+      (data: FoundObject[]) => {
         this.lostObjects = data;
         this.filteredObjects = data; // Inicialmente, exibe todos os objetos perdidos
       },
@@ -72,48 +81,16 @@ export class MyLeiloesComponent implements OnInit {
 
   addFoundObject() {
     if (this.lostObjectForm.valid) {
-      // Obtenha os valores do formulário
-      const formData = {
-        title: this.lostObjectForm.get('title')?.value,
-        specific_date: this.lostObjectForm.get('specific_date')?.value,
-        start_date: this.formatDate(this.lostObjectForm.get('start_date')?.value),
-        end_date: this.formatDate(this.lostObjectForm.get('end_date')?.value),
-        description: this.lostObjectForm.get('description')?.value,
-        category: this.lostObjectForm.get('category')?.value,
-        address: this.lostObjectForm.get('address')?.value,
-        firstName: this.lostObjectForm.get('firstName')?.value,
-        lastName: this.lostObjectForm.get('lastName')?.value,
-        genero: this.lostObjectForm.get('genero')?.value,
-        birthday: this.lostObjectForm.get('birthday')?.value,
-        idCivil: this.lostObjectForm.get('idCivil')?.value,
-        idFiscal: this.lostObjectForm.get('idFiscal')?.value,
-        phoneNumber: this.lostObjectForm.get('phoneNumber')?.value,
-        police: this.lostObjectForm.get('police')?.value,
-        delivered: this.lostObjectForm.get('delivered')?.value
-      };
-  
       // Chame o serviço para adicionar o objeto encontrado
-      this.service.addFoundObject(formData).subscribe(() => {
+      this.service.addFoundObject(this.lostObjectForm.value).subscribe(() => {
         this.loadFoundObjects();
         this.cancelAddObject();
-        window.location.reload(); // Recarregar a página após adicionar o objeto
       }, error => {
         console.error('Erro ao adicionar objeto encontrado:', error);
         // Tratar erro aqui, como exibir uma mensagem na interface
       });
     }
   }
-  
-  // Função para formatar a data para YYYY-MM-DD
-  private formatDate(date: Date): string {
-    if (!date) return '';
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    return `${year}-${month}-${day}`;
-  }
-  
-  
 
   cancelAddObject() { 
     this.lostObjectForm.reset();
