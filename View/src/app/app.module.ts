@@ -31,6 +31,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ProfileCompletionPolicemanComponent } from './component/profile-completion-policeman/profile-completion-policeman.component';
 import { ObjectDetailsComponent } from './component/object-details/object-details.component';
+import { PostoPoliciaComponent } from './component/postopolicia/postopolicia.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +49,7 @@ import { ObjectDetailsComponent } from './component/object-details/object-detail
     MyAccountLogadoComponent,
     ProfileCompletionPolicemanComponent,
     ObjectDetailsComponent,
+    PostoPoliciaComponent,
   ],
   imports: [
     BrowserModule,

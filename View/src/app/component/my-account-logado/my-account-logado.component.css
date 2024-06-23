@@ -4,7 +4,7 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background-color: #f0f5f9;
+  background-color: #fff; /* Change to white for better readability */
 }
 
 .profile-avatar {
@@ -33,10 +33,28 @@
   margin: 0; /* Remove default margin */
 }
 
+.profile-field {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.profile-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-value {
+  color: #666;
+}
+
 .button-container {
   display: flex;
   justify-content: center; /* Center align buttons */
   margin-top: 20px;
+  gap: 10px; /* Add space between buttons */
 }
 
 mat-form-field {
@@ -51,9 +69,9 @@ mat-form-field {
   margin-bottom: 16px; /* Added margin below address fields */
 }
 
-button[type="submit"] {
+button[type="submit"],
+button[type="button"] {
   width: 150px; /* Set a fixed width for buttons */
-  margin-right: 10px; /* Add space between buttons */
 }
 
 button[type="submit"]:hover,
