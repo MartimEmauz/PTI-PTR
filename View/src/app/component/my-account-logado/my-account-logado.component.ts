@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '@auth0/auth0-angular';
+import { MasterService } from '../../service/master.service';
+import { Router } from '@angular/router';
+import { User } from '@auth0/auth0-spa-js';
+import { GeneralUser } from '../../Model/general-users-model';
+import { Address } from '../../Model/address.model';
 
 @Component({
   selector: 'app-my-account-logado',
@@ -10,19 +16,39 @@ export class MyAccountLogadoComponent implements OnInit {
 
   profileForm: FormGroup;
   user: any = {
-    name: 'John Doe',
+    firstname: '',
+    lastname: '',
+    gender: '',
+    birthday: '',
+    street: '',
+    country: '',
+    city: '',
+    zip: '',
+    nif: '',
+    cc: '',
+    phoneNumber: '',
     email: 'john.doe@example.com',
-    phone: '123-456-7890',
-    address: '123 Main St, Anytown, USA',
     avatarUrl: 'assets/avatar.png'  // Default avatar URL
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    public auth: AuthService,
+    private masterService: MasterService,
+    private router: Router
+  ) {
     this.profileForm = this.fb.group({
-      name: [this.user.name, Validators.required],
-      email: [this.user.email, [Validators.required, Validators.email]],
-      phone: [this.user.phone, Validators.required],
-      address: [this.user.address, Validators.required]
+      firstname: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+      lastname: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+      gender: ['', Validators.required],
+      birthday: ['', Validators.required],
+      street: ['', Validators.required],
+      country: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+      city: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+      zip: ['', [Validators.required]],
+      nif: ['', [Validators.required]],
+      cc: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
     });
   }
 
@@ -35,21 +61,31 @@ export class MyAccountLogadoComponent implements OnInit {
     // In a real application, fetch user data from a service
     // For now, we're using hardcoded data
     const userData = {
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      phone: '123-456-7890',
-      address: '123 Main St, Anytown, USA',
-      avatarUrl: 'assets/sport.jpg'
+      firstname: 'João',
+      lastname: 'Silva',
+      gender: 'male',
+      birthday: '1990-01-01',
+      street: 'Rua Principal 123',
+      country: 'Portugal',
+      city: 'Lisboa',
+      zip: '1000-001',
+      nif: '123456789',
+      cc: '987654321',
+      phoneNumber: '912345678',
+      email: 'joao.silva@example.com',
+      avatarUrl: 'assets/avatar.png'
     };
 
     this.user = userData;
     this.profileForm.patchValue(userData);
   }
 
-  onSubmit(): void {
+  onSave(): void {
     if (this.profileForm.valid) {
       this.user = this.profileForm.value;
       // In a real application, update user data via a service
+      // For now, let's just log the updated user data
+      console.log(this.user);
     }
   }
 

@@ -1,33 +1,72 @@
 <mat-card class="profile-card">
-    <mat-card-header>
-      <div mat-card-avatar class="profile-avatar" [style.background-image]="'url(' + user.avatarUrl + ')'"></div>
-      <mat-card-title>{{ user.name }}</mat-card-title>
-      <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
-    </mat-card-header>
-  
-    <mat-card-content>
-      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline">
-          <mat-label>Name</mat-label>
-          <input matInput formControlName="name" required>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email" required>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Phone</mat-label>
-          <input matInput formControlName="phone" type="tel" required>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Address</mat-label>
-          <textarea matInput formControlName="address" required></textarea>
-        </mat-form-field>
-        <div class="button-container">
-          <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">Save</button>
-          <button mat-raised-button color="accent" type="button" (click)="onCancel()">Repor</button>
+  <mat-card-header>
+    <div mat-card-avatar class="profile-avatar" [style.background-image]="'url(' + user.avatarUrl + ')'"></div>
+    <mat-card-title>{{ user.firstname }} {{ user.lastname }}</mat-card-title>
+    <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="profileForm" (ngSubmit)="onSave()">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="firstname" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Apelido</mat-label>
+        <input matInput formControlName="lastname" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Género</mat-label>
+        <mat-select formControlName="gender" required>
+          <mat-option value="male">Masculino</mat-option>
+          <mat-option value="female">Feminino</mat-option>
+          <mat-option value="other">Outro</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Data de Nascimento</mat-label>
+        <input matInput type="date" formControlName="birthday" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Morada</mat-label>
+        <input matInput formControlName="street" required>
+      </mat-form-field>
+      <div class="address-fields">
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>País</mat-label>
+            <input matInput formControlName="country" required>
+          </mat-form-field>
         </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
-  
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Cidade</mat-label>
+            <input matInput formControlName="city" required>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Código Postal</mat-label>
+            <input matInput formControlName="zip" required>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>NIF</mat-label>
+        <input matInput formControlName="nif" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>CC</mat-label>
+        <input matInput formControlName="cc" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Número de Telefone</mat-label>
+        <input matInput type="tel" formControlName="phoneNumber" required>
+      </mat-form-field>
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">Guardar</button>
+        <button mat-raised-button color="accent" type="button" (click)="onCancel()">Cancelar</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
