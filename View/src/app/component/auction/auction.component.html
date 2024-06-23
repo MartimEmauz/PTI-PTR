@@ -1,10 +1,10 @@
+<!-- src/app/component/auction/auction.component.html -->
 <mat-card>
   <mat-toolbar class="toolbar">
     <mat-form-field class="search-bar">
       <input matInput (keyup)="filterChange($event)" placeholder="Pesquisar Leilão">
     </mat-form-field>
     <span class="spacer"></span>
-    <button (click)="toggleAddBidForm()" mat-raised-button color="primary">Adicionar Leilão</button>
   </mat-toolbar>
   
   <mat-card-content>

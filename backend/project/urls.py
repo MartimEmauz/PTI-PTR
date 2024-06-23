@@ -33,7 +33,10 @@ urlpatterns = [
     #---------------------------------------------------------
     #-----------Objectos perdidos e achados-------------------
     #---------------------------------------------------------
-    
+    # Objeto URLs
+    path('objects/', views.ObjectListCreateAPIView.as_view(), name='object-list-create'),
+    path('objects/<int:pk>/', views.ObjectRetrieveUpdateDestroyAPIView.as_view(), name='object-retrieve-update-destroy'),
+
     # Lost Objects URLs
     path('lostobjects/', views.LostObjectListCreateAPIView.as_view(), name='lostobject-list-create'),
     path('lostobjects/<int:pk>/', views.LostObjectRetrieveUpdateDestroyAPIView.as_view(), name='lostobject-retrieve-update-destroy'),

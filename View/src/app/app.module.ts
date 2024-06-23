@@ -13,7 +13,7 @@ import { MapaComponent } from './component/mapa/mapa.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PopupComponent } from './component/popup/popup.component';
 import { UserdetailComponent } from './component/userdetail/userdetail.component';
-import { LeiloesComponent } from './component/leiloes/leiloes.component';
+import { AuctionComponent } from './component/auction/auction.component';
 import { MyLeiloesComponent } from './component/myleiloes/myleiloes.component';
 import { LoginComponent } from './component/login/login.component';
 import { MyAccountComponent } from './component/my-account/my-account.component';
@@ -28,6 +28,12 @@ import { DatePipe } from '@angular/common';
 import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosperdidos.component';
 import { MyAccountLogadoComponent } from './component/my-account-logado/my-account-logado.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
 import { ProfileCompletionPolicemanComponent } from './component/profile-completion-policeman/profile-completion-policeman.component';
 @NgModule({
   declarations: [
@@ -37,7 +43,7 @@ import { ProfileCompletionPolicemanComponent } from './component/profile-complet
     MapaComponent,
     PopupComponent,
     UserdetailComponent,
-    LeiloesComponent,
+    AuctionComponent,
     MyLeiloesComponent,
     LoginComponent,
     MyAccountComponent,
@@ -60,6 +66,12 @@ import { ProfileCompletionPolicemanComponent } from './component/profile-complet
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule,
     AuthModule.forRoot({
       domain: 'dev-7ety36lrjtchzs5o.us.auth0.com',
       clientId: 'QtBbOFF8p3ObAlrfl8NvoARtRysybsAi',

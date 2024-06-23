@@ -7,6 +7,9 @@ import { LostObject } from '../Model/lost-object.model';
 import { GeneralUser } from '../Model/general-users-model';
 import { Address } from '../Model/address.model';
 import { PoliceUser } from '../Model/police-users-model';
+import { Leilao } from '../Model/leilao-model';
+import { Licitacao } from '../Model/licitacao-model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -108,5 +111,16 @@ export class MasterService {
     return this.http.get<GeneralUser | null>(`${this.apiUrl}policeusers/${email}/`);
   }
 
+  getAuctions(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}auctions/`);
+  }
 
+  addAuction(auction: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}auctions/`, auction);
+  }
+
+  // Bid Services
+  addBid(bid: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}bids/`, bid);
+  }
 }

@@ -221,46 +221,21 @@ class Generaluser(models.Model):
                 super().save(*args, **kwargs)
 
 
-class Lostobject(models.Model):
-    id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=255, blank=True, null=True)
-    specific_date = models.DateTimeField(blank=True, null=True)
-    start_date = models.DateField(blank=True, null=True)
-    end_date = models.DateField(blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE,db_column='category', blank=True, null=True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, db_column='address', blank=True, null=True)
-    generaluser = models.ForeignKey(Generaluser, models.DO_NOTHING, db_column='generaluser', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'lostobject'
-        app_label = 'app'
-        constraints = [
-            models.CheckConstraint(
-                check=models.Q(start_date__lt=models.F('end_date')),
-                name='start_date_before_end_date'
-            ),
-            models.CheckConstraint(
-                check=(
-                    models.Q(specific_date__isnull=False, start_date__isnull=True, end_date__isnull=True) |
-                    models.Q(specific_date__isnull=True, start_date__isnull=False, end_date__isnull=False)
-                ),
-                name='valid_date_constraints'
-            )
-        ]
-
 
 class Objeto(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=255, blank=True, null=True)
-    specific_date = models.DateTimeField(blank=True, null=True)
-    start_date = models.DateField(blank=True, null=True)
-    end_date = models.DateField(blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE,db_column='category', blank=True, null=True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE,db_column='address', blank=True, null=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    specific_date = models.DateTimeField(null=True, blank=True)
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
+    description = models.TextField(max_length=255, null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, db_column='category', blank=True, null=True)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, db_column='address', blank=True, null=True)
 
+    def clean(self):
+        if not self.specific_date and not self.start_date and not self.end_date:
+            raise ValidationError('At least one of specific_date, start_date, or end_date must be set.')
+        
     class Meta:
         managed = False
         db_table = 'objeto'
@@ -333,14 +308,19 @@ class Userpolice(models.Model):
                 raise ValidationError("Email must contain @ symbol.")
             super().save(*args, **kwargs)
 
+class Lostobject(models.Model):
+    id = models.AutoField(primary_key=True)
+    objeto_id = models.ForeignKey(Objeto, on_delete=models.CASCADE, db_column='objeto_id', blank=True, null=True, related_name='lost_objects')
+    generaluser = models.ForeignKey(Generaluser, on_delete=models.CASCADE, db_column='generaluser', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'lostobject'
+        app_label = 'app'
 
 class Foundobject(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=255, blank=True, null=True)
-    specific_date = models.DateTimeField(blank=True, null=True)
-    start_date = models.DateField(blank=True, null=True)
-    end_date = models.DateField(blank=True, null=True)
-    description = models.TextField(max_length=255, blank=True, null=True)
+    objeto_id = models.ForeignKey(Objeto, on_delete=models.CASCADE, db_column='objeto_id', blank=True, null=True, related_name='found_objects')
     firstname = models.CharField(max_length=255, blank=True, null=True)
     lastname = models.CharField(max_length=255, blank=True, null=True)
     genero = models.CharField(max_length=50, blank=True, null=True)
@@ -350,27 +330,15 @@ class Foundobject(models.Model):
     phonenumber = models.CharField(max_length=15, unique=True, blank=True, null=True,
                                    validators=[RegexValidator(regex=r'^(2\d{8}|9\d{8})$', message="Enter a valid phone number.")])
     police = models.ForeignKey(Userpolice, on_delete=models.CASCADE, db_column='police', blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, db_column='category', blank=True, null=True)
     possibleOwner = models.ForeignKey(Generaluser, on_delete=models.CASCADE, db_column='possibleowner', blank=True, null=True)
     delivered = models.BooleanField(blank=True, null=True)
-
-    def clean(self):
-        if not self.specific_date and not self.start_date and not self.end_date:
-            raise ValidationError('At least one of specific_date, start_date, or end_date must be set.')
 
     class Meta:
         managed = False
         db_table = 'foundobject'
         app_label = 'app'
-        constraints = [
-            models.CheckConstraint(
-                check=(
-                    models.Q(specific_date__isnull=False, start_date__isnull=True, end_date__isnull=True) |
-                    models.Q(specific_date__isnull=True, start_date__isnull=False, end_date__isnull=False)
-                ),
-                name='valid_date_constraints'
-            )
-        ]
+    
+
 class Leilao(models.Model):
     id = models.AutoField(primary_key=True)
     valor_base = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)

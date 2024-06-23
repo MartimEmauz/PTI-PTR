@@ -33,22 +33,18 @@ CREATE TABLE Category (
         UNIQUE (name)
 );
 
--- Creating Objeto table
+-- Tabela para armazenar objetos
 CREATE TABLE Objeto (
     id SERIAL PRIMARY KEY,
-    title VARCHAR(255),
-    specific_date TIMESTAMP,   -- Para armazenar uma data e hora específica
-    start_date DATE,           -- Para armazenar o início do intervalo de datas
-    end_date DATE,
-    description TEXT,
-    category INTEGER,
+    title VARCHAR(255), -- Título do objeto
+    specific_date TIMESTAMP, -- Data e hora específica
+    start_date DATE, -- Data de início
+    end_date DATE, -- Data de fim
+    description TEXT, -- Descrição do objeto
+    category INTEGER, -- Categoria do objeto
         FOREIGN KEY (category) REFERENCES Category(id),
     address INTEGER,
-        FOREIGN KEY (address) REFERENCES Address(id),
-    CHECK (
-        (specific_date IS NOT NULL AND start_date IS NULL AND end_date IS NULL) OR
-        (specific_date IS NULL AND start_date IS NOT NULL AND end_date IS NOT NULL)
-    )
+        FOREIGN KEY (address) REFERENCES Address(id)
 );
 
 -- Creating Category_attribute table
@@ -87,7 +83,7 @@ CREATE TABLE UserPolice (
     email VARCHAR(255),
         UNIQUE (email),
     password VARCHAR(255),
-    internalId INTEGER,
+    internalId VARCHAR(255),
     postoPolice INTEGER,
 		UNIQUE (internalId),
         FOREIGN KEY (postoPolice) REFERENCES PolicePost(id)
@@ -105,7 +101,7 @@ CREATE TABLE GeneralUser (
     birthday DATE,
     address INTEGER,
         FOREIGN KEY (address) REFERENCES Address(id),
-    phoneNumber INTEGER,
+    phoneNumber VARCHAR(9),
         UNIQUE (phoneNumber),
     status BOOLEAN,
     idCivil VARCHAR(255),
@@ -114,27 +110,37 @@ CREATE TABLE GeneralUser (
 		UNIQUE (idFiscal)
 );
 
--- Creating FoundObject table
+
+-- Tabelas específicas para tipos de objetos
 CREATE TABLE FoundObject (
+    id SERIAL PRIMARY KEY,
+    objeto_id INTEGER,
+        UNIQUE (objeto_id),
     firstName VARCHAR(255),
     lastName VARCHAR(255),
     genero VARCHAR(50),
     birthday DATE,
     idCivil VARCHAR(255),
     idFiscal VARCHAR(255),
-    phoneNumber INTEGER,
+    phoneNumber VARCHAR(9),
     police INTEGER,
-    	FOREIGN KEY (police) REFERENCES UserPolice(id),
     possibleOwner INTEGER,
-    	FOREIGN KEY (possibleOwner) REFERENCES GeneralUser(id),
-    delivered BOOLEAN
-) INHERITS (Objeto);
+    delivered BOOLEAN,
+        FOREIGN KEY (objeto_id) REFERENCES Objeto(id) ON DELETE CASCADE,
+        FOREIGN KEY (police) REFERENCES UserPolice(id),
+        FOREIGN KEY (possibleOwner) REFERENCES GeneralUser(id)
+);
 
--- Creating LostObject table
+
 CREATE TABLE LostObject (
+    id SERIAL PRIMARY KEY,
+    objeto_id INTEGER,
+        UNIQUE (objeto_id),
     generalUser INTEGER,
-    	FOREIGN KEY (generalUser) REFERENCES GeneralUser(id)
-) INHERITS (Objeto);
+        FOREIGN KEY (objeto_id) REFERENCES Objeto(id) ON DELETE CASCADE,
+        FOREIGN KEY (generalUser) REFERENCES GeneralUser(id)
+);
+
 
 
 -- Creating Leilao table
@@ -145,7 +151,7 @@ CREATE TABLE Leilao (
     data_fim TIMESTAMP,
     maior_licitacao NUMERIC,
     objeto INTEGER,
-        FOREIGN KEY (objeto) REFERENCES Objeto(id)
+        FOREIGN KEY (objeto) REFERENCES FoundObject(id)
 );
 
 -- Creating Licitação table

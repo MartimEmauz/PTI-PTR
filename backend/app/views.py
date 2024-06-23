@@ -1,10 +1,12 @@
+import stat
+from telnetlib import STATUS
 from rest_framework import generics
-from .models import Lostobject, Foundobject, Generaluser, Userpolice, PolicePost,Leilao, Licitacao, Category, CategoryAttribute, Subscription, Address
+from .models import Objeto , Lostobject, Foundobject, Generaluser, Userpolice, PolicePost,Leilao, Licitacao, Category, CategoryAttribute, Subscription, Address
 from .serializers import (
     LostobjectSerializer, FoundobjectSerializer, GeneraluserSerializer,
     UserpoliceSerializer, PolicePostSerializer, LeilaoSerializer, LicitacaoSerializer,
     CategorySerializer, CategoryAttributeSerializer, SubscriptionSerializer,
-    AddressSerializer
+    AddressSerializer, ObjetoSerializer
 )
 from utils.utils import find_similar_objects, compare_objects
 
@@ -67,9 +69,20 @@ class PolicePostRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVi
 #-----------Objectos perdidos e achados-------------------
 #---------------------------------------------------------
 
+
+class ObjectListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Objeto.objects.all()
+    serializer_class = ObjetoSerializer
+    permission_classes = [AllowAny]
+
+class ObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Objeto.objects.all()
+    serializer_class = ObjetoSerializer
+    permission_classes = [AllowAny]
+
 class LostObjectListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Lostobject.objects.all()
     serializer_class = LostobjectSerializer
+    queryset = Lostobject.objects.all()
     permission_classes = [AllowAny]
 
 class LostObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
