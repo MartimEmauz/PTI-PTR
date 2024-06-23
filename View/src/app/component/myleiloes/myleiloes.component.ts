@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MasterService } from 'src/app/service/master.service';
 import { Router } from '@angular/router'; // Import Router
 import { FoundObject } from 'src/app/Model/found-object.model';
+import { User } from '@auth0/auth0-spa-js';
+
 
 @Component({
   selector: 'app-table',

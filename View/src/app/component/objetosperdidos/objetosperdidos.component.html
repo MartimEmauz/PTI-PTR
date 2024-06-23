@@ -3,7 +3,7 @@
       <input class="searchbar" [(ngModel)]="searchText" (input)="onSearch()" placeholder="Pesquisar Objeto" aria-label="Search Objects">
       <button (click)="showAddObjectForm = true" mat-raised-button color="primary">Adicionar Objeto</button>
     </div>
-  
+    
     <mat-card-content>
       <!-- Formulário para adicionar objeto -->
       <div *ngIf="showAddObjectForm">
