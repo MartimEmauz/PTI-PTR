@@ -39,6 +39,7 @@ export class AuthSwitchService {
         redirect_uri: window.location.origin,
       }
     });
+    
     return from(this.auth.loginWithPopup()).pipe(
         switchMap(() => this.auth.user$),
         switchMap(user => {

@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { User } from '@auth0/auth0-spa-js';
 import { MasterService } from '../../service/master.service';
 import { Observable, catchError, map, of } from 'rxjs';
+import { AuthSwitchService } from '../../auth-switch.service';
+import { PoliceUser } from 'src/app/Model/police-users-model';
+import { GeneralUser } from 'src/app/Model/general-users-model';
+
 
 @Component({
   selector: 'app-menubar',
@@ -22,7 +26,8 @@ export class MenubarComponent implements OnInit {
   constructor(
     public _auth: AuthService,
     private router: Router,
-    private apiService: MasterService
+    private apiService: MasterService,
+    private authSwitchService: AuthSwitchService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +37,20 @@ export class MenubarComponent implements OnInit {
         this.userName = user.name || ''; // Store the user's name
         this.userEmail = user.email || null;                 //COMENTEI AQUI PQ TAVA A DAR ERRO
 
+        this.authSwitchService.getRoles().subscribe(roles => {
+          console.log('User roles:', roles);
+          if (roles.includes('general')) {
+            if(this.userEmail != null){
+              this.isProfileCompleted(this.userEmail);
+            }
+          }
+          else if (roles.includes('police')) {
+            if(this.userEmail != null){
+              this.isProfileCompletedPolice(this.userEmail);
+            }
+          }
+        });
+
         // Set profile image or initials
         if (user.picture) {
           this.profileImage = user.picture;
@@ -40,6 +59,7 @@ export class MenubarComponent implements OnInit {
         }
       }
     });
+    
   }
 
   badgevisibility() {
@@ -63,4 +83,42 @@ export class MenubarComponent implements OnInit {
       }
     });
   }
+
+
+  isProfileCompleted(email: string): Observable<boolean> {
+    return this.apiService.getUserByEmail(email).pipe(
+      map((user: GeneralUser | null) => {
+        if (user) {
+          const { password, ...userData } = user; // Destructure user object and exclude email
+          return Object.values(userData).every(value => value !== null);
+        } else {
+          return false; // User not found or error occurred, profile not completed
+        }
+      }),
+      catchError((error) => {
+        console.error('Error checking user:', error);
+        return of(false); // Return false if there is an error
+      })
+    );
+  }
+
+
+  isProfileCompletedPolice(email: string): Observable<boolean> {
+    return this.apiService.getPoliceUserByEmail(email).pipe(
+      map((user: PoliceUser | null) => {
+        if (user) {
+          const { password, ...userData } = user; // Destructure user object and exclude email
+          return Object.values(userData).every(value => value !== null);
+        } else {
+          return false; // User not found or error occurred, profile not completed
+        }
+      }),
+      catchError((error) => {
+        console.error('Error checking user:', error);
+        return of(false); // Return false if there is an error
+      })
+    );
+  }
+
+
 }
