@@ -36,7 +36,7 @@ export class MyLeiloesComponent implements OnInit {
   lostObjects: any[] = [];
   filteredObjects: any[] = [];
   userId: string | null = null; // Change the type to string | null
-
+  delivered: boolean = false;
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router, private _auth: AuthService) { // Inject Router
     this.dataSource = new MatTableDataSource<any>();
     this.lostObjectForm = this.fb.group({
@@ -55,7 +55,7 @@ export class MyLeiloesComponent implements OnInit {
       idfiscal: ['', Validators.required],
       phonenumber: ['', Validators.required],
       police: ['', Validators.required],
-      delivered: [0]
+      delivered: [false],
     }, { validators: this.dateRangeValidator });
   }
 
@@ -78,6 +78,7 @@ export class MyLeiloesComponent implements OnInit {
             const associatedObjects = objects.filter(object => 
               this.lostObjects.some(foundObject => foundObject.objeto_id === object.id)
             );
+
             this.filteredObjects = associatedObjects;
             this.dataSource.data = this.filteredObjects;
             this.dataSource.paginator = this.paginator;
@@ -93,6 +94,12 @@ export class MyLeiloesComponent implements OnInit {
       }
     );
   }
+
+  getDeliveredStatus(objectId: number): boolean | undefined {
+    const foundObject = this.lostObjects.find(obj => obj.objeto_id === objectId);
+    return foundObject.delivered;
+  }
+  
 
   addFoundObject() {
     if (this.lostObjectForm.valid) {
@@ -119,7 +126,7 @@ export class MyLeiloesComponent implements OnInit {
           phonenumber: this.lostObjectForm.value.phonenumber,
           police: this.lostObjectForm.value.police,
           objeto_id: objeto_id,
-          delivered: true,
+          delivered: false,
         };
   
         // Adiciona o foundObject associado
