@@ -11,9 +11,9 @@ Redefinição de metas.
 
 Esforço alocado (em horas):
 
-André Silva - 5
-Bernardo Caldas - 2
+André Silva - 3
+Bernardo Caldas - 1
 David Carreira - 2
-Martim Emauz - 1
-Miguel Martins - 3
-Tomás Alves - 1
+Martim Emauz - 2
+Miguel Martins - 0
+Tomás Alves - 2

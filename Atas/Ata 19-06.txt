@@ -11,9 +11,9 @@ Foram identificados problemas na ligação entre a API e as BD's.
 
 Esforço alocado (em horas):
 
-André Silva - 10
-Bernardo Caldas - 5
-David Carreira - 10
-Martim Emauz - 18
-Miguel Martins - 7
-Tomás Alves - 18
+André Silva - 4
+Bernardo Caldas - 4
+David Carreira - 4
+Martim Emauz - 16
+Miguel Martins - 10
+Tomás Alves - 16

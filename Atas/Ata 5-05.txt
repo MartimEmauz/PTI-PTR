@@ -10,9 +10,9 @@ Correção de alguns atributos da API, criação de página apara adicionar obje
 
 Esforço alocado (em horas):
 
-André Silva - 7
-Bernardo Caldas - 7
+André Silva - 5
+Bernardo Caldas - 4
 David Carreira - 7
 Martim Emauz - 10
-Miguel Martins - 7
+Miguel Martins - 5
 Tomás Alves - 10
