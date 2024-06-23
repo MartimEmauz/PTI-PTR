@@ -12,5 +12,3 @@ export interface Objeto {
   address?: number | Address;
 }
 
-
-//INUTILIZADO ESTE MODEL

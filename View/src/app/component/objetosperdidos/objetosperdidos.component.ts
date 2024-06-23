@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 export class ObjetosperdidosComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
-  displayedColumns: string[] = ["code", "name", "email", "phone", "status", "action"];
+  displayedColumns: string[] = ["code", "title", "category", "specific_date", "description", "action"];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   lostObjectForm: FormGroup;
@@ -26,8 +26,9 @@ export class ObjetosperdidosComponent implements OnInit {
   searchText: string = '';
   lostObjects: any[] = [];
   filteredObjects: any[] = [];
-  userName: string = ''; // Add this property
-  userId: string | null = null; // Change the type to string | null
+  userName: string = '';
+  userId: string | null = null;
+
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router, private _auth: AuthService) {
     this.dataSource = new MatTableDataSource<any>();
     this.lostObjectForm = this.fb.group({
@@ -35,15 +36,15 @@ export class ObjetosperdidosComponent implements OnInit {
       specific_date: ['', Validators.required],
       description: ['', Validators.required],
       category: ['', Validators.required],
-      generaluser: [null], // Initialize with null
-      objeto_id: [null], // Initialize with null
+      generaluser: [null],
+      objeto_id: [null],
     });
   }
 
   ngOnInit(): void {
     this._auth.user$.subscribe((user: User | null | undefined) => {
-      if (user !== null && user !== undefined) {
-        const userEmail = user.email || ''; // Handle undefined case
+      if (user) {
+        const userEmail = user.email || '';
         this.getUserByEmail(userEmail);
         this.userName = user.name || '';
       }
@@ -53,44 +54,39 @@ export class ObjetosperdidosComponent implements OnInit {
 
   loadLostObjects() {
     this.service.getLostObjects().subscribe(
-      (data: LostObject[]) => {
-        this.lostObjects = data;
-        this.filteredObjects = data; // Inicialmente, exibe todos os objetos perdidos
+      (lostObjects: any[]) => {
+        this.lostObjects = lostObjects;
+        this.service.getObjects().subscribe(
+          (objects: any[]) => {
+            const associatedObjects = objects.filter(object => 
+              this.lostObjects.some(lostObject => lostObject.objeto_id === object.id)
+            );
+            this.filteredObjects = associatedObjects;
+            this.dataSource.data = this.filteredObjects;
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          },
+          (error) => {
+            console.error('Erro ao carregar objetos:', error);
+          }
+        );
       },
       (error) => {
         console.error('Erro ao carregar objetos perdidos:', error);
-        // Trate o erro conforme necessário, como exibir uma mensagem de erro na interface
       }
     );
   }
 
-  loadCustomer() {
-    this.service.GetCustomer().subscribe(res => {
-      this.dataSource.data = res;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
-  }
-
-  filterChange(data: Event) {
-    const value = (data.target as HTMLInputElement).value;
-    this.dataSource.filter = value.trim().toLowerCase();
-  }
-
   addLostObject() {
     if (this.lostObjectForm.valid) {
-      // Adiciona o objeto principal
       this.service.addObject(this.lostObjectForm.value).subscribe((newObject: any) => {
-        const objeto_id = newObject.id; // Captura o id do objeto criado
-        
-        // Cria o objeto lostObject associado
+        const objeto_id = newObject.id;
         const lostObjectData = {
-          id: 1, // O id do lostObject deve ser fornecido pelo backend ou incrementado
+          id: 0,  // Usando 0 como um valor temporário que será substituído pelo backend
           objeto_id: objeto_id,
-          generaluser: parseInt(this.userId || '0')
+          generaluser: parseInt(this.userId || '0', 10)
         };
-  
-        // Adiciona o lostObject associado
+
         this.service.addLostObject(lostObjectData).subscribe(() => {
           this.loadLostObjects();
           this.cancelAddObject();
@@ -108,21 +104,21 @@ export class ObjetosperdidosComponent implements OnInit {
     this.filteredObjects = this.searchText.trim() === '' ? [...this.lostObjects] : this.lostObjects.filter(obj =>
       obj.title.toLowerCase().includes(this.searchText.toLowerCase())
     );
+    this.dataSource.data = this.filteredObjects;
   }
 
   viewDetails(FoundObject: any) {
-    this.router.navigate(['/object-details', FoundObject.id]); // Navigate to the details page
+    this.router.navigate(['/object-details', FoundObject.id]);
   }
 
   removeLostObject(id: number) {
     if (confirm('Tem certeza que deseja remover este objeto?')) {
       this.service.deleteObject(id).subscribe(
         () => {
-          this.loadLostObjects(); // Recarrega a lista de objetos encontrados após a remoção
+          this.loadLostObjects();
         },
         error => {
           console.error('Erro ao remover objeto encontrado:', error);
-          // Tratar erro aqui, como exibir uma mensagem na interface
         }
       );
     }
@@ -131,16 +127,13 @@ export class ObjetosperdidosComponent implements OnInit {
   getUserByEmail(email: string): void {
     this.service.getUserByEmail(email).subscribe(
       (data: any) => {
-        console.log(data);
         this.userId = data.id;
-        // Atualiza o valor de generaluser no formulário
         this.lostObjectForm.patchValue({
-          generaluser: parseInt(this.userId || '0') // Converte para número inteiro
+          generaluser: parseInt(this.userId || '0', 10)
         });
       },
       (error) => {
-        console.error('Erro ao carregar objetos perdidos:', error);
-        // Trate o erro conforme necessário, como exibir uma mensagem de erro na interface
+        console.error('Erro ao carregar usuário:', error);
       }
     );
   }
@@ -156,7 +149,7 @@ export class ObjetosperdidosComponent implements OnInit {
       case 4:
         return "assets/sport.jpg";
       default:
-        return "assets/default.jpg"; // Provide a default image path
+        return "assets/default.jpg";
     }
   }
 }
