@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
-import { MasterService } from '../../service/master.service';
-import { Router } from '@angular/router';
 import { User } from '@auth0/auth0-spa-js';
-import { GeneralUser } from '../../Model/general-users-model';
-import { Address } from '../../Model/address.model';
+import { MenubarComponent } from '../menubar/menubar.component'; // Import MenubarComponent
 
 @Component({
   selector: 'app-my-account-logado',
@@ -27,15 +24,17 @@ export class MyAccountLogadoComponent implements OnInit {
     nif: '',
     cc: '',
     phoneNumber: '',
-    email: 'john.doe@example.com',
+    email: '', // Initialize email as empty
     avatarUrl: 'assets/avatar.png'  // Default avatar URL
   };
+
+  profileImage: string | null = null;
+  userName: string = ''; // Initialize userName
 
   constructor(
     private fb: FormBuilder,
     public auth: AuthService,
-    private masterService: MasterService,
-    private router: Router
+    private menubarComponent: MenubarComponent // Inject MenubarComponent
   ) {
     this.profileForm = this.fb.group({
       firstname: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
@@ -53,13 +52,26 @@ export class MyAccountLogadoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Simulate loading user data
-    this.loadUserData();
+    this.loadUserData(); // Load user data
+
+    // Subscribe to user$ to get authenticated user information
+    this.auth.user$.subscribe({
+      next: (user: User | null | undefined) => {
+        if (user) {
+          this.userName = user.name || ''; // Set the user's name
+          this.user.email = user.email || ''; // Set the user's email
+        }
+      },
+      error: (err: any) => {
+        console.error('Error retrieving user:', err);
+      }
+    });
+
+    this.profileImage = this.menubarComponent.profileImage; // Load profile image from MenubarComponent
   }
 
   loadUserData(): void {
-    // In a real application, fetch user data from a service
-    // For now, we're using hardcoded data
+    // Simulate loading user data
     const userData = {
       firstname: 'João',
       lastname: 'Silva',
@@ -72,7 +84,7 @@ export class MyAccountLogadoComponent implements OnInit {
       nif: '123456789',
       cc: '987654321',
       phoneNumber: '912345678',
-      email: 'joao.silva@example.com',
+      email: '', // Initialize email as empty
       avatarUrl: 'assets/avatar.png'
     };
 
@@ -83,9 +95,7 @@ export class MyAccountLogadoComponent implements OnInit {
   onSave(): void {
     if (this.profileForm.valid) {
       this.user = this.profileForm.value;
-      // In a real application, update user data via a service
-      // For now, let's just log the updated user data
-      console.log(this.user);
+      console.log(this.user); // In a real application, update user data via a service
     }
   }
 

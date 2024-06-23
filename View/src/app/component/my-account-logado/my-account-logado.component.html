@@ -1,8 +1,9 @@
 <mat-card class="profile-card">
   <mat-card-header>
-    <div mat-card-avatar class="profile-avatar" [style.background-image]="'url(' + user.avatarUrl + ')'"></div>
-    <mat-card-title>{{ user.firstname }} {{ user.lastname }}</mat-card-title>
-    <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
+    <!-- Display profile avatar from MenubarComponent -->
+    <div mat-card-avatar class="profile-avatar" [style.background-image]="'url(' + profileImage + ')'"></div>
+    <mat-card-title>{{ userName }}</mat-card-title> <!-- Display user's full name -->
+    <mat-card-subtitle>{{ user.email }}</mat-card-subtitle> <!-- Display user's email -->
   </mat-card-header>
 
   <mat-card-content>
@@ -64,7 +65,7 @@
         <input matInput type="tel" formControlName="phoneNumber" required>
       </mat-form-field>
       <div class="button-container">
-        <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">Guardar</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid" (click)="onSave()">Guardar</button>
         <button mat-raised-button color="accent" type="button" (click)="onCancel()">Cancelar</button>
       </div>
     </form>
