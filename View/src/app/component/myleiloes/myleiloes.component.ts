@@ -7,6 +7,8 @@ import { MasterService } from 'src/app/service/master.service';
 import { Router } from '@angular/router'; // Import Router
 import { FoundObject } from 'src/app/Model/found-object.model';
 import { User } from '@auth0/auth0-spa-js';
+import { AuthService } from '@auth0/auth0-angular';
+import { first } from 'rxjs';
 
 
 @Component({
@@ -36,8 +38,8 @@ export class MyLeiloesComponent implements OnInit {
   searchText: string = '';
   lostObjects: any[] = [];
   filteredObjects: any[] = [];
-
-  constructor(private service: MasterService, private fb: FormBuilder, private router: Router) { // Inject Router
+  userId: string | null = null; // Change the type to string | null
+  constructor(private service: MasterService, private fb: FormBuilder, private router: Router, private _auth: AuthService) { // Inject Router
     this.dataSource = new MatTableDataSource<any>();
     this.lostObjectForm = this.fb.group({
       title: ['', Validators.required],
@@ -55,11 +57,17 @@ export class MyLeiloesComponent implements OnInit {
       idfiscal: ['', Validators.required],
       phonenumber: ['', Validators.required],
       police: ['', Validators.required],
-      delivered: [1]
+      delivered: [0]
     }, { validators: this.dateRangeValidator });
   }
 
   ngOnInit(): void {
+    this._auth.user$.subscribe((user: User | null | undefined) => {
+      if (user !== null && user !== undefined) {
+        const userEmail = user.email || ''; // Handle undefined case
+        this.getUserByEmail(userEmail);
+      }
+    });
     this.loadFoundObjects();
   }
 
@@ -83,16 +91,41 @@ export class MyLeiloesComponent implements OnInit {
 
   addFoundObject() {
     if (this.lostObjectForm.valid) {
-      // Chame o serviço para adicionar o objeto encontrado
-      this.service.addFoundObject(this.lostObjectForm.value).subscribe(() => {
-        this.loadFoundObjects();
-        this.cancelAddObject();
-      }, error => {
-        console.error('Erro ao adicionar objeto encontrado:', error);
-        // Tratar erro aqui, como exibir uma mensagem na interface
+      // Adiciona o objeto principal
+      this.service.addObject(this.lostObjectForm.value).subscribe((newObject: any) => {
+        const objeto_id = newObject.id; // Captura o id do objeto criado
+        
+        // Cria o objeto lostObject associado
+        const FoundObjectData: FoundObject = {
+          title : this.lostObjectForm.value.title,
+          specific_date: this.lostObjectForm.value.specific_date,
+          start_date: this.lostObjectForm.value.start_date,
+          end_date: this.lostObjectForm.value.end_date,
+          description: this.lostObjectForm.value.description,
+          category: this.lostObjectForm.value.category,
+          address: this.lostObjectForm.value.address,
+          generaluser: parseInt(this.userId || '0'),
+          firstname: this.lostObjectForm.value.firstname,
+          lastname: this.lostObjectForm.value.lastname,
+          genero: this.lostObjectForm.value.genero,
+          birthday: this.lostObjectForm.value.birthday,
+          idcivil: this.lostObjectForm.value.idcivil,
+          idfiscal: this.lostObjectForm.value.idfiscal,
+          phonenumber: this.lostObjectForm.value.phonenumber,
+          police: this.lostObjectForm.value.police,
+          objeto_id: objeto_id,
+          delivered: true,
+        };
+  
+        // Adiciona o lostObject associado
+        this.service.addFoundObject(FoundObjectData).subscribe(() => {
+          this.loadFoundObjects();
+          this.cancelAddObject();
+        });
       });
     }
   }
+  
 
   cancelAddObject() { 
     this.lostObjectForm.reset();
@@ -151,7 +184,7 @@ export class MyLeiloesComponent implements OnInit {
 
   removeFoundObject(id: number) {
     if (confirm('Tem certeza que deseja remover este objeto?')) {
-      this.service.deleteFoundObject(id).subscribe(
+      this.service.deleteObject(id).subscribe(
         () => {
           this.loadFoundObjects(); // Recarrega a lista de objetos encontrados após a remoção
         },
@@ -163,5 +196,21 @@ export class MyLeiloesComponent implements OnInit {
     }
   }
   
+  getUserByEmail(email: string): void {
+    this.service.getUserByEmail(email).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.userId = data.id;
+        // Atualiza o valor de generaluser no formulário
+        this.lostObjectForm.patchValue({
+          generaluser: parseInt(this.userId || '0') // Converte para número inteiro
+        });
+      },
+      (error) => {
+        console.error('Erro ao carregar objetos perdidos:', error);
+        // Trate o erro conforme necessário, como exibir uma mensagem de erro na interface
+      }
+    );
+  }
   
 }

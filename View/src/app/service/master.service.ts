@@ -72,7 +72,7 @@ export class MasterService {
   }
 
   getFoundObjects(): Observable<any[]> {
-    return this.http.get<FoundObject[]>(`${this.apiUrl}foundobjects/`);
+    return this.http.get<FoundObject[]>(`${this.apiUrl}objects/`);
   }
 
   // Example function to send data to Django API
