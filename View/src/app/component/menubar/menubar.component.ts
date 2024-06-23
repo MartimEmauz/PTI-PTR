@@ -15,6 +15,9 @@ export class MenubarComponent implements OnInit {
   profileImage: string | null = null;
   initials: string = '';
   userName: string = ''; // Add this property
+  userId: string = ''; // Add this property
+  userEmail: string | null =null;// Add this property
+
   isAuthenticated$ = this._auth.isAuthenticated$;
   constructor(
     public _auth: AuthService,
@@ -25,9 +28,9 @@ export class MenubarComponent implements OnInit {
   ngOnInit(): void {
     this._auth.user$.subscribe((user: User | null | undefined) => {
       if (user !== null && user !== undefined) {
-        const userId = user.sub || ''; // Provide a default value if user.sub is undefined
+        this.userId = user.sub || ''; // Provide a default value if user.sub is undefined
         this.userName = user.name || ''; // Store the user's name
-        //this.checkUser(user.email);                 //COMENTEI AQUI PQ TAVA A DAR ERRO
+        this.userEmail = user.email || null;                 //COMENTEI AQUI PQ TAVA A DAR ERRO
 
         // Set profile image or initials
         if (user.picture) {
