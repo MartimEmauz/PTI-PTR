@@ -33,7 +33,7 @@ export class MyAccountComponent {
             (profileCompleted) => {
               if (!profileCompleted) {
                 console.log('Profile is not completed');
-                this.router.navigate(['/profile-completion']);
+                this.router.navigate(['/my-account-logado']);
               }
             },
             (error) => {
@@ -66,7 +66,7 @@ export class MyAccountComponent {
             (response) => {
               console.log('User added to generalusers table:', response);
               // Redirect to profile completion page after sign-up
-              this.router.navigate(['/profile-completion']);
+              this.router.navigate(['/my-account-logado']);
             },
             (error) => {
               console.error('Error adding user to generalusers table:', error);
