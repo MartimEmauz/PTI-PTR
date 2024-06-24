@@ -131,7 +131,6 @@ export class MasterService {
     return this.http.delete<void>(`${this.apiUrl}objects/${id}/`);
   }
 
-  getAuctions(): Observable<any[]> {
   getLeilao(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}auctions/`);
   }
@@ -143,10 +142,6 @@ export class MasterService {
   // Bid Services
   addBid(bid: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}bids/`, bid);
-  }
-
-  getObjects(): Observable<any[]> {
-    return this.http.get<Object[]>(`${this.apiUrl}objects/`);
   }
 
   getFoundObjects(): Observable<any[]> {
