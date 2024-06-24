@@ -13,11 +13,13 @@ import { AuthGuard } from './auth.guard';
 import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosperdidos.component';
 import { MyAccountLogadoComponent } from './component/my-account-logado/my-account-logado.component';
 import { ObjectDetailsComponent } from './component/object-details/object-details.component'; // Import ObjectDetailsComponent
+import { CriarLeilaoComponent } from './component/criar-leilao/criar-leilao.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'mapa', component: MapaComponent, canActivate: [AuthGuard]},
   { path: 'auction', component: AuctionComponent, canActivate: [AuthGuard]},
+  { path: 'criar-leilao', component: CriarLeilaoComponent },
   { path: 'myleiloes', component: MyLeiloesComponent, canActivate: [AuthGuard]},
   { path: 'myaccount', component: MyAccountComponent },
   { path: 'login', component: LoginComponent },

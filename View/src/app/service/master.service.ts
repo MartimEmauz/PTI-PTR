@@ -75,10 +75,6 @@ export class MasterService {
     return this.http.get<LostObject[]>(`${this.apiUrl}lostobjects/`);
   }
 
-  getFoundObjects(): Observable<any[]> {
-    return this.http.get<FoundObject[]>(`${this.apiUrl}foundobjects/`);
-  }
-
   // Example function to send data to Django API
   sendData(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/endpoint`, data);
@@ -136,10 +132,11 @@ export class MasterService {
   }
 
   getAuctions(): Observable<any[]> {
+  getLeilao(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}auctions/`);
   }
 
-  addAuction(auction: any): Observable<any> {
+  addLeilao(auction: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}auctions/`, auction);
   }
 
@@ -147,4 +144,13 @@ export class MasterService {
   addBid(bid: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}bids/`, bid);
   }
+
+  getObjects(): Observable<any[]> {
+    return this.http.get<Object[]>(`${this.apiUrl}objects/`);
+  }
+
+  getFoundObjects(): Observable<any[]> {
+    return this.http.get<FoundObject[]>(`${this.apiUrl}foundobjects/`);
+  }
+
 }

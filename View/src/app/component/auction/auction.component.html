@@ -1,10 +1,10 @@
-<!-- src/app/component/auction/auction.component.html -->
 <mat-card>
   <mat-toolbar class="toolbar">
     <mat-form-field class="search-bar">
       <input matInput (keyup)="filterChange($event)" placeholder="Pesquisar Leilão">
     </mat-form-field>
     <span class="spacer"></span>
+    <button mat-raised-button color="primary" (click)="navegarParaCriarLeilao()">Criar Leilão</button>
   </mat-toolbar>
   
   <mat-card-content>
@@ -50,6 +50,11 @@
       <ng-container matColumnDef="valorAtual">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Valor Atual</th>
         <td mat-cell *matCellDef="let element">{{element.valorAtual | currency: 'EUR':'symbol':'1.0-2'}}</td>
+      </ng-container>
+      
+      <ng-container matColumnDef="tempoRestante">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tempo Restante</th>
+        <td mat-cell *matCellDef="let element">{{element.tempoRestante}}</td>
       </ng-container>
       
       <ng-container matColumnDef="seguir">

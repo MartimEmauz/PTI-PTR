@@ -32,6 +32,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ProfileCompletionPolicemanComponent } from './component/profile-completion-policeman/profile-completion-policeman.component';
 import { ObjectDetailsComponent } from './component/object-details/object-details.component';
 import { PostoPoliciaComponent } from './component/postopolicia/postopolicia.component';
+import { CriarLeilaoComponent } from './component/criar-leilao/criar-leilao.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +51,7 @@ import { PostoPoliciaComponent } from './component/postopolicia/postopolicia.com
     ProfileCompletionPolicemanComponent,
     ObjectDetailsComponent,
     PostoPoliciaComponent,
+    CriarLeilaoComponent,
   ],
   imports: [
     BrowserModule,

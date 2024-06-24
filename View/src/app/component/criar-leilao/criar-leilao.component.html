@@ -1,0 +1,48 @@
+<mat-card class="criar-leilao-card">
+  <mat-card-title>Criar Leilão</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="criarLeilaoForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Valor Base</mat-label>
+        <input matInput formControlName="valor_base" type="number" required>
+        <mat-error *ngIf="criarLeilaoForm?.get('valor_base')?.invalid">Valor Base é obrigatório</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Data de Início</mat-label>
+        <input matInput [value]="criarLeilaoForm.get('data_inicio')?.value | date:'yyyy-MM-ddTHH:mm'" disabled>
+      </mat-form-field>
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Data de Fim</mat-label>
+        <input matInput [matDatepicker]="dataFimPicker" formControlName="data_fim" required>
+        <mat-datepicker-toggle matSuffix [for]="dataFimPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dataFimPicker></mat-datepicker>
+        <mat-error *ngIf="criarLeilaoForm?.get('data_fim')?.invalid">Data de Fim é obrigatória</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Hora de Fim</mat-label>
+        <input matInput formControlName="data_fim_hora" type="time" required>
+        <mat-error *ngIf="criarLeilaoForm?.get('data_fim_hora')?.invalid">Hora de Fim é obrigatória</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Objeto</mat-label>
+        <input matInput formControlName="objeto" [matAutocomplete]="auto" placeholder="Escolha um objeto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let objeto of objetos" [value]="objeto.id">
+            {{ objeto.titulo }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="criarLeilaoForm.controls['objeto'].invalid">Objeto é obrigatório</mat-error>
+      </mat-form-field>
+      
+
+      <div class="button-group">
+        <button mat-raised-button color="primary" type="submit" [disabled]="criarLeilaoForm.invalid">Criar Leilão</button>
+        <button mat-raised-button color="warn" type="button" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

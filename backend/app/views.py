@@ -107,6 +107,8 @@ class SimilarLostObjectListAPIView(generics.ListAPIView): #REFAZER
         similar_lost_objects = find_similar_objects(reported_lost_object)
         return similar_lost_objects
 
+
+
 class FoundObjectListCreateAPIView(generics.ListCreateAPIView):
     queryset = Foundobject.objects.all()
     serializer_class = FoundobjectSerializer
