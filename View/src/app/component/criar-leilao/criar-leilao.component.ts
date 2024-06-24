@@ -47,10 +47,8 @@ export class CriarLeilaoComponent implements OnInit {
       const dataFim = new Date(formValue.data_fim);
       const timeParts = formValue.data_fim_hora.split(':');
       dataFim.setHours(timeParts[0], timeParts[1]);
-
       formValue.data_inicio = new Date();
       formValue.data_fim = dataFim;
-
       delete formValue.data_fim_hora;
 
       this.auctionService.addLeilao(formValue).subscribe(() => {

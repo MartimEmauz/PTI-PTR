@@ -342,8 +342,8 @@ class Foundobject(models.Model):
 class Leilao(models.Model):
     id = models.AutoField(primary_key=True)
     valor_base = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
-    data_inicio = models.DateField(blank=True, null=True)
-    data_fim = models.DateField(blank=True, null=True)
+    data_inicio = models.DateTimeField(blank=True, null=True)
+    data_fim = models.DateTimeField(blank=True, null=True)
     maior_licitacao = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     objeto = models.ForeignKey(Foundobject, on_delete=models.CASCADE, db_column='objeto', blank=True, null=True)
 

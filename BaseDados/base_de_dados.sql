@@ -42,9 +42,9 @@ CREATE TABLE Objeto (
     end_date DATE, -- Data de fim
     description TEXT, -- Descrição do objeto
     category INTEGER, -- Categoria do objeto
-        FOREIGN KEY (category) REFERENCES Category(id),
+        FOREIGN KEY (category) REFERENCES Category(id) ON DELETE CASCADE,
     address INTEGER,
-        FOREIGN KEY (address) REFERENCES Address(id)
+        FOREIGN KEY (address) REFERENCES Address(id) ON DELETE CASCADE
 );
 
 -- Creating Category_attribute table
@@ -52,16 +52,16 @@ CREATE TABLE Category_attribute (
     id SERIAL PRIMARY KEY,
     attribute VARCHAR(255),
     category_id INTEGER,
-        FOREIGN KEY (category_id) REFERENCES Category(id),
+        FOREIGN KEY (category_id) REFERENCES Category(id) ON DELETE CASCADE,
     UNIQUE (attribute, category_id)
 );
 
 -- Creating atributes_object table
 CREATE TABLE atributes_object (
     object_id INTEGER,
-        FOREIGN KEY (object_id) REFERENCES Objeto(id),
+        FOREIGN KEY (object_id) REFERENCES Objeto(id) ON DELETE CASCADE,
     category_attribute_id INTEGER,
-        FOREIGN KEY (category_attribute_id) REFERENCES Category_attribute(id),
+        FOREIGN KEY (category_attribute_id) REFERENCES Category_attribute(id) ON DELETE CASCADE,
     value VARCHAR(255),
     PRIMARY KEY (object_id, category_attribute_id)
 );
@@ -72,7 +72,7 @@ CREATE TABLE PolicePost (
     location INTEGER,
     stationnumber VARCHAR(255),
         UNIQUE (stationnumber),
-    	FOREIGN KEY (location) REFERENCES Address(id)
+    	FOREIGN KEY (location) REFERENCES Address(id) ON DELETE CASCADE
 );
 
 -- Creating UserPolice table inheriting from Users
@@ -86,7 +86,7 @@ CREATE TABLE UserPolice (
     internalId VARCHAR(255),
     postoPolice INTEGER,
 		UNIQUE (internalId),
-        FOREIGN KEY (postoPolice) REFERENCES PolicePost(id)
+        FOREIGN KEY (postoPolice) REFERENCES PolicePost(id) ON DELETE CASCADE
 );
 
 -- Creating GeneralUser table inheriting from Users
@@ -100,7 +100,7 @@ CREATE TABLE GeneralUser (
     gender VARCHAR(50),
     birthday DATE,
     address INTEGER,
-        FOREIGN KEY (address) REFERENCES Address(id),
+        FOREIGN KEY (address) REFERENCES Address(id) ON DELETE CASCADE,
     phoneNumber VARCHAR(9),
         UNIQUE (phoneNumber),
     status BOOLEAN,
@@ -127,8 +127,8 @@ CREATE TABLE FoundObject (
     possibleOwner INTEGER,
     delivered BOOLEAN,
         FOREIGN KEY (objeto_id) REFERENCES Objeto(id) ON DELETE CASCADE,
-        FOREIGN KEY (police) REFERENCES UserPolice(id),
-        FOREIGN KEY (possibleOwner) REFERENCES GeneralUser(id)
+        FOREIGN KEY (police) REFERENCES UserPolice(id) ON DELETE CASCADE,
+        FOREIGN KEY (possibleOwner) REFERENCES GeneralUser(id) ON DELETE CASCADE
 );
 
 
@@ -138,7 +138,7 @@ CREATE TABLE LostObject (
         UNIQUE (objeto_id),
     generalUser INTEGER,
         FOREIGN KEY (objeto_id) REFERENCES Objeto(id) ON DELETE CASCADE,
-        FOREIGN KEY (generalUser) REFERENCES GeneralUser(id)
+        FOREIGN KEY (generalUser) REFERENCES GeneralUser(id) ON DELETE CASCADE
 );
 
 
@@ -151,7 +151,7 @@ CREATE TABLE Leilao (
     data_fim TIMESTAMP,
     maior_licitacao NUMERIC,
     objeto INTEGER,
-        FOREIGN KEY (objeto) REFERENCES FoundObject(id)
+        FOREIGN KEY (objeto) REFERENCES FoundObject(id) ON DELETE CASCADE
 );
 
 -- Creating Licitação table
@@ -160,9 +160,9 @@ CREATE TABLE Licitacao (
     valor_licitacao NUMERIC,
     data TIMESTAMP,
     id_user INTEGER,
-        FOREIGN KEY (id_user) REFERENCES GeneralUser(id),
+        FOREIGN KEY (id_user) REFERENCES GeneralUser(id) ON DELETE CASCADE,
     leilao INTEGER,
-        FOREIGN KEY (leilao) REFERENCES Leilao(id),
+        FOREIGN KEY (leilao) REFERENCES Leilao(id) ON DELETE CASCADE,
         UNIQUE(leilao, id_user, valor_licitacao)
 );
 
@@ -170,7 +170,7 @@ CREATE TABLE Licitacao (
 CREATE TABLE Subscription (
     id SERIAL PRIMARY KEY,
     id_user INTEGER,
-        FOREIGN KEY (id_user) REFERENCES GeneralUser(id),
+        FOREIGN KEY (id_user) REFERENCES GeneralUser(id) ON DELETE CASCADE,
     id_leilao INTEGER,
-        FOREIGN KEY (id_leilao) REFERENCES Leilao(id)
+        FOREIGN KEY (id_leilao) REFERENCES Leilao(id) ON DELETE CASCADE
 );
