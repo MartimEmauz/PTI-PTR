@@ -62,7 +62,7 @@ body {
 }
 
 .mdc-list {
-  margin-top: calc((100vh - 200px) / 2); /* Adjust 200px to half of the element's height */
+  /* margin-top: calc((100vh - 200px) / 2);  Adjust 200px to half of the element's height */
   padding: 8px 0;
   list-style-type: none;
 }
