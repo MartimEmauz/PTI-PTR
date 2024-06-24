@@ -1,12 +1,20 @@
-<mat-card *ngIf="objectDetails">
-    <mat-card-header>
-      <mat-card-title>{{ objectDetails.title }}</mat-card-title>
-      <mat-card-subtitle>{{ objectDetails.specific_date | date }}</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image [src]="getCardImagePath(objectDetails.category)" alt="Imagem de {{ objectDetails.title }}">
-    <mat-card-content>
-      <p>{{ objectDetails.description }}</p>
-      <p><strong>Categoria:</strong> {{ objectDetails.category }}</p>
-      <p><strong>Endereço:</strong> {{ objectDetails.address }}</p>
-    </mat-card-content>
-  </mat-card>
+<mat-card class="object-details-card">
+  <mat-card-header class="object-details-header">
+    <mat-card-title class="object-details-title">{{ objectDetails.title }}</mat-card-title>
+    <mat-card-subtitle>Data de Perda: {{ objectDetails.specific_date | date }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="object-details-content">
+    <div class="detail-row">
+      <div class="detail-label">Descrição:</div>
+      <div class="detail-value">{{ objectDetails.description }}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Categoria:</div>
+      <div class="detail-value">{{ objectDetails.category }}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Zona onde foi perdido:</div>
+      <div class="detail-value">{{ objectDetails.address }}</div>
+    </div>
+  </mat-card-content>
+</mat-card>
