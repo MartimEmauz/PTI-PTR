@@ -127,6 +127,10 @@ export class MasterService {
     return this.http.delete<void>(`${this.apiUrl}lostobjects/${id}/`);
   }
   
+  deleteUser(email: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}generalusers/${email}/`);
+  }
+
   deleteObject(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}objects/${id}/`);
   }

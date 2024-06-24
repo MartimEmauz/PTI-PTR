@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
 import { User } from '@auth0/auth0-spa-js';
 import { MenubarComponent } from '../menubar/menubar.component'; // Import MenubarComponent
-
+import { MasterService } from '../../service/master.service'; // Import MasterService
 @Component({
   selector: 'app-my-account-logado',
   templateUrl: './my-account-logado.component.html',
@@ -21,9 +21,9 @@ export class MyAccountLogadoComponent implements OnInit {
     country: '',
     city: '',
     zip: '',
-    nif: '',
-    cc: '',
-    phoneNumber: '',
+    idfiscal: '',
+    idcivil: '',
+    phonenumber: '',
     email: '', // Initialize email as empty
     avatarUrl: 'assets/avatar.png'  // Default avatar URL
   };
@@ -35,7 +35,8 @@ export class MyAccountLogadoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public auth: AuthService,
-    private menubarComponent: MenubarComponent // Inject MenubarComponent
+    private menubarComponent: MenubarComponent, // Inject MenubarComponent
+    private service: MasterService // Inject MasterService
   ) {
     this.profileForm = this.fb.group({
       firstname: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
@@ -46,9 +47,9 @@ export class MyAccountLogadoComponent implements OnInit {
       country: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
       city: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
       zip: ['', [Validators.required]],
-      nif: ['', [Validators.required]],
-      cc: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
+      idfiscal: ['', [Validators.required]],
+      idcivil: ['', [Validators.required]],
+      phonenumber: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
     });
   }
 
@@ -72,34 +73,43 @@ export class MyAccountLogadoComponent implements OnInit {
   }
 
   loadUserData(): void {
-    // Simulate loading user data
-    const userData = {
-      firstname: 'João',
-      lastname: 'Silva',
-      gender: 'male',
-      birthday: '1990-01-01',
-      street: 'Rua Principal 123',
-      country: 'Portugal',
-      city: 'Lisboa',
-      zip: '1000-001',
-      nif: '123456789',
-      cc: '987654321',
-      phoneNumber: '912345678',
-      email: '', // Initialize email as empty
-      avatarUrl: 'assets/avatar.png'
-    };
-
-    this.user = userData;
-    this.profileForm.patchValue(userData);
+    this.auth.user$.subscribe((user: User | null | undefined) => {
+      if (user) {
+        const email = user.email || this.user.email; // Use the authenticated user's email
+        this.service.getUserByEmail(email).subscribe({
+          next: (userData: any) => {
+            console.log('User data:', userData);
+            this.user = userData; // Update local user data
+            this.profileForm.patchValue(userData); // Update profile form with user data
+          },
+          error: (err: any) => {
+            console.error('Error retrieving user data:', err);
+          }
+        });
+      }
+    });
   }
 
   onSave(): void {
-    if (this.profileForm.valid) {
-      this.user = this.profileForm.value;
-      console.log(this.user); // In a real application, update user data via a service
-      this.isEditing = false; // Exit edit mode after saving
-    }
+    this.auth.user$.subscribe((user: User | null | undefined) => {
+      if (user && this.profileForm.valid) {
+        const email = user.email || this.user.email; // Use o email do usuário autenticado
+        const updatedUserData = this.profileForm.value;
+        updatedUserData.email = email; // Adicione o email ao objeto de dados atualizado
+        this.service.updateUser(email, updatedUserData).subscribe({
+          next: (updatedUser: any) => {
+            console.log('User updated:', updatedUser);
+            this.isEditing = false; // Exit edit mode after saving
+            this.user = updatedUserData; // Atualize os dados do usuário localmente após a atualização
+          },
+          error: (err: any) => {
+            console.error('Error updating user:', err);
+          }
+        });
+      }
+    });
   }
+  
 
   onCancel(): void {
     this.profileForm.patchValue(this.user);
@@ -116,7 +126,18 @@ export class MyAccountLogadoComponent implements OnInit {
   }
 
   deleteAccount(): void {
-    // Implement account deletion logic here
-    console.log('Account deleted');
+    this.auth.user$.subscribe((user: User | null | undefined) => {
+      if (user) {
+        const email = user.email || this.user.email;
+        this.service.deleteUser(email).subscribe({
+          next: () => {
+            console.log('User deleted:', email);// Redirect to home after logout
+          },
+          error: (err: any) => {
+            console.error('Error deleting user:', err);
+          }
+        });
+      }
+    });
   }
 }

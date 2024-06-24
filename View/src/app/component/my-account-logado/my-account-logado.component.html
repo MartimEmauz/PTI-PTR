@@ -9,7 +9,7 @@
   <mat-card-content *ngIf="!isEditing">
     <div class="profile-field">
       <span class="profile-label">Nome:</span>
-      <span class="profile-value">{{ user.firstname }}</span>
+      <span class="profile-value">{{user.firstname}}</span>
     </div>
     <div class="profile-field">
       <span class="profile-label">Apelido:</span>
@@ -43,15 +43,15 @@
     </div>
     <div class="profile-field">
       <span class="profile-label">NIF:</span>
-      <span class="profile-value">{{ user.nif }}</span>
+      <span class="profile-value">{{ user.idfiscal }}</span>
     </div>
     <div class="profile-field">
       <span class="profile-label">CC:</span>
-      <span class="profile-value">{{ user.cc }}</span>
+      <span class="profile-value">{{ user.idcivil }}</span>
     </div>
     <div class="profile-field">
       <span class="profile-label">Número de Telefone:</span>
-      <span class="profile-value">{{ user.phoneNumber }}</span>
+      <span class="profile-value">{{ user.phonenumber }}</span>
     </div>
     <div class="button-container">
       <button mat-raised-button color="primary" (click)="editProfile()">Editar Perfil</button>
@@ -108,15 +108,15 @@
       </div>
       <mat-form-field appearance="outline">
         <mat-label>NIF</mat-label>
-        <input matInput formControlName="nif" required>
+        <input matInput formControlName="idfiscal" required>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>CC</mat-label>
-        <input matInput formControlName="cc" required>
+        <input matInput formControlName="idcivil" required>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Número de Telefone</mat-label>
-        <input matInput type="tel" formControlName="phoneNumber" required>
+        <input matInput type="tel" formControlName="phonenumber" required>
       </mat-form-field>
       <div class="button-container">
         <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">Guardar</button>
