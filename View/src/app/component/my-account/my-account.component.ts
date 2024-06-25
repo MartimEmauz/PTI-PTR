@@ -6,7 +6,6 @@ import { GeneralUser } from '../../Model/general-users-model';
 import { MasterService } from '../../service/master.service';
 import { Observable, catchError, map, of } from 'rxjs';
 import { AuthSwitchService } from '../../auth-switch.service';
-import { get } from 'jquery';
 import { PoliceUser } from 'src/app/Model/police-users-model';
 
 @Component({
@@ -15,7 +14,6 @@ import { PoliceUser } from 'src/app/Model/police-users-model';
   styleUrls: ['./my-account.component.css']
 })
 export class MyAccountComponent {
-
   constructor(
     public _auth: AuthService,
     private router: Router,
@@ -28,12 +26,11 @@ export class MyAccountComponent {
       this.apiService.getUserByEmail(email).subscribe(
         (user) => {
           console.log('User exists:', user);
-          // Additional logic if user exists
           this.isProfileCompleted(email).subscribe(
             (profileCompleted) => {
               if (!profileCompleted) {
                 console.log('Profile is not completed');
-                this.router.navigate(['/my-account-logado']);
+                this.router.navigate(['/profile-completion']);
               }
             },
             (error) => {
@@ -65,8 +62,7 @@ export class MyAccountComponent {
           this.apiService.createUser(generalUser).subscribe(
             (response) => {
               console.log('User added to generalusers table:', response);
-              // Redirect to profile completion page after sign-up
-              this.router.navigate(['/my-account-logado']);
+              this.router.navigate(['/profile-completion']);
             },
             (error) => {
               console.error('Error adding user to generalusers table:', error);
@@ -81,27 +77,26 @@ export class MyAccountComponent {
     });
   }
 
-
   isProfileCompleted(email: string): Observable<boolean> {
     return this.apiService.getUserByEmail(email).pipe(
       map((user: GeneralUser | null) => {
         if (user) {
-          const { password, ...userData } = user; // Destructure user object and exclude email
+          const { password, ...userData } = user;
           return Object.values(userData).every(value => value !== null);
         } else {
-          return false; // User not found or error occurred, profile not completed
+          return false;
         }
       }),
       catchError((error) => {
         console.error('Error checking user:', error);
-        return of(false); // Return false if there is an error
+        return of(false);
       })
     );
   }
 
   loginGeneral(): void {
     this.authSwitchService.switchToGeneralUserClient().subscribe({
-      next: () =>{ 
+      next: () => {
         console.log('General user logged in successfully');
         this._auth.user$.subscribe((user: User | null | undefined) => {
           if (user !== null && user !== undefined) {
@@ -112,11 +107,6 @@ export class MyAccountComponent {
       error: (err) => console.error('Error logging in as general user:', err),
     });
   }
-
-
-
-  /*---------------------------------------------------------------------------------------POLICIAL-------------------------------------------------*/
-
 
   loginPolice(): void {
     this.authSwitchService.switchToPoliceUserClient().subscribe({
@@ -137,7 +127,6 @@ export class MyAccountComponent {
       this.apiService.getPoliceUserByEmail(email).subscribe(
         (user) => {
           console.log('PoliceUser exists:', user);
-          // Additional logic if user exists
           this.isProfileCompletedPolice(email).subscribe(
             (profileCompleted) => {
               if (!profileCompleted) {
@@ -174,7 +163,6 @@ export class MyAccountComponent {
           this.apiService.createPoliceUser(policeUser).subscribe(
             (response) => {
               console.log('User added to userpolice table:', response);
-              // Redirect to profile completion page after sign-up
               this.router.navigate(['/profile-completion-policeman']);
             },
             (error) => {
@@ -190,22 +178,24 @@ export class MyAccountComponent {
     });
   }
 
-
   isProfileCompletedPolice(email: string): Observable<boolean> {
     return this.apiService.getPoliceUserByEmail(email).pipe(
       map((user: PoliceUser | null) => {
         if (user) {
-          const { password, ...userData } = user; // Destructure user object and exclude email
+          const { password, ...userData } = user;
           return Object.values(userData).every(value => value !== null);
         } else {
-          return false; // User not found or error occurred, profile not completed
+          return false;
         }
       }),
       catchError((error) => {
         console.error('Error checking user:', error);
-        return of(false); // Return false if there is an error
+        return of(false);
       })
     );
   }
-}
 
+  isPoliceUser(): boolean {
+    return this.authSwitchService.getRole() === 'police';
+  }
+}
