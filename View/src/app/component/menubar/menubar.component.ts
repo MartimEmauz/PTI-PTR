@@ -9,6 +9,7 @@ import { PoliceUser } from 'src/app/Model/police-users-model';
 import { GeneralUser } from 'src/app/Model/general-users-model';
 
 
+
 @Component({
   selector: 'app-menubar',
   templateUrl: './menubar.component.html',
@@ -37,20 +38,6 @@ export class MenubarComponent implements OnInit {
         this.userName = user.name || ''; // Store the user's name
         this.userEmail = user.email || null;                 //COMENTEI AQUI PQ TAVA A DAR ERRO
 
-        this.authSwitchService.getRoles().subscribe(roles => {
-          console.log('User roles:', roles);
-          if (roles.includes('general')) {
-            if(this.userEmail != null){
-              this.isProfileCompleted(this.userEmail);
-            }
-          }
-          else if (roles.includes('police')) {
-            if(this.userEmail != null){
-              this.isProfileCompletedPolice(this.userEmail);
-            }
-          }
-        });
-
         // Set profile image or initials
         if (user.picture) {
           this.profileImage = user.picture;
@@ -64,6 +51,10 @@ export class MenubarComponent implements OnInit {
 
   badgevisibility() {
     this.badgevisible = true;
+  }
+
+  isPoliceUser(): boolean {
+    return this.authSwitchService.getRole() === 'police';
   }
 
   getInitials(name: string): string {

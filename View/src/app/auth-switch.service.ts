@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService, AuthClientConfig } from '@auth0/auth0-angular';
-import { from, Observable, of, switchMap } from 'rxjs';
+import { from, Observable, of, switchMap, tap } from 'rxjs';
 import { AUTH_CONFIG } from './auth.config';
 
 @Injectable({
@@ -8,8 +8,6 @@ import { AUTH_CONFIG } from './auth.config';
 })
 export class AuthSwitchService {
   constructor(private auth: AuthService, private authClientConfig: AuthClientConfig) {}
-
-  private roles: string[] = [];
 
   switchToGeneralUserClient(): Observable<void> {
     this.authClientConfig.set({
@@ -20,15 +18,14 @@ export class AuthSwitchService {
       }
     });
     return from(this.auth.loginWithPopup()).pipe(
-        switchMap(() => this.auth.user$),
-        switchMap(user => {
-          if (user) {
-                this.clearRoles(); // Clear all roles
-                return this.addRole('general');
-          }
-          return of(undefined);
-        })
-      );
+      switchMap(() => this.auth.user$),
+      switchMap(user => {
+        if (user) {
+          this.setRole('general');
+        }
+        return of(undefined);
+      })
+    );
   }
 
   switchToPoliceUserClient(): Observable<void> {
@@ -39,37 +36,27 @@ export class AuthSwitchService {
         redirect_uri: window.location.origin,
       }
     });
-    
+
     return from(this.auth.loginWithPopup()).pipe(
-        switchMap(() => this.auth.user$),
-        switchMap(user => {
-          if (user) {
-            this.clearRoles(); // Clear all roles
-            return this.addRole('police'); // Add police role on login
-          }
-          return of(undefined);
-        })
-      );
+      switchMap(() => this.auth.user$),
+      switchMap(user => {
+        if (user) {
+          this.setRole('police');
+        }
+        return of(undefined);
+      })
+    );
   }
 
-  getRoles(): Observable<string[]> {
-    return of(this.roles);
+  private setRole(role: string): void {
+    localStorage.setItem('userRole', role);
   }
 
-  addRole(role: string): Observable<void> {
-    if (!this.roles.includes(role)) {
-      this.roles.push(role);
-    }
-    return of(undefined);
+  getRole(): string | null {
+    return localStorage.getItem('userRole');
   }
 
-  removeRole(role: string): Observable<void> {
-    this.roles = this.roles.filter(r => r !== role);
-    return of(undefined);
-  }
-
-  clearRoles(): Observable<void> {
-    this.roles = [];
-    return of(undefined);
+  clearRole(): void {
+    localStorage.removeItem('userRole');
   }
 }

@@ -116,6 +116,12 @@ export class MasterService {
     return this.http.get<GeneralUser | null>(`${this.apiUrl}policeusers/${email}/`);
   }
 
+  getAdressById(id: number): Observable<Address> {
+    return this.http.get<Address>(`${this.apiUrl}addresses/${id}/`);
+  }
+  updateAddress(address: Address): Observable<Address> {
+    return this.http.put<Address>(`${this.apiUrl}addresses/${address.id}/`, address);
+  }
   // Add method to fetch object details
   getObjectDetails(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/object-details/${id}`);

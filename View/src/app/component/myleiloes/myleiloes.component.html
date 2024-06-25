@@ -8,18 +8,18 @@
     <!-- Formulário para adicionar objeto -->
     <div *ngIf="showAddObjectForm" class="add-object-form">
       <form (ngSubmit)="addFoundObject()" [formGroup]="lostObjectForm" class="form-grid">
-        
+
         <!-- Campos para o objeto encontrado -->
         <mat-form-field class="full-width" appearance="outline">
           <mat-label>Título</mat-label>
           <input matInput formControlName="title" required>
           <mat-error *ngIf="lostObjectForm.controls['title'].invalid && lostObjectForm.controls['title'].touched">Título é obrigatório</mat-error>
         </mat-form-field>
-        
+
         <div class="form-group">
           <mat-slide-toggle (change)="toggleDateInput()" [checked]="useSpecificDate">Usar Data Específica</mat-slide-toggle>
         </div>
-        
+
         <!-- Opção de data específica ou intervalo de datas -->
         <ng-container *ngIf="useSpecificDate; else dateRange">
           <mat-form-field class="full-width" appearance="outline">
@@ -28,28 +28,28 @@
             <mat-error *ngIf="lostObjectForm.controls['specific_date'].invalid && lostObjectForm.controls['specific_date'].touched">Data Específica é obrigatória se o intervalo de datas não for fornecido</mat-error>
           </mat-form-field>
         </ng-container>
-        
+
         <ng-template #dateRange>
-          <mat-form-field appearance="outline">
+          <mat-form-field class="full-width" appearance="outline">
             <mat-label>Data de Início</mat-label>
             <input matInput formControlName="start_date" type="date">
             <mat-error *ngIf="lostObjectForm.controls['start_date'].invalid && lostObjectForm.controls['start_date'].touched">Data de Início é obrigatória se a Data Específica não for fornecida</mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field class="full-width" appearance="outline">
             <mat-label>Data de Fim</mat-label>
             <input matInput formControlName="end_date" type="date">
             <mat-error *ngIf="lostObjectForm.controls['end_date'].invalid && lostObjectForm.controls['end_date'].touched">Data de Fim é obrigatória se a Data Específica não for fornecida</mat-error>
           </mat-form-field>
         </ng-template>
-        
+
         <mat-form-field class="full-width" appearance="outline">
           <mat-label>Descrição</mat-label>
           <textarea matInput formControlName="description" required></textarea>
           <mat-error *ngIf="lostObjectForm.controls['description'].invalid && lostObjectForm.controls['description'].touched">Descrição é obrigatória</mat-error>
         </mat-form-field>
-        
-        <mat-form-field appearance="outline">
+
+        <mat-form-field class="full-width" appearance="outline">
           <mat-label>Categoria</mat-label>
           <mat-select formControlName="category" required>
             <mat-option *ngFor="let category of categories" [value]="category.id">
@@ -58,45 +58,63 @@
           </mat-select>
           <mat-error *ngIf="lostObjectForm.controls['category'].invalid">Categoria é obrigatória</mat-error>
         </mat-form-field>
-        
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Endereço</mat-label>
-          <input matInput formControlName="address" required>
-          <mat-error *ngIf="lostObjectForm.controls['address'].invalid && lostObjectForm.controls['address'].touched">Endereço é obrigatório</mat-error>
+
+        <!-- Campos de endereço -->
+        <mat-form-field>
+          <mat-label>Morada</mat-label>
+          <input matInput formControlName="street" required>
+          <mat-error *ngIf="lostObjectForm.controls['street'].invalid && lostObjectForm.controls['street'].touched">Morada é obrigatória</mat-error>
         </mat-form-field>
-        
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>País</mat-label>
+          <input matInput formControlName="country" required>
+          <mat-error *ngIf="lostObjectForm.controls['country'].invalid && lostObjectForm.controls['country'].touched">Por favor, insira um país válido.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Cidade</mat-label>
+          <input matInput formControlName="city" required>
+          <mat-error *ngIf="lostObjectForm.controls['city'].invalid && lostObjectForm.controls['city'].touched">Por favor, insira uma cidade válida.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Código Postal</mat-label>
+          <input matInput formControlName="zip" required>
+          <mat-error *ngIf="lostObjectForm.controls['zip'].invalid && lostObjectForm.controls['zip'].touched">Por favor, insira um código postal válido.</mat-error>
+        </mat-form-field>
+
         <!-- Campos para os dados do proprietário -->
-        <mat-form-field appearance="outline">
+        <mat-form-field class="full-width" appearance="outline">
           <mat-label>Primeiro Nome</mat-label>
           <input matInput formControlName="firstname" required>
           <mat-error *ngIf="lostObjectForm.controls['firstname'].invalid && lostObjectForm.controls['firstname'].touched">Primeiro nome é obrigatório</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field class="full-width" appearance="outline">
           <mat-label>Sobrenome</mat-label>
           <input matInput formControlName="lastname" required>
           <mat-error *ngIf="lostObjectForm.controls['lastname'].invalid && lostObjectForm.controls['lastname'].touched">Sobrenome é obrigatório</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field class="full-width" appearance="outline">
           <mat-label>Gênero</mat-label>
           <input matInput formControlName="genero" required>
           <mat-error *ngIf="lostObjectForm.controls['genero'].invalid && lostObjectForm.controls['genero'].touched">Gênero é obrigatório</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field class="full-width" appearance="outline">
           <mat-label>Data de Nascimento</mat-label>
           <input matInput formControlName="birthday" type="date" required>
           <mat-error *ngIf="lostObjectForm.controls['birthday'].invalid && lostObjectForm.controls['birthday'].touched">Data de nascimento é obrigatória</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field class="full-width" appearance="outline">
           <mat-label>Identificação Civil</mat-label>
           <input matInput formControlName="idcivil" required>
           <mat-error *ngIf="lostObjectForm.controls['idcivil'].invalid && lostObjectForm.controls['idcivil'].touched">Identificação civil é obrigatória</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field class="full-width" appearance="outline">
           <mat-label>Identificação Fiscal</mat-label>
           <input matInput formControlName="idfiscal" required>
           <mat-error *ngIf="lostObjectForm.controls['idfiscal'].invalid && lostObjectForm.controls['idfiscal'].touched">Identificação fiscal é obrigatória</mat-error>
@@ -114,7 +132,7 @@
           <input matInput formControlName="police" required>
           <mat-error *ngIf="lostObjectForm.controls['police'].invalid && lostObjectForm.controls['police'].touched">Detalhes do usuário policial são obrigatórios</mat-error>
         </mat-form-field>
-        
+
         <!-- Botão para adicionar objeto encontrado -->
         <div class="button-group full-width">
           <button mat-raised-button type="submit" color="primary" [disabled]="lostObjectForm.invalid">Guardar</button>
@@ -139,6 +157,6 @@
         </div>
       </li>
     </ul>
-    
+
   </mat-card-content>
 </mat-card>
