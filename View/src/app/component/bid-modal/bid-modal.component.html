@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Fazer um Bid</h1>
+<div mat-dialog-content>
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>Valor do Bid</mat-label>
+    <input matInput [(ngModel)]="bidValue" type="number" required>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button (click)="onBid()" cdkFocusInitial>Fazer Bid</button>
+</div>

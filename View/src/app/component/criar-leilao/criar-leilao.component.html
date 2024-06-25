@@ -30,7 +30,7 @@
       <mat-form-field class="full-width" appearance="outline">
         <mat-label>Objeto</mat-label>
         <mat-select formControlName="objeto" required>
-          <mat-option *ngFor="let objeto of objetos" [value]="objeto.id">
+          <mat-option *ngFor="let objeto of filteredObjects" [value]="objeto.id">
             {{ objeto.title }}
           </mat-option>
         </mat-select>

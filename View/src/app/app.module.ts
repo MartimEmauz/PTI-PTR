@@ -33,6 +33,7 @@ import { ProfileCompletionPolicemanComponent } from './component/profile-complet
 import { ObjectDetailsComponent } from './component/object-details/object-details.component';
 import { PostoPoliciaComponent } from './component/postopolicia/postopolicia.component';
 import { CriarLeilaoComponent } from './component/criar-leilao/criar-leilao.component';
+import { BidModalComponent } from './component/bid-modal/bid-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +53,7 @@ import { CriarLeilaoComponent } from './component/criar-leilao/criar-leilao.comp
     ObjectDetailsComponent,
     PostoPoliciaComponent,
     CriarLeilaoComponent,
+    BidModalComponent,
   ],
   imports: [
     BrowserModule,

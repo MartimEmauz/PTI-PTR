@@ -56,7 +56,12 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Tempo Restante</th>
         <td mat-cell *matCellDef="let element">{{element.tempoRestante}}</td>
       </ng-container>
-      
+      <ng-container matColumnDef="openBidDialog">
+        <th mat-header-cell *matHeaderCellDef> Fazer Licitação </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button (click)="openBidDialog(element)" color="primary">Fazer Lance</button>
+        </td>
+      </ng-container>
       <ng-container matColumnDef="seguir">
         <th mat-header-cell *matHeaderCellDef>Seguir</th>
         <td mat-cell *matCellDef="let element">
