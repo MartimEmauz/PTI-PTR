@@ -8,6 +8,8 @@ import { Router } from '@angular/router'; // Import Router
 import { FoundObject } from 'src/app/Model/found-object.model';
 import { User } from '@auth0/auth0-spa-js';
 import { AuthService } from '@auth0/auth0-angular';
+import { count, zip } from 'rxjs';
+import { Address } from 'src/app/Model/address.model';
 
 @Component({
   selector: 'app-table',
@@ -46,7 +48,10 @@ export class MyLeiloesComponent implements OnInit {
       end_date: [{ value: '', disabled: this.useSpecificDate }],
       description: ['', Validators.required],
       category: ['', Validators.required],
-      address: ['', Validators.required],
+      street : ['', Validators.required],
+      country: ['', Validators.required],
+      city : ['', Validators.required],
+      zip: ['', Validators.required],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       genero: ['', Validators.required],
@@ -55,6 +60,7 @@ export class MyLeiloesComponent implements OnInit {
       idfiscal: ['', Validators.required],
       phonenumber: ['', Validators.required],
       police: ['', Validators.required],
+      address : [],
       delivered: [false],
     }, { validators: this.dateRangeValidator });
   }
@@ -103,40 +109,74 @@ export class MyLeiloesComponent implements OnInit {
 
   addFoundObject() {
     if (this.lostObjectForm.valid) {
-      // Adiciona o objeto principal
-      this.service.addObject(this.lostObjectForm.value).subscribe((newObject: any) => {
-        const objeto_id = newObject.id; // Captura o id do objeto criado
-        
-        // Cria o objeto foundObject associado
-        const foundObjectData: FoundObject = {
-          title : this.lostObjectForm.value.title,
-          specific_date: this.lostObjectForm.value.specific_date,
-          start_date: this.lostObjectForm.value.start_date,
-          end_date: this.lostObjectForm.value.end_date,
-          description: this.lostObjectForm.value.description,
-          category: this.lostObjectForm.value.category,
-          address: this.lostObjectForm.value.address,
-          generaluser: parseInt(this.userId || '0'),
-          firstname: this.lostObjectForm.value.firstname,
-          lastname: this.lostObjectForm.value.lastname,
-          genero: this.lostObjectForm.value.genero,
-          birthday: this.lostObjectForm.value.birthday,
-          idcivil: this.lostObjectForm.value.idcivil,
-          idfiscal: this.lostObjectForm.value.idfiscal,
-          phonenumber: this.lostObjectForm.value.phonenumber,
-          police: this.lostObjectForm.value.police,
-          objeto_id: objeto_id,
-          delivered: false,
+        // Extraia os dados do endereço do formulário
+        const address: Address = {
+            street: this.lostObjectForm.value.street,
+            country: this.lostObjectForm.value.country,
+            city: this.lostObjectForm.value.city,
+            zip: this.lostObjectForm.value.zip,
         };
-  
-        // Adiciona o foundObject associado
-        this.service.addFoundObject(foundObjectData).subscribe(() => {
-          this.loadFoundObjects();
-          this.cancelAddObject();
-        });
-      });
+
+        // Cria o endereço associado
+        this.service.createAddress(address).subscribe(
+            (addressResponse) => { 
+                if (addressResponse && addressResponse.id) {
+                    // Atualiza o formulário com o ID do endereço criado
+                    this.lostObjectForm.patchValue({ address: addressResponse.id });
+
+                    // Adiciona o objeto principal
+                    this.service.addObject(this.lostObjectForm.value).subscribe((newObject: any) => {
+                        const objeto_id = newObject.id; // Captura o id do objeto criado
+                        console.log('Address Response:', addressResponse.id);
+                        // Formata a data de aniversário
+                        const formattedDate = this.lostObjectForm.value.birthday.split('T')[0];
+
+                        // Cria o objeto foundObject associado
+                        const foundObjectData: FoundObject = {
+                            title: this.lostObjectForm.value.title,
+                            specific_date: this.lostObjectForm.value.specific_date,
+                            start_date: this.lostObjectForm.value.start_date,
+                            end_date: this.lostObjectForm.value.end_date,
+                            description: this.lostObjectForm.value.description,
+                            category: this.lostObjectForm.value.category,
+                            generaluser: parseInt(this.userId || '0'),
+                            firstname: this.lostObjectForm.value.firstname,
+                            lastname: this.lostObjectForm.value.lastname,
+                            genero: this.lostObjectForm.value.genero,
+                            birthday: formattedDate,
+                            idcivil: this.lostObjectForm.value.idcivil,
+                            idfiscal: this.lostObjectForm.value.idfiscal,
+                            phonenumber: this.lostObjectForm.value.phonenumber,
+                            police: this.lostObjectForm.value.police,
+                            objeto_id: objeto_id,
+                            delivered: false,
+                            address: addressResponse.id, // Adiciona o ID do endereço criado
+                        };
+
+                        console.log('Found Object Data:', foundObjectData); // Verifique o conteúdo do foundObjectData
+
+                        // Adiciona o foundObject associado
+                        this.service.addFoundObject(foundObjectData).subscribe(() => {
+                            this.loadFoundObjects();
+                            this.cancelAddObject();
+                        }, (error) => {
+                            console.error('Error adding found object:', error);
+                        });
+                    }, (error) => {
+                        console.error('Error adding object:', error);
+                    });
+                } else {
+                    console.error('Address ID is null or undefined:', addressResponse);
+                }
+            },
+            (error) => {
+                console.error('Error creating address:', error);
+            }
+        );
+    } else {
+        console.error('Lost object form is invalid');
     }
-  }
+}
 
   cancelAddObject() { 
     this.lostObjectForm.reset();

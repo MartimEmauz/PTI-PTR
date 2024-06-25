@@ -138,4 +138,16 @@ mat-card {
     border-style: solid;
     padding: 10px;
   }
+
+  button.remove-button {
+    color: #fff;
+    background-color: #f44336; /* Vermelho */
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
   
+  button.remove-button:hover {
+    background-color: #e57373; /* Tom mais claro de vermelho ao passar o mouse */
+  }

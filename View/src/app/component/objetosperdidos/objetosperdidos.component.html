@@ -48,7 +48,7 @@
                 </div>
               </div>
               <p class="card__description">{{lostObject.description}}</p>
-              <button mat-button color="warn" (click)="removeLostObject(lostObject.id); $event.stopPropagation()">Remover</button>
+              <button mat-button color="warn" class = "remove-button" (click)="removeLostObject(lostObject.id); $event.stopPropagation()">Remover</button>
             </div>
           </a>
         </li>
