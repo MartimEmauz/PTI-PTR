@@ -167,6 +167,7 @@ export class MyAccountLogadoComponent implements OnInit {
         }
       }
     });
+    this.loadUserData(); // Reload user data after saving
   }
   
 
