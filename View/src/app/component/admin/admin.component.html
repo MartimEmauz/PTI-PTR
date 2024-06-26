@@ -1,0 +1,50 @@
+<div class="container">
+    <h1>Admin Page - Police Posts</h1>
+    <div class="form-group">
+      <label for="stationnumber">Station Number:</label>
+      <input type="number" id="stationnumber" [(ngModel)]="newPost.stationnumber" class="form-control">
+  
+      <label for="street">Street:</label>
+      <input type="text" id="street" [(ngModel)]="newPost.location.street" class="form-control">
+  
+      <label for="country">Country:</label>
+      <input type="text" id="country" [(ngModel)]="newPost.location.country" class="form-control">
+  
+      <label for="city">City:</label>
+      <input type="text" id="city" [(ngModel)]="newPost.location.city" class="form-control">
+  
+      <label for="zip">ZIP:</label>
+      <input type="text" id="zip" [(ngModel)]="newPost.location.zip" class="form-control">
+  
+      <button (click)="addPolicePost()" class="btn btn-primary mt-2">Add Police Post</button>
+    </div>
+  
+    <h2>Existing Police Posts</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Station Number</th>
+          <th>Street</th>
+          <th>Country</th>
+          <th>City</th>
+          <th>ZIP</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of policePosts">
+          <td>{{ post.id }}</td>
+          <td>{{ post.stationnumber }}</td>
+          <td>{{ post.location.street }}</td>
+          <td>{{ post.location.country }}</td>
+          <td>{{ post.location.city }}</td>
+          <td>{{ post.location.zip }}</td>
+          <td>
+            <button (click)="deletePolicePost(post.id)" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

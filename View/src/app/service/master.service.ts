@@ -11,6 +11,7 @@ import { FoundObject } from '../Model/found-object.model';
 import { Leilao } from '../Model/leilao-model';
 import { Licitacao } from '../Model/licitacao-model';
 import { Objeto } from '../Model/object-model';
+import { PolicePost } from '../Model/postopolice.model';
 
 @Injectable({
   providedIn: 'root'
@@ -190,5 +191,20 @@ export class MasterService {
 
   getFoundObjects(): Observable<any[]> {
     return this.http.get<FoundObject[]>(`${this.apiUrl}foundobjects/`);
+  }
+
+  // Get all police posts
+  getPolicePosts(): Observable<PolicePost[]> {
+    return this.http.get<PolicePost[]>(`${this.apiUrl}policeposts/`);
+  }
+
+  // Add a new police post
+  addPolicePost(newPost: PolicePost): Observable<PolicePost> {
+    return this.http.post<PolicePost>(`${this.apiUrl}policeposts/`, newPost);
+  }
+
+  // Delete a police post
+  deletePolicePost(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}policeposts/${id}/`);
   }
 }
