@@ -33,13 +33,23 @@
 
             <mat-form-field class="full-width" appearance="outline">
               <mat-label>Categoria</mat-label>
-              <mat-select formControlName="category" required>
+              <mat-select formControlName="category" (selectionChange)="onCategoryChange($event)" required>
                 <mat-option *ngFor="let category of categories" [value]="category.id">
                   {{ category.name }}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="lostObjectForm.controls['category'].invalid">Categoria é obrigatória</mat-error>
             </mat-form-field>
+
+            <div *ngIf="filteredAttributes.length > 0">
+              <div *ngFor="let attribute of filteredAttributes">
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>{{ attribute.attribute }}</mat-label>
+                  <input matInput [placeholder]="attribute.attribute" [formControlName]="attribute.id" required>
+                  <mat-error *ngIf="lostObjectForm.controls[attribute.id].invalid && lostObjectForm.controls[attribute.id].touched">{{ attribute.attribute }} é obrigatório</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
 
             <div>
               <button mat-button matStepperNext>Próximo</button>

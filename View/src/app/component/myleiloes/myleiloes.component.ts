@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Attribute, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -9,6 +9,7 @@ import { FoundObject } from 'src/app/Model/found-object.model';
 import { User } from '@auth0/auth0-spa-js';
 import { AuthService } from '@auth0/auth0-angular';
 import { Address } from 'src/app/Model/address.model';
+import { AuthSwitchService } from 'src/app/auth-switch.service';
 
 @Component({
   selector: 'app-table',
@@ -32,10 +33,12 @@ export class MyLeiloesComponent implements OnInit {
   searchText: string = '';
   lostObjects: any[] = [];
   filteredObjects: any[] = [];
+  filteredAttributes: any[] = [];
   userId: string | null = null; // Change the type to string | null
   delivered: boolean = false;
   ownerFormGroup: FormGroup;
   addressFormGroup: FormGroup;
+  categoryAttributes: any[] = [];
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router, private _auth: AuthService) { // Inject Router
     this.dataSource = new MatTableDataSource<any>();
     this.lostObjectForm = this.fb.group({
@@ -43,6 +46,7 @@ export class MyLeiloesComponent implements OnInit {
       specific_date: [''],
       description: ['', Validators.required],
       category: ['', Validators.required],
+      filteredAttributes: [''],
     });
 
     this.addressFormGroup = this.fb.group({
@@ -73,6 +77,41 @@ export class MyLeiloesComponent implements OnInit {
     this.loadFoundObjects();
     this.getCategoriesFromDb();
   }
+
+
+  onCategoryChange(event: any): void {
+    const categoryId = event.value;
+    this.loadCategoryAttributes(categoryId);
+  }
+
+  loadCategoryAttributes(categoryId: number): void {
+    this.service.getAttributes().subscribe(
+      (attributes: any[]) => {
+        // Filtrar atributos com base no category_id
+        this.filteredAttributes = attributes.filter(attribute => attribute.category_id === categoryId);
+        this.updateFormWithAttributes(this.filteredAttributes);
+      },
+      (error) => {
+        console.error('Erro ao carregar atributos da categoria:', error);
+      }
+    );
+  }
+
+  updateFormWithAttributes(attributes: any[]): void {
+    // Limpar controles antigos
+    Object.keys(this.lostObjectForm.controls).forEach(key => {
+      if (key !== 'title' && key !== 'specific_date' && key !== 'description' && key !== 'category') {
+        this.lostObjectForm.removeControl(key);
+      }
+    });
+  
+    // Adicionar novos controles baseados nos atributos filtrados
+    attributes.forEach(attribute => {
+      const control = this.fb.control('', Validators.required);
+      this.lostObjectForm.addControl(attribute.id.toString(), control); // Certifique-se de usar toString() se attribute.id for um número
+    });
+  }
+  
 
   getCategoriesFromDb() {
     this.service.getCategories().subscribe(
@@ -148,7 +187,7 @@ export class MyLeiloesComponent implements OnInit {
               console.log('Address Response:', addressResponse.id);
 
               // Formata a data de aniversário
-              const formattedDate = ownerData.value.birthday.split('T')[0];
+              const formattedDate = ownerData.birthday.split('T')[0];
 
               // Cria o objeto foundObject associado
               const foundObjectData: FoundObject = {
@@ -194,7 +233,7 @@ export class MyLeiloesComponent implements OnInit {
       console.error('Lost object form is invalid');
     }
   }
-
+  
   cancelAddObject() { 
     this.lostObjectForm.reset();
     this.showAddObjectForm = false;
@@ -266,7 +305,7 @@ export class MyLeiloesComponent implements OnInit {
   }
 
   getUserByEmail(email: string): void {
-    this.service.getUserByEmail(email).subscribe(
+    this.service.getPoliceByEmail(email).subscribe(
       (data: any) => {
         console.log(data);
         this.userId = data.id;

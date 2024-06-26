@@ -103,10 +103,18 @@ export class MasterService {
     return this.http.put<any>(`${this.apiUrl}generalusers/${email}/`, userData);
   }
 
+  getAttributes(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}categoryattributes/`);
+  }
+      
+
   getUserByEmail(email: string): Observable<GeneralUser | null> {
     return this.http.get<GeneralUser | null>(`${this.apiUrl}generalusers/${email}/`);
   }
 
+  getPoliceByEmail(email: string): Observable<PoliceUser | null> {
+    return this.http.get<PoliceUser | null>(`${this.apiUrl}policeusers/${email}/`);
+  }
   createAddress(address: Address): Observable<Address> {
     return this.http.post<Address>(`${this.apiUrl}addresses/`, address);
   }

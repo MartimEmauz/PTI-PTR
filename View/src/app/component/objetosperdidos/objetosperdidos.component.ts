@@ -8,6 +8,7 @@ import { LostObject } from 'src/app/Model/lost-object.model';
 import { AuthService } from '@auth0/auth0-angular';
 import { User } from '@auth0/auth0-spa-js';
 import { Router } from '@angular/router';
+import { AuthSwitchService } from '../../auth-switch.service';
 
 @Component({
   selector: 'app-table',
@@ -29,7 +30,7 @@ export class ObjetosperdidosComponent implements OnInit {
   userName: string = '';
   userId: string | null = null;
 
-  constructor(private service: MasterService, private fb: FormBuilder, private router: Router, private _auth: AuthService) {
+  constructor(private service: MasterService, private fb: FormBuilder, private router: Router, private _auth: AuthService,private authSwitchService: AuthSwitchService) {
     this.dataSource = new MatTableDataSource<any>();
     this.lostObjectForm = this.fb.group({
       title: ['', Validators.required],
@@ -124,7 +125,12 @@ export class ObjetosperdidosComponent implements OnInit {
     }
   }
 
+  isPoliceUser(): boolean {
+    return this.authSwitchService.getRole() === 'police';
+  }
+
   getUserByEmail(email: string): void {
+    if (!this.isPoliceUser()) {
     this.service.getUserByEmail(email).subscribe(
       (data: any) => {
         this.userId = data.id;
@@ -136,7 +142,20 @@ export class ObjetosperdidosComponent implements OnInit {
         console.error('Erro ao carregar usuário:', error);
       }
     );
+  }else{
+    this.service.getPoliceUserByEmail(email).subscribe(
+      (data: any) => {
+        this.userId = data.id;
+        this.lostObjectForm.patchValue({
+          generaluser: parseInt(this.userId || '0', 10)
+        });
+      },
+      (error) => {
+        console.error('Erro ao carregar usuário:', error);
+      }
+    );
   }
+}
 
   getCardImagePath(categoryId: number): string {
     switch (categoryId) {
