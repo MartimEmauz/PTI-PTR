@@ -146,6 +146,12 @@ export class MasterService {
     return this.http.get<any>(`${this.apiUrl}categories/${id}/`);
   }
 
+
+  getCategoryAttributes(categoryId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}categoryattributes/category/${categoryId}/`);
+  }
+
+
   getAddressById(id: number): Observable<Address> {
     return this.http.get<Address>(`${this.apiUrl}addresses/${id}/`);
   }
