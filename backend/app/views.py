@@ -95,8 +95,26 @@ class LostObjectHistoryListAPIView(generics.ListAPIView):
     permission_classes = [AllowAny]
 
     def get_queryset(self):
-        user = self.request.user
-        lost_objects = Lostobject.objects.filter(owner=user)
+        user_id = self.kwargs.get('pk')  # Captura o ID do usuário a partir da URL
+        lost_objects = Lostobject.objects.filter(generaluser_id=user_id)  # Filtra os objetos perdidos pelo ID do usuário
+        return lost_objects
+    
+class LostObjectSearchAPIView(generics.ListAPIView):
+    serializer_class = LostobjectSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        description = self.kwargs.get('description')  # Captura o parâmetro 'description' da URL
+        lost_objects = Lostobject.objects.filter(objeto_id__description__icontains=description)
+        return lost_objects
+
+class LostObjectSearchCategoryAPIView(generics.ListAPIView):
+    serializer_class = LostobjectSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')  # Captura o parâmetro 'pk' da URL
+        lost_objects = Lostobject.objects.filter(objeto_id__category=pk)
         return lost_objects
 
 class SimilarLostObjectListAPIView(generics.ListAPIView): #REFAZER
@@ -107,7 +125,21 @@ class SimilarLostObjectListAPIView(generics.ListAPIView): #REFAZER
         similar_lost_objects = find_similar_objects(reported_lost_object)
         return similar_lost_objects
 
+class LostObjectCompareByCategoryAPIView(generics.ListAPIView):
+    serializer_class = FoundobjectSerializer
+    permission_classes = [AllowAny]
 
+    def get_queryset(self):
+        lost_object_id = self.kwargs.get('pk')
+        lost_object = Lostobject.objects.get(id=lost_object_id)
+
+        # Obtém a categoria do objeto perdido
+        lost_object_category = lost_object.objeto_id.category
+
+        # Filtra objetos encontrados que pertencem à mesma categoria que o objeto perdido
+        found_objects = Foundobject.objects.filter(objeto_id__category=lost_object_category)
+
+        return found_objects
 
 class FoundObjectListCreateAPIView(generics.ListCreateAPIView):
     queryset = Foundobject.objects.all()
@@ -119,38 +151,6 @@ class FoundObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIV
     serializer_class = FoundobjectSerializer
     permission_classes = [AllowAny]
 
-
-class LostObjectSearchAPIView(generics.ListAPIView):
-    serializer_class = LostobjectSerializer
-    permission_classes = [AllowAny]
-
-
-    def get_queryset(self):
-        description = self.request.data.get('description')
-        lost_objects = Lostobject.objects.filter(description__icontains=description)
-        return lost_objects
-    
-class LostObjectSearchCategoryAPIView(generics.ListAPIView):
-    serializer_class = LostobjectSerializer
-    permission_classes = [AllowAny]
-
-
-    def get_queryset(self):
-        category = self.request.data.get('category')
-        lost_objects = Lostobject.objects.filter(category__name=category)
-        return lost_objects
-
-class LostObjectCompareAPIView(generics.RetrieveAPIView):
-    serializer_class = LostobjectSerializer
-    permission_classes = [AllowAny]
-
-
-    def get_queryset(self):
-        lost_object = self.request.data.get('lost_object')
-        found_object = self.request.data.get('found_object')
-        compare_objects(lost_object, found_object)
-        return lost_object
-
 class FoundObjectHistoryListAPIView(generics.ListAPIView):
     serializer_class = FoundobjectSerializer
     permission_classes = [AllowAny]
@@ -160,16 +160,44 @@ class FoundObjectHistoryListAPIView(generics.ListAPIView):
         found_objects = Foundobject.objects.filter(owner=user)
         return found_objects
 
-class FoundObjectPossibleOwner(generics.RetrieveUpdateDestroyAPIView):
+class FoundObjectChangeOwnerAPIView(generics.RetrieveUpdateAPIView):
     queryset = Foundobject.objects.all()
     serializer_class = FoundobjectSerializer
     permission_classes = [AllowAny]
 
+    def put(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
-class FoundObjectDelivered(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Foundobject.objects.all()
-    serializer_class = FoundobjectSerializer
+    def patch(self, request, *args, **kwargs):
+        return self.put(request, *args, **kwargs)
+
+class FoundObjectDelivered(APIView):
     permission_classes = [AllowAny]
+
+    def get_object(self, pk):
+        try:
+            return Foundobject.objects.get(pk=pk)
+        except Foundobject.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        found_object = self.get_object(pk)
+        serializer = FoundobjectSerializer(found_object)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        found_object = self.get_object(pk)
+        found_object.delivered = True
+        serializer = FoundobjectSerializer(found_object, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CategoryListCreateAPIView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
@@ -199,8 +227,8 @@ class CategoryAttributeListAPIView(generics.ListAPIView):
     permission_classes = [AllowAny]
 
     def get_queryset(self):
-        category = self.request.data.get('category')
-        attributes = CategoryAttribute.objects.filter(category=category)
+        category_pk = self.kwargs.get('pk')  # Corrigido para pegar 'pk' dos kwargs da URL
+        attributes = CategoryAttribute.objects.filter(category_id=category_pk)  # Filtra pelo ID da categoria
         return attributes
     
 class AtributesObjectListCreateAPIView(generics.ListCreateAPIView):
@@ -212,6 +240,18 @@ class AtributesObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroy
     queryset = AtributesObject.objects.all()
     serializer_class = AtributesObjectSerializer
     permission_classes = [AllowAny]
+
+class AtributesObjectViewObject(generics.ListAPIView):
+    serializer_class = AtributesObjectSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        object = self.kwargs.get('pk')
+        if object is not None:
+            attributes = AtributesObject.objects.filter(object_id=object)
+        else:
+            attributes = AtributesObject.objects.none()
+        return attributes
 
 #---------------------------------------------------------
 #---------Leilões de objetos não reclamados---------------
