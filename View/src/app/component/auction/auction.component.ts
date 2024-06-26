@@ -4,7 +4,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MasterService } from 'src/app/service/master.service';
 import { Subscription, interval } from 'rxjs';
 import { Router } from '@angular/router';
-
+import { MatDialog } from '@angular/material/dialog';
+import { BidModalComponent } from '../bid-modal/bid-modal.component';
 
 @Component({
   selector: 'app-auction',
@@ -12,19 +13,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./auction.component.css']
 })
 export class AuctionComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['nome', 'estado', 'valorAtual', 'tempoRestante', 'seguir'];
+  displayedColumns: string[] = ['nome', 'valorAtual', 'tempoRestante', 'fazerLicitacao', 'seguir'];
   dataSource = new MatTableDataSource<any>();
-  addBidForm: FormGroup;
   showAddBidForm = false;
   subscriptions: Subscription[] = [];
 
-  constructor(private auctionService: MasterService, private fb: FormBuilder, private router: Router) {
-    this.addBidForm = this.fb.group({
-      nome: ['', Validators.required],
-      estado: ['', Validators.required],
-      valorAtual: ['', [Validators.required, Validators.min(0)]]
-    });
-  }
+  constructor(
+    private auctionService: MasterService,
+    private fb: FormBuilder,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.loadAuctions();
@@ -67,22 +66,20 @@ export class AuctionComponent implements OnInit, OnDestroy {
     return `${days}d ${hours}h ${minutes}m ${seconds}s`;
   }
 
-  toggleAddBidForm(): void {
-    this.showAddBidForm = !this.showAddBidForm;
-  }
+  openBidModal(id: number): void {
+    const dialogRef = this.dialog.open(BidModalComponent, {
+      height: '250px',
+      width: '400px',
+      data: { leilaoId: id }
+    });
 
-  addBid(): void {
-    if (this.addBidForm.valid) {
-      this.auctionService.addLeilao(this.addBidForm.value).subscribe(() => {
-        this.loadAuctions(); // Recarregar a lista após adicionar
-        this.toggleAddBidForm(); // Fechar o formulário
-      });
-    }
-  }
-
-  followBid(id: string): void {
-    // Lógica para seguir leilão
-    console.log(`Seguindo leilão com ID: ${id}`);
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        console.log('The dialog was closed');
+        console.log('Bid value:', result);
+        // Aqui você pode adicionar lógica para processar a licitação, se necessário
+      }
+    });
   }
 
   filterChange(event: Event): void {
@@ -92,5 +89,10 @@ export class AuctionComponent implements OnInit, OnDestroy {
 
   navegarParaCriarLeilao(): void {
     this.router.navigate(['/criar-leilao']);
+  }
+
+  followBid(id: number): void {
+    // Implemente a lógica para seguir o leilão com o ID fornecido
+    console.log('Seguindo leilão com ID:', id);
   }
 }

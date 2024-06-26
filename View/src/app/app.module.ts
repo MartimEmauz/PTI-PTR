@@ -34,6 +34,8 @@ import { ObjectDetailsComponent } from './component/object-details/object-detail
 import { PostoPoliciaComponent } from './component/postopolicia/postopolicia.component';
 import { CriarLeilaoComponent } from './component/criar-leilao/criar-leilao.component';
 import { ObjetosperdidospoliciaComponent } from './component/objetosperdidospolicia/objetosperdidospolicia.component';
+import { BidModalComponent } from './component/bid-modal/bid-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +56,7 @@ import { ObjetosperdidospoliciaComponent } from './component/objetosperdidospoli
     PostoPoliciaComponent,
     CriarLeilaoComponent,
     ObjetosperdidospoliciaComponent,
+    BidModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +73,7 @@ import { ObjetosperdidospoliciaComponent } from './component/objetosperdidospoli
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
+    MatDialogModule,
     AuthModule.forRoot({
       domain: 'dev-7ety36lrjtchzs5o.us.auth0.com',
       clientId: 'QtBbOFF8p3ObAlrfl8NvoARtRysybsAi',
@@ -80,6 +84,6 @@ import { ObjetosperdidospoliciaComponent } from './component/objetosperdidospoli
     MatSlideToggleModule // Add MatSlideToggleModule to imports
   ],
   providers: [DatePipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

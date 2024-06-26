@@ -58,12 +58,13 @@ CREATE TABLE Category_attribute (
 
 -- Creating atributes_object table
 CREATE TABLE atributes_object (
+    id SERIAL PRIMARY KEY,
     object_id INTEGER,
         FOREIGN KEY (object_id) REFERENCES Objeto(id) ON DELETE CASCADE,
     category_attribute_id INTEGER,
         FOREIGN KEY (category_attribute_id) REFERENCES Category_attribute(id) ON DELETE CASCADE,
     value VARCHAR(255),
-    PRIMARY KEY (object_id, category_attribute_id)
+    UNIQUE (object_id, category_attribute_id)
 );
 
 -- Creating Policepost table

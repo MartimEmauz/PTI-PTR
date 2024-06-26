@@ -17,6 +17,9 @@ import { Objeto } from '../Model/object-model';
   providedIn: 'root'
 })
 export class MasterService {
+  followLeilao(id: any) {
+    throw new Error('Method not implemented.');
+  }
 
   getObjects(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}objects/`);

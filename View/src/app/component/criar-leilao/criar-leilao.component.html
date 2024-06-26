@@ -29,12 +29,11 @@
 
       <mat-form-field class="full-width" appearance="outline">
         <mat-label>Objeto</mat-label>
-        <input matInput formControlName="objeto" [matAutocomplete]="auto" placeholder="Escolha um objeto">
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let objeto of objetos" [value]="objeto.id">
-            {{ objeto.titulo }}
+        <mat-select formControlName="objeto" required>
+          <mat-option *ngFor="let objeto of filteredObjects" [value]="objeto.id">
+            {{ objeto.title }}
           </mat-option>
-        </mat-autocomplete>
+        </mat-select>
         <mat-error *ngIf="criarLeilaoForm.controls['objeto'].invalid">Objeto é obrigatório</mat-error>
       </mat-form-field>
       

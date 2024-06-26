@@ -1,9 +1,9 @@
 import stat
 from telnetlib import STATUS
 from rest_framework import generics
-from .models import Objeto , Lostobject, Foundobject, Generaluser, Userpolice, PolicePost,Leilao, Licitacao, Category, CategoryAttribute, Subscription, Address
+from .models import AtributesObject, Objeto , Lostobject, Foundobject, Generaluser, Userpolice, PolicePost,Leilao, Licitacao, Category, CategoryAttribute, Subscription, Address
 from .serializers import (
-    LostobjectSerializer, FoundobjectSerializer, GeneraluserSerializer,
+    AtributesObjectSerializer, LostobjectSerializer, FoundobjectSerializer, GeneraluserSerializer,
     UserpoliceSerializer, PolicePostSerializer, LeilaoSerializer, LicitacaoSerializer,
     CategorySerializer, CategoryAttributeSerializer, SubscriptionSerializer,
     AddressSerializer, ObjetoSerializer
@@ -193,6 +193,25 @@ class CategoryAttributeRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestr
     serializer_class = CategoryAttributeSerializer
     permission_classes = [AllowAny]
 
+
+class CategoryAttributeListAPIView(generics.ListAPIView):
+    serializer_class = CategoryAttributeSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        category = self.request.data.get('category')
+        attributes = CategoryAttribute.objects.filter(category=category)
+        return attributes
+    
+class AtributesObjectListCreateAPIView(generics.ListCreateAPIView):
+    queryset = AtributesObject.objects.all()
+    serializer_class = AtributesObjectSerializer
+    permission_classes = [AllowAny]
+
+class AtributesObjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = AtributesObject.objects.all()
+    serializer_class = AtributesObjectSerializer
+    permission_classes = [AllowAny]
 
 #---------------------------------------------------------
 #---------Leilões de objetos não reclamados---------------

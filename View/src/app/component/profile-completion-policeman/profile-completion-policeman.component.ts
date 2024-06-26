@@ -24,7 +24,7 @@ export class ProfileCompletionPolicemanComponent implements OnInit {
       firstname: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
       lastname: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
       internalid: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
-      postopolice: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]]
+      postopolice: ['', [Validators.required]]
     });
   }
 
