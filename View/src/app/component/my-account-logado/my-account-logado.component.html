@@ -23,20 +23,20 @@
       <span class="profile-label">Data de Nascimento:</span>
       <span class="profile-value">{{ user.birthday }}</span>
     </div>
-    <div class="profile-field">
+    <div  *ngIf ="!isPoliceUser()" class="profile-field">
       <span class="profile-label">Morada:</span>
       <span class="profile-value">{{ user.address.street }}</span>
     </div>
-    <div class="address-fields">
+    <div  *ngIf ="!isPoliceUser()" class="address-fields">
       <div class="profile-field">
         <span class="profile-label">País:</span>
         <span class="profile-value">{{ user.address.country }}</span>
       </div>
-      <div class="profile-field">
+      <div *ngIf ="!isPoliceUser()" class="profile-field">
         <span class="profile-label">Cidade:</span>
         <span class="profile-value">{{ user.address.city }}</span>
       </div>
-      <div class="profile-field">
+      <div *ngIf ="!isPoliceUser()" class="profile-field">
         <span class="profile-label">Código Postal:</span>
         <span class="profile-value">{{ user.address.zip }}</span>
       </div>
@@ -82,25 +82,25 @@
         <mat-label>Data de Nascimento</mat-label>
         <input matInput type="date" formControlName="birthday" required>
       </mat-form-field>
-      <mat-form-field appearance="outline">
+      <mat-form-field *ngIf ="!isPoliceUser()" appearance="outline">
         <mat-label>Morada</mat-label>
         <input matInput formControlName="street" required>
       </mat-form-field>
       <div class="address-fields">
         <div>
-          <mat-form-field appearance="outline">
+          <mat-form-field *ngIf ="!isPoliceUser()" appearance="outline">
             <mat-label>País</mat-label>
             <input matInput formControlName="country" required>
           </mat-form-field>
         </div>
         <div>
-          <mat-form-field appearance="outline">
+          <mat-form-field  *ngIf ="!isPoliceUser()" appearance="outline">
             <mat-label>Cidade</mat-label>
             <input matInput formControlName="city" required>
           </mat-form-field>
         </div>
         <div>
-          <mat-form-field appearance="outline">
+          <mat-form-field *ngIf ="!isPoliceUser()" appearance="outline">
             <mat-label>Código Postal</mat-label>
             <input matInput formControlName="zip" required>
           </mat-form-field>
