@@ -93,6 +93,10 @@ export class MasterService {
     return this.http.post<any>(`${this.apiUrl}foundobjects/`, newFoundObject); 
   } 
 
+  addAttributeObject(attribute: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}atributesobjects/`, attribute);
+  }
+
   createUser(user: GeneralUser): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}generalusers/`, user);
   }

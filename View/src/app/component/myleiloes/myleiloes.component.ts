@@ -112,6 +112,23 @@ export class MyLeiloesComponent implements OnInit {
     });
   }
   
+  getAttributesData(): any[] {
+    const attributesData: any[] = [];
+
+    // Iterate over filteredAttributes and get values from form
+    this.filteredAttributes.forEach(attribute => {
+      const value = this.lostObjectForm.get(attribute.id.toString())?.value;
+      const attributeData = {
+        id: attribute.id,
+        value: value,
+        object_id: 1, // Replace with the actual object_id if needed
+        category_attribute_id: attribute.id
+      };
+      attributesData.push(attributeData);
+    });
+
+    return attributesData;
+  }
 
   getCategoriesFromDb() {
     this.service.getCategories().subscribe(
@@ -161,11 +178,11 @@ export class MyLeiloesComponent implements OnInit {
       const lostObjectData = this.lostObjectForm.value;
       const addressData = this.addressFormGroup.value;
       const ownerData = this.ownerFormGroup.value;
-
+  
       // Verifica e ajusta os campos start_date e end_date
       lostObjectData.start_date = lostObjectData.start_date ? lostObjectData.start_date : null;
       lostObjectData.end_date = lostObjectData.end_date ? lostObjectData.end_date : null;
-
+  
       // Extraia os dados do endereço do formulário
       const address: Address = {
         street: addressData.street,
@@ -173,22 +190,22 @@ export class MyLeiloesComponent implements OnInit {
         city: addressData.city,
         zip: addressData.zip,
       };
-
+  
       // Cria o endereço associado
       this.service.createAddress(address).subscribe(
-        (addressResponse) => { 
+        (addressResponse) => {
           if (addressResponse && addressResponse.id) {
             // Atualiza o formulário com o ID do endereço criado
             this.lostObjectForm.patchValue({ address: addressResponse.id });
-
+  
             // Adiciona o objeto principal
             this.service.addObject(this.lostObjectForm.value).subscribe((newObject: any) => {
               const objeto_id = newObject.id; // Captura o id do objeto criado
               console.log('Address Response:', addressResponse.id);
-
+  
               // Formata a data de aniversário
               const formattedDate = ownerData.birthday.split('T')[0];
-
+  
               // Cria o objeto foundObject associado
               const foundObjectData: FoundObject = {
                 title: lostObjectData.title,
@@ -208,11 +225,34 @@ export class MyLeiloesComponent implements OnInit {
                 objeto_id: objeto_id,
                 delivered: false
               };
-
+  
               console.log('Found Object Data:', foundObjectData); // Verifique o conteúdo do foundObjectData
-
+  
               // Adiciona o foundObject associado
               this.service.addFoundObject(foundObjectData).subscribe(() => {
+                // Agora, adicione os atributos ao objeto
+                const attributeObjects = [];
+                for (const key of Object.keys(this.lostObjectForm.value)) {
+                  const attributeId = parseInt(key, 10);
+                  if (!isNaN(attributeId)) {
+                    const attributeObject = {
+                      value: this.lostObjectForm.value[key],
+                      object_id: objeto_id,
+                      category_attribute_id: attributeId
+                    };
+                    attributeObjects.push(attributeObject);
+                  }
+                }
+  
+                // Envie os atributos para a API
+                for (const attribute of attributeObjects) {
+                  this.service.addAttributeObject(attribute).subscribe(() => {
+                    console.log('Attribute added:', attribute);
+                  }, (error) => {
+                    console.error('Error adding attribute:', error);
+                  });
+                }
+  
                 this.loadFoundObjects();
                 this.cancelAddObject();
               }, (error) => {
@@ -233,6 +273,7 @@ export class MyLeiloesComponent implements OnInit {
       console.error('Lost object form is invalid');
     }
   }
+  
   
   cancelAddObject() { 
     this.lostObjectForm.reset();
