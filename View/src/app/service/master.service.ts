@@ -105,6 +105,10 @@ export class MasterService {
     return this.http.put<any>(`${this.apiUrl}generalusers/${email}/`, userData);
   }
 
+  updateFoundObject(id: number, foundObjectData: Partial<FoundObject>): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}foundobjects/${id}/`, foundObjectData);
+  }
+
   getAttributes(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}categoryattributes/`);
   }

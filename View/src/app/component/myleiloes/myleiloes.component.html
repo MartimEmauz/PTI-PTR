@@ -159,6 +159,11 @@
             <span class="status-icon material-icons">{{ getDeliveredStatus(foundObject.id) ? 'check_circle' : 'cancel' }}</span>
             <span class="status-label">{{ getDeliveredStatus(foundObject.id) ? 'Entregue' : 'Não entregue' }}</span>
           </div>
+          <button mat-button color="primary" class="receive-button"
+        *ngIf="!getDeliveredStatus(foundObject.id)"
+        (click)="markAsReceived(foundObject.id); $event.stopPropagation()">
+  Marcar como Recebido
+</button>  
           <button mat-button color="warn" (click)="removeFoundObject(foundObject.id); $event.stopPropagation()" class="remove-button">Remover</button>
         </div>
       </li>

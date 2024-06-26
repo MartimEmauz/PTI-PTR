@@ -274,7 +274,28 @@ export class MyLeiloesComponent implements OnInit {
     }
   }
   
+  markAsReceived(objectId: number) {
+    console.log(`Marking object as received with ID: ${objectId}`); // Log for debugging
+    
+    // Encontra o FoundObject correspondente ao objeto
+    const foundObject = this.lostObjects.find(obj => obj.objeto_id === objectId);
   
+    if (foundObject) {
+      this.service.updateFoundObject(foundObject.id, { delivered: true }).subscribe(
+        () => {
+          foundObject.delivered = true; // Atualiza localmente o status de entrega
+          this.loadFoundObjects(); // Recarrega os objetos encontrados
+        },
+        (error) => {
+          console.error('Erro ao marcar como recebido:', error);
+        }
+      );
+    } else {
+      console.error('FoundObject não encontrado para o objeto ID:', objectId);
+    }
+  }
+  
+
   cancelAddObject() { 
     this.lostObjectForm.reset();
     this.showAddObjectForm = false;
