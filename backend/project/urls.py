@@ -42,22 +42,19 @@ urlpatterns = [
     path('lostobjects/<int:pk>/', views.LostObjectRetrieveUpdateDestroyAPIView.as_view(), name='lostobject-retrieve-update-destroy'),
     path('lostobjects/history/<int:pk>', views.LostObjectHistoryListAPIView.as_view(), name='lostobject-history-list'),
     #  Pesquisar objetos perdidos pela descrição. 
-    path('lostobjects/search/', views.LostObjectSearchAPIView.as_view(), name='lostobject-search'),
-    #  Pesquisar objetos perdidos pelos campos específicos de categorias.
-    path('lostobjects/search/category/', views.LostObjectSearchCategoryAPIView.as_view(), name='lostobject-search-category'), 
+    path('lostobjects/search/<str:description>/', views.LostObjectSearchAPIView.as_view(), name='lostobject-search'),    #  Pesquisar objetos perdidos pelos campos específicos de categorias.
+    path('lostobjects/search/category/<int:pk>', views.LostObjectSearchCategoryAPIView.as_view(), name='lostobject-search-category'), 
     # Comparar um objeto perdido com um achado, revelando as diferenças.
-    path('lostobjects/compare/<int:pk>/', views.LostObjectCompareAPIView.as_view(), name='lostobject-compare'),
-    # Registar, editar, e remover possível dono de objeto achado. Altera um atributo do objeto achado.
-    path('lostobjects/owner/<int:pk>/', views.FoundObjectPossibleOwner.as_view(), name='foundobject-possible'),
-    # Registar entrega de objeto achado ao dono.
-    path('lostobjects/delivered/<int:pk>/', views.FoundObjectDelivered.as_view(), name='foundobject-delivered'),
+    path('lostobjects/comparebycategory/<int:pk>/', views.LostObjectCompareByCategoryAPIView.as_view(), name='lostobject-compare'),
     path('lostobjects/similar/<int:pk>/', views.SimilarLostObjectListAPIView.as_view(), name='lostobject-similar-list'),
         
     # Found Objects URLs
     path('foundobjects/', views.FoundObjectListCreateAPIView.as_view(), name='foundobject-list-create'),
     path('foundobjects/<int:pk>/', views.FoundObjectRetrieveUpdateDestroyAPIView.as_view(), name='foundobject-retrieve-update-destroy'),
     path('foundobjects/history/<int:pk>', views.FoundObjectHistoryListAPIView.as_view(), name='foundobject-history-list'),
-
+    # Registar, editar, e remover possível dono de objeto achado. Altera um atributo do objeto achado.
+    path('foundobjects/<int:pk>/change-owner/', views.FoundObjectChangeOwnerAPIView.as_view(), name='foundobject-change-owner'),    # Registar entrega de objeto achado ao dono.
+    path('foundobject/delivered/<int:pk>/', views.FoundObjectDelivered.as_view(), name='foundobject-delivered'),
     # Category URLs
     path('categories/', views.CategoryListCreateAPIView.as_view(), name='category-list-create'),
     path('categories/<int:pk>/', views.CategoryRetrieveUpdateDestroyAPIView.as_view(), name='category-retrieve-update-destroy'),
@@ -65,12 +62,12 @@ urlpatterns = [
     # Category Attributes URLs
     path('categoryattributes/', views.CategoryAttributeListCreateAPIView.as_view(), name='categoryattribute-list-create'),
     path('categoryattributes/<int:pk>/', views.CategoryAttributeRetrieveUpdateDestroyAPIView.as_view(), name='categoryattribute-retrieve-update-destroy'),
-
     path('categoryattributes/category/<int:pk>/', views.CategoryAttributeListAPIView.as_view(), name='categoryattribute-list'),
 
     # AtributesObject URLs
     path('atributesobjects/', views.AtributesObjectListCreateAPIView.as_view(), name='objectattribute-list-create'),
     path('atributesobjects/<int:pk>/', views.AtributesObjectRetrieveUpdateDestroyAPIView.as_view(), name='objectattribute-retrieve-update-destroy'),
+    path('atributesobjects/object/<int:pk>/', views.AtributesObjectViewObject.as_view(), name='objectattribute-list'),
 
     #---------------------------------------------------------
     #---------Leilões de objetos não reclamados---------------

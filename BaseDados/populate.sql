@@ -52,11 +52,11 @@ INSERT INTO Category_attribute (attribute, category_id) VALUES
 
 -- Populate UserPolice table
 INSERT INTO UserPolice (firstName, lastName, email, password, internalId, postoPolice) VALUES
-('João', 'Silva', 'joao.silva@police.pt', 'password123', 'P001', 1),
-('Ana', 'Costa', 'ana.costa@police.pt', 'password123', 'P002', 2),
-('Carlos', 'Pereira', 'carlos.pereira@police.pt', 'password123', 'P003', 3),
-('Maria', 'Fernandes', 'maria.fernandes@police.pt', 'password123', 'P004', 4),
-('Pedro', 'Gomes', 'pedro.gomes@police.pt', 'password123', 'P005', 5);
+('João', 'Silva', 'joao.silva@police.pt', 'password123', '105258812', 1),
+('Ana', 'Costa', 'ana.costa@police.pt', 'password123', '123546879', 2),
+('Carlos', 'Pereira', 'carlos.pereira@police.pt', 'password123', '1548569876', 3),
+('Maria', 'Fernandes', 'maria.fernandes@police.pt', 'password123', '168796397', 4),
+('Pedro', 'Gomes', 'pedro.gomes@police.pt', 'password123', '5361978941', 5);
 
 -- Populate GeneralUser table
 INSERT INTO GeneralUser (firstName, lastName, email, password, gender, birthday, address, phoneNumber, status, idCivil, idFiscal) VALUES
