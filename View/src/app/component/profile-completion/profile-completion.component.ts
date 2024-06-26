@@ -32,14 +32,15 @@ export class ProfileCompletionComponent implements OnInit {
       zip: ['', [Validators.required, Validators.pattern(/^\d{4}-\d{3}$/)]],
       nif: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       cc: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]]
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
+      privacyCheckbox: [false, Validators.requiredTrue] // Added privacy checkbox
     });
   }
 
   ngOnInit() {}
 
   onCompleteProfile() {
-    if (this.profileForm.valid) {
+    if (this.profileForm.valid && this.profileForm.value.privacyCheckbox) {
       this.auth.user$.subscribe((user: User | null | undefined) => {
         if (user && user.email) {
           const address: Address = {
@@ -85,7 +86,8 @@ export class ProfileCompletionComponent implements OnInit {
         }
       });
     } else {
-      console.error('Profile form is invalid');
+      console.error('Profile form is invalid or privacy policy not accepted');
+      // You may want to provide user feedback here
     }
   }
 
