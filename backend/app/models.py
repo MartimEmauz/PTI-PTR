@@ -114,7 +114,7 @@ class Category(models.Model):
 class CategoryAttribute(models.Model):
     id = models.AutoField(primary_key=True)
     attribute = models.CharField(max_length=255, blank=True, null=True)
-    category = models.ForeignKey(Category, models.DO_NOTHING, db_column="category", blank=True, null=True)
+    category_id = models.ForeignKey(Category, models.DO_NOTHING, db_column="category_id", blank=True, null=True)
 
     class Meta:
         managed = False
@@ -221,7 +221,6 @@ class Generaluser(models.Model):
                 super().save(*args, **kwargs)
 
 
-
 class Objeto(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255, null=True, blank=True)
@@ -249,18 +248,6 @@ class Objeto(models.Model):
                 name='valid_date_constraints'
             )
         ]
-
-class AtributesObject(models.Model):
-    object_id = models.ForeignKey(Objeto, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
-    category_attribute = models.ForeignKey(CategoryAttribute, on_delete=models.CASCADE,db_column='id', blank=True, null=True)
-    value = models.CharField(max_length=255, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'atributes_object'
-        unique_together = (('object_id', 'category_attribute'),)
-        app_label = 'app'
-
 
 class SpatialRefSys(models.Model):
     srid = models.IntegerField(primary_key=True)
@@ -337,7 +324,19 @@ class Foundobject(models.Model):
         managed = False
         db_table = 'foundobject'
         app_label = 'app'
-    
+
+class AtributesObject(models.Model):
+    id = models.AutoField(primary_key=True)
+    object_id = models.ForeignKey(Objeto, on_delete=models.CASCADE, db_column='object_id', blank=True, null=True)
+    category_attribute_id = models.ForeignKey(CategoryAttribute, on_delete=models.CASCADE, db_column='category_attribute_id', blank=True, null=True)
+    value = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'atributes_object'
+        unique_together = (('object_id', 'category_attribute_id'),) 
+        app_label = 'app'
+
 
 class Leilao(models.Model):
     id = models.AutoField(primary_key=True)

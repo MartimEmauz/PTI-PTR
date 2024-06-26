@@ -5,7 +5,7 @@ import { MasterService } from 'src/app/service/master.service';
 import { Subscription, interval } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { BidDialogComponent } from '../bid-modal/bid-modal.component';
+import { BidModalComponent } from '../bid-modal/bid-modal.component';
 
 @Component({
   selector: 'app-auction',
@@ -13,13 +13,17 @@ import { BidDialogComponent } from '../bid-modal/bid-modal.component';
   styleUrls: ['./auction.component.css']
 })
 export class AuctionComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['nome', 'estado', 'valorAtual', 'tempoRestante', 'seguir'];
+  displayedColumns: string[] = ['nome', 'valorAtual', 'tempoRestante', 'fazerLicitacao', 'seguir'];
   dataSource = new MatTableDataSource<any>();
   showAddBidForm = false;
   subscriptions: Subscription[] = [];
 
-  constructor(private auctionService: MasterService, private fb: FormBuilder, private router: Router, public dialog: MatDialog) {
-  }
+  constructor(
+    private auctionService: MasterService,
+    private fb: FormBuilder,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.loadAuctions();
@@ -62,15 +66,19 @@ export class AuctionComponent implements OnInit, OnDestroy {
     return `${days}d ${hours}h ${minutes}m ${seconds}s`;
   }
 
-  openBidDialog(): void {
-    const dialogRef = this.dialog.open(BidDialogComponent, {
-      width: '250px',
-      data: {}
+  openBidModal(id: number): void {
+    const dialogRef = this.dialog.open(BidModalComponent, {
+      height: '250px',
+      width: '400px',
+      data: { leilaoId: id }
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      console.log('The dialog was closed');
-      console.log('Bid value:', result);
+      if (result) {
+        console.log('The dialog was closed');
+        console.log('Bid value:', result);
+        // Aqui você pode adicionar lógica para processar a licitação, se necessário
+      }
     });
   }
 
@@ -81,5 +89,10 @@ export class AuctionComponent implements OnInit, OnDestroy {
 
   navegarParaCriarLeilao(): void {
     this.router.navigate(['/criar-leilao']);
+  }
+
+  followBid(id: number): void {
+    // Implemente a lógica para seguir o leilão com o ID fornecido
+    console.log('Seguindo leilão com ID:', id);
   }
 }

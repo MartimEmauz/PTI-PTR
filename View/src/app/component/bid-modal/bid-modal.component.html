@@ -1,11 +1,15 @@
-<h1 mat-dialog-title>Fazer um Bid</h1>
-<div mat-dialog-content>
-  <mat-form-field class="full-width" appearance="outline">
-    <mat-label>Valor do Bid</mat-label>
-    <input matInput [(ngModel)]="bidValue" type="number" required>
-  </mat-form-field>
+<h1 mat-dialog-title>Fazer Licitação</h1>
+<div mat-dialog-content class="pop">
+  <!-- Conteúdo do formulário de lance -->
+  <form [formGroup]="bidForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Valor da Licitação</mat-label>
+      <input matInput formControlName="valorLance" type="number" required>
+      <mat-error *ngIf="bidForm.controls['valorLance'].invalid">Valor é obrigatório</mat-error>
+    </mat-form-field>
+  </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Cancelar</button>
-  <button mat-button (click)="onBid()" cdkFocusInitial>Fazer Bid</button>
+  <button mat-button type="submit" [disabled]="bidForm.invalid" (click)="onSubmit()">Salvar</button>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
 </div>

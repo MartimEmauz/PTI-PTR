@@ -1,24 +1,34 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-bid-dialog',
-  templateUrl: './bid-dialog.component.html',
-  styleUrls: ['./bid-dialog.component.css']
+  selector: 'app-bid-modal',
+  templateUrl: './bid-modal.component.html',
+  styleUrls: ['./bid-modal.component.css']
 })
-export class BidDialogComponent {
-  bidValue: number = 0;
+export class BidModalComponent implements OnInit {
+  bidForm!: FormGroup;
 
   constructor(
-    public dialogRef: MatDialogRef<BidDialogComponent>,
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<BidModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
-  onCancel(): void {
-    this.dialogRef.close();
+  ngOnInit(): void {
+    this.bidForm = this.fb.group({
+      valorLance: ['', Validators.required]
+    });
   }
 
-  onBid(): void {
-    this.dialogRef.close(this.bidValue);
+  onSubmit(): void {
+    if (this.bidForm.valid) {
+      this.dialogRef.close(this.bidForm.value.valorLance);
+    }
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

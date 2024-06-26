@@ -66,6 +66,12 @@ urlpatterns = [
     path('categoryattributes/', views.CategoryAttributeListCreateAPIView.as_view(), name='categoryattribute-list-create'),
     path('categoryattributes/<int:pk>/', views.CategoryAttributeRetrieveUpdateDestroyAPIView.as_view(), name='categoryattribute-retrieve-update-destroy'),
 
+    path('categoryattributes/category/<int:pk>/', views.CategoryAttributeListAPIView.as_view(), name='categoryattribute-list'),
+
+    # AtributesObject URLs
+    path('atributesobjects/', views.AtributesObjectListCreateAPIView.as_view(), name='objectattribute-list-create'),
+    path('atributesobjects/<int:pk>/', views.AtributesObjectRetrieveUpdateDestroyAPIView.as_view(), name='objectattribute-retrieve-update-destroy'),
+
     #---------------------------------------------------------
     #---------Leilões de objetos não reclamados---------------
     #---------------------------------------------------------
