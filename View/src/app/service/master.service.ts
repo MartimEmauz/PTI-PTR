@@ -42,6 +42,10 @@ export class MasterService {
     return this.http.post<any>(`${this.apiUrl}objects/`, newObject);
   }
 
+  getCategories(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}categories/`);
+  }
+
   GetCustomer(): Observable<Customer[]> {
     return this.http.get<Customer[]>("http://localhost:8000/customer");
   }

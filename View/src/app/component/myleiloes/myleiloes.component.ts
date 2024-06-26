@@ -8,7 +8,6 @@ import { Router } from '@angular/router'; // Import Router
 import { FoundObject } from 'src/app/Model/found-object.model';
 import { User } from '@auth0/auth0-spa-js';
 import { AuthService } from '@auth0/auth0-angular';
-import { count, zip } from 'rxjs';
 import { Address } from 'src/app/Model/address.model';
 
 @Component({
@@ -26,43 +25,42 @@ export class MyLeiloesComponent implements OnInit {
   showAddObjectForm: boolean = false;
   useSpecificDate: boolean = true;
   categories = [
-    { id: 1, name: 'Eletrónicos' },
-    { id: 2, name: 'Documentos' },
-    { id: 3, name: 'Chaves' },
-    { id: 4, name: 'Acessórios' },
-    { id: 5, name: 'Roupas' },
-    { id: 6, name: 'Outros' }
+    { id: null, name: '' },
   ];
+
 
   searchText: string = '';
   lostObjects: any[] = [];
   filteredObjects: any[] = [];
   userId: string | null = null; // Change the type to string | null
   delivered: boolean = false;
+  ownerFormGroup: FormGroup;
+  addressFormGroup: FormGroup;
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router, private _auth: AuthService) { // Inject Router
     this.dataSource = new MatTableDataSource<any>();
     this.lostObjectForm = this.fb.group({
       title: ['', Validators.required],
-      specific_date: [{ value: '', disabled: !this.useSpecificDate }],
-      start_date: [{ value: '', disabled: this.useSpecificDate }],
-      end_date: [{ value: '', disabled: this.useSpecificDate }],
+      specific_date: [''],
       description: ['', Validators.required],
       category: ['', Validators.required],
-      street : ['', Validators.required],
+    });
+
+    this.addressFormGroup = this.fb.group({
+      street: ['', Validators.required],
       country: ['', Validators.required],
-      city : ['', Validators.required],
-      zip: ['', Validators.required],
+      city: ['', Validators.required],
+      zip: ['', Validators.required]
+    });
+
+    this.ownerFormGroup = this.fb.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       genero: ['', Validators.required],
       birthday: ['', Validators.required],
       idcivil: ['', Validators.required],
       idfiscal: ['', Validators.required],
-      phonenumber: ['', Validators.required],
-      police: ['', Validators.required],
-      address : [],
-      delivered: [false],
-    }, { validators: this.dateRangeValidator });
+      phonenumber: ['', [Validators.required, Validators.pattern(/^\d+$/)]]
+    });
   }
 
   ngOnInit(): void {
@@ -73,6 +71,19 @@ export class MyLeiloesComponent implements OnInit {
       }
     });
     this.loadFoundObjects();
+    this.getCategoriesFromDb();
+  }
+
+  getCategoriesFromDb() {
+    this.service.getCategories().subscribe(
+      (categories: any[]) => {
+        this.categories = categories;
+      },
+      (error) => {
+        console.error('Erro ao carregar categorias:', error);
+      }
+    );
+  
   }
 
   loadFoundObjects() {
@@ -106,77 +117,83 @@ export class MyLeiloesComponent implements OnInit {
     return foundObject.delivered;
   }
   
-
   addFoundObject() {
     if (this.lostObjectForm.valid) {
-        // Extraia os dados do endereço do formulário
-        const address: Address = {
-            street: this.lostObjectForm.value.street,
-            country: this.lostObjectForm.value.country,
-            city: this.lostObjectForm.value.city,
-            zip: this.lostObjectForm.value.zip,
-        };
+      const lostObjectData = this.lostObjectForm.value;
+      const addressData = this.addressFormGroup.value;
+      const ownerData = this.ownerFormGroup.value;
 
-        // Cria o endereço associado
-        this.service.createAddress(address).subscribe(
-            (addressResponse) => { 
-                if (addressResponse && addressResponse.id) {
-                    // Atualiza o formulário com o ID do endereço criado
-                    this.lostObjectForm.patchValue({ address: addressResponse.id });
+      // Verifica e ajusta os campos start_date e end_date
+      lostObjectData.start_date = lostObjectData.start_date ? lostObjectData.start_date : null;
+      lostObjectData.end_date = lostObjectData.end_date ? lostObjectData.end_date : null;
 
-                    // Adiciona o objeto principal
-                    this.service.addObject(this.lostObjectForm.value).subscribe((newObject: any) => {
-                        const objeto_id = newObject.id; // Captura o id do objeto criado
-                        console.log('Address Response:', addressResponse.id);
-                        // Formata a data de aniversário
-                        const formattedDate = this.lostObjectForm.value.birthday.split('T')[0];
+      // Extraia os dados do endereço do formulário
+      const address: Address = {
+        street: addressData.street,
+        country: addressData.country,
+        city: addressData.city,
+        zip: addressData.zip,
+      };
 
-                        // Cria o objeto foundObject associado
-                        const foundObjectData: FoundObject = {
-                            title: this.lostObjectForm.value.title,
-                            specific_date: this.lostObjectForm.value.specific_date,
-                            start_date: this.lostObjectForm.value.start_date,
-                            end_date: this.lostObjectForm.value.end_date,
-                            description: this.lostObjectForm.value.description,
-                            category: this.lostObjectForm.value.category,
-                            generaluser: parseInt(this.userId || '0'),
-                            firstname: this.lostObjectForm.value.firstname,
-                            lastname: this.lostObjectForm.value.lastname,
-                            genero: this.lostObjectForm.value.genero,
-                            birthday: formattedDate,
-                            idcivil: this.lostObjectForm.value.idcivil,
-                            idfiscal: this.lostObjectForm.value.idfiscal,
-                            phonenumber: this.lostObjectForm.value.phonenumber,
-                            police: this.lostObjectForm.value.police,
-                            objeto_id: objeto_id,
-                            delivered: false,
-                            address: addressResponse.id, // Adiciona o ID do endereço criado
-                        };
+      // Cria o endereço associado
+      this.service.createAddress(address).subscribe(
+        (addressResponse) => { 
+          if (addressResponse && addressResponse.id) {
+            // Atualiza o formulário com o ID do endereço criado
+            this.lostObjectForm.patchValue({ address: addressResponse.id });
 
-                        console.log('Found Object Data:', foundObjectData); // Verifique o conteúdo do foundObjectData
+            // Adiciona o objeto principal
+            this.service.addObject(this.lostObjectForm.value).subscribe((newObject: any) => {
+              const objeto_id = newObject.id; // Captura o id do objeto criado
+              console.log('Address Response:', addressResponse.id);
 
-                        // Adiciona o foundObject associado
-                        this.service.addFoundObject(foundObjectData).subscribe(() => {
-                            this.loadFoundObjects();
-                            this.cancelAddObject();
-                        }, (error) => {
-                            console.error('Error adding found object:', error);
-                        });
-                    }, (error) => {
-                        console.error('Error adding object:', error);
-                    });
-                } else {
-                    console.error('Address ID is null or undefined:', addressResponse);
-                }
-            },
-            (error) => {
-                console.error('Error creating address:', error);
-            }
-        );
+              // Formata a data de aniversário
+              const formattedDate = ownerData.value.birthday.split('T')[0];
+
+              // Cria o objeto foundObject associado
+              const foundObjectData: FoundObject = {
+                title: lostObjectData.title,
+                specific_date: lostObjectData.specific_date,
+                description: lostObjectData.description,
+                category: lostObjectData.category,
+                address: addressResponse.id,
+                generaluser: parseInt(this.userId || '0', 10),
+                firstname: ownerData.firstname,
+                lastname: ownerData.lastname,
+                genero: ownerData.genero,
+                birthday: formattedDate,
+                idcivil: ownerData.idcivil,
+                idfiscal: ownerData.idfiscal,
+                phonenumber: ownerData.phonenumber,
+                police: parseInt(this.userId || '0', 10), // Valor temporário que será substituído pelo backend
+                objeto_id: objeto_id,
+                delivered: false
+              };
+
+              console.log('Found Object Data:', foundObjectData); // Verifique o conteúdo do foundObjectData
+
+              // Adiciona o foundObject associado
+              this.service.addFoundObject(foundObjectData).subscribe(() => {
+                this.loadFoundObjects();
+                this.cancelAddObject();
+              }, (error) => {
+                console.error('Error adding found object:', error);
+              });
+            }, (error) => {
+              console.error('Error adding object:', error);
+            });
+          } else {
+            console.error('Address ID is null or undefined:', addressResponse);
+          }
+        },
+        (error) => {
+          console.error('Error creating address:', error);
+        }
+      );
     } else {
-        console.error('Lost object form is invalid');
+      console.error('Lost object form is invalid');
     }
-}
+  }
 
   cancelAddObject() { 
     this.lostObjectForm.reset();
