@@ -12,9 +12,14 @@
       <div class="detail-label">Categoria:</div>
       <div class="detail-value">{{ objectDetails.category }}</div>
     </div>
-    <div class="detail-row">
-      <div class="detail-label">Zona onde foi perdido:</div>
-      <div class="detail-value">{{ objectDetails.address }}</div>
+    <div class="detail-row" *ngIf="objectDetails.address">
+      <div class="detail-label">Endereço:</div>
+      <div class="detail-value">
+        {{ objectDetails.address.street }},
+        {{ objectDetails.address.city }},
+        {{ objectDetails.address.country }},
+        {{ objectDetails.address.zip }}
+      </div>
     </div>
   </mat-card-content>
 </mat-card>
