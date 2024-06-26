@@ -7,6 +7,7 @@ import { User } from '@auth0/auth0-spa-js';
 import { MenubarComponent } from '../menubar/menubar.component'; // Import MenubarComponent
 import { MasterService } from '../../service/master.service'; // Import MasterService
 import { Address } from 'src/app/Model/address.model';
+import { AuthSwitchService } from 'src/app/auth-switch.service';
 
 @Component({
   selector: 'app-my-account-logado',
@@ -41,7 +42,8 @@ export class MyAccountLogadoComponent implements OnInit {
     private fb: FormBuilder,
     public auth: AuthService,
     private menubarComponent: MenubarComponent, // Inject MenubarComponent
-    private service: MasterService // Inject MasterService
+    private service: MasterService, // Inject MasterService
+    private authSwitchService: AuthSwitchService
   ) {
     this.profileForm = this.fb.group({
       firstname: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
@@ -77,6 +79,7 @@ export class MyAccountLogadoComponent implements OnInit {
   }
 
   loadUserData(): void {
+    if(!this.isPoliceUser){
     this.auth.user$.subscribe((user: User | null | undefined) => {
       if (user) {
         const email = user.email || this.user.email;
@@ -93,6 +96,29 @@ export class MyAccountLogadoComponent implements OnInit {
         });
       }
     });
+    }else{
+      this.auth.user$.subscribe((user: User | null | undefined) => {
+        if (user) {
+          const email = user.email || this.user.email;
+          this.service.getPoliceByEmail(email).subscribe({
+            next: (userData: any) => {
+              console.log('User data:', userData);
+              this.user = userData; // Update user data locally
+              this.profileForm.patchValue(userData); // Update form with user data
+              this.loadUserAddress(userData.address); // Load user address
+            },
+            error: (err: any) => {
+              console.error('Error retrieving user data:', err);
+            }
+          });
+        }
+      });
+    }
+  }
+
+
+  isPoliceUser(): boolean {
+    return this.authSwitchService.getRole() === 'police';
   }
 
   loadUserAddress(address: number): void {
@@ -173,6 +199,7 @@ export class MyAccountLogadoComponent implements OnInit {
 
   updateUserWithAddress(email: string, updatedUserData: any): void {
     // Update user data with address
+    if(!this.isPoliceUser()){
     this.service.updateUser(email, updatedUserData).subscribe({
       next: (updatedUser: any) => {
         console.log('User updated with address:', updatedUser);
@@ -183,6 +210,18 @@ export class MyAccountLogadoComponent implements OnInit {
         console.error('Error updating user with address:', err);
       }
     });
+  }else{
+    this.service.updatePoliceUser(email, updatedUserData).subscribe({
+      next: (updatedUser: any) => {
+        console.log('User updated with address:', updatedUser);
+        this.isEditing = false; // Exit edit mode after saving
+        this.user = updatedUserData; // Update user data locally after update
+      },
+      error: (err: any) => {
+        console.error('Error updating user with address:', err);
+      }
+    });
+  }
   }
 
   onCancel(): void {
