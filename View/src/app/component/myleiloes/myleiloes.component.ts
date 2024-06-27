@@ -1,4 +1,4 @@
-import { Attribute, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -7,6 +7,7 @@ import { MasterService } from 'src/app/service/master.service';
 import { Router } from '@angular/router';
 import { User } from '@auth0/auth0-spa-js';
 import { AuthService } from '@auth0/auth0-angular';
+import { ConstantPool } from '@angular/compiler';
 
 @Component({
   selector: 'app-table',
@@ -24,7 +25,6 @@ export class MyLeiloesComponent implements OnInit {
   useSpecificDate: boolean = true;
   categories = [{ id: null, name: '' }];
   searchText: string = '';
-  lostObjects: any[] = [];
   objects: any[] = [];
   filteredObjects: any[] = [];
   filteredAttributes: any[] = [];
@@ -132,23 +132,8 @@ export class MyLeiloesComponent implements OnInit {
   loadFoundObjects() {
     this.service.getFoundObjects().subscribe(
       (foundObjects: any[]) => {
-        this.lostObjects = foundObjects;
-        this.service.getObjects().subscribe(
-          (objects: any[]) => {
-            this.objects = objects;
-
-            const objectIds = this.lostObjects.map(lostObject => lostObject.objeto_id);
-            const userCategoryObjects = this.objects.filter(object => objectIds.includes(object.id));
-
-            if (userCategoryObjects.length > 0) {
-              const firstCategoryId = userCategoryObjects[0].category_id;
-              this.loadObjectsByCategory(2);
-            }
-          },
-          (error) => {
-            console.error('Erro ao carregar objetos:', error);
-          }
-        );
+        this.objects = foundObjects;
+        this.loadObjectsByCategory(2); // Assume a categoria que você quer carregar, como 2
       },
       (error) => {
         console.error('Erro ao carregar objetos encontrados:', error);
@@ -158,11 +143,18 @@ export class MyLeiloesComponent implements OnInit {
 
   loadObjectsByCategory(categoryId: number) {
     this.service.compareObjectsByCategory(categoryId).subscribe(
-      (foundObjects: any[]) => {
-        this.filteredObjects = foundObjects;
+      (objects: any[]) => {
+        this.filteredObjects = objects.map(object => {
+          const foundObject = this.objects.find(found => found.object_id === object.id);
+          return {
+            ...foundObject,
+            ...object
+          };
+        });
         this.dataSource.data = this.filteredObjects;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        console.log(this.filteredObjects);
       },
       (error) => {
         console.error('Erro ao carregar objetos por categoria:', error);
@@ -171,11 +163,11 @@ export class MyLeiloesComponent implements OnInit {
   }
 
   getDeliveredStatus(objectId: number): boolean | undefined {
-    const foundObject = this.lostObjects.find(obj => obj.objeto_id === objectId);
+    const foundObject = this.objects.find(obj => obj.id === objectId);
     return foundObject?.delivered;
   }
 
-  cancelAddObject() { 
+  cancelAddObject() {
     this.lostObjectForm.reset();
     this.showAddObjectForm = false;
   }
@@ -185,7 +177,7 @@ export class MyLeiloesComponent implements OnInit {
       obj.title.toLowerCase().includes(this.searchText.toLowerCase())
     );
     this.dataSource.data = this.filteredObjects;
-    if(this.searchText == ''){
+    if (this.searchText == '') {
       this.loadFoundObjects();
     }
   }
@@ -230,9 +222,7 @@ export class MyLeiloesComponent implements OnInit {
     return null;
   }
 
-   // Inside MyLeiloesComponent class
-
-   viewDetails(foundObject: any) {
+  viewDetails(foundObject: any) {
     console.log('Clicked foundObject:', foundObject);
 
     if (foundObject && foundObject.id !== undefined) {
