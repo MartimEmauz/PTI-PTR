@@ -38,6 +38,9 @@ import { BidModalComponent } from './component/bid-modal/bid-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
 import { FoundpoliceComponent } from './component/foundpolice/foundpolice.component';
+import { AdminComponent } from './component/admin/admin.component';
+import { LeilaoDetailsComponent } from './component/leilao-details/leilao-details.component';
+
 
 @NgModule({
   declarations: [
@@ -61,6 +64,8 @@ import { FoundpoliceComponent } from './component/foundpolice/foundpolice.compon
     ObjetosperdidospoliciaComponent,
     BidModalComponent,
     FoundpoliceComponent,
+    AdminComponent,
+    LeilaoDetailsComponent
   ],
   imports: [
     MatStepperModule,
