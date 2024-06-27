@@ -68,7 +68,6 @@ import { AdminComponent } from './component/admin/admin.component';
   imports: [
     MatStepperModule,
     BrowserModule,
-    ProfileCompletionPolicemanComponent,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatTooltipModule,

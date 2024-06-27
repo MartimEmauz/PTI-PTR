@@ -6,17 +6,16 @@ import { MasterService } from '../../service/master.service';
 import { Router } from '@angular/router';
 import { PoliceUser } from 'src/app/Model/police-users-model';
 
-interface PostoDePolicia {
-  id: number;
-  nome: string;
-}
-
 @Component({
   selector: 'app-profile-completion-policeman',
   templateUrl: './profile-completion-policeman.component.html',
   styleUrls: ['./profile-completion-policeman.component.css']
 })
 
+interface PostoDePolicia {
+  id: number;
+  nome: string;
+}
 
 export class ProfileCompletionPolicemanComponent implements OnInit {
   profileForm: FormGroup;
