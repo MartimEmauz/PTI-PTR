@@ -47,7 +47,7 @@
 
 /* Estilos para botões */
 button {
-  margin: 2px;
+  margin: 5px;
   background-color: #5c6bc0;
   color: #fff;
   border: none;
@@ -55,11 +55,17 @@ button {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-weight: bold;
 }
 
 button:hover {
   background-color: #3949ab;
 }
+
+.card:hover {
+  cursor:pointer;
+}
+
 
 /* Estilos para a seção de pesquisa */
 .search-container {
@@ -202,4 +208,25 @@ button.remove-button:hover {
   background-color: #e57373; /* Tom mais claro de vermelho ao passar o mouse */
 }
 
+/* Estilos específicos para o botão "Marcar como Recebido" */
+.receive-button {
+  color: #fff;
+  background-color: #4caf50; /* Verde */
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
 
+.receive-button:hover {
+  background-color: #388e3c; /* Tom mais escuro de verde ao passar o mouse */
+}
+
+.receive-button[disabled] {
+  background-color: #a0a0a0; /* Cinza claro para botão desabilitado */
+  cursor: not-allowed;
+}
+
+.receive-button[disabled]:hover {
+  background-color: #a0a0a0; /* Manter a cor cinza em hover */
+}

@@ -274,7 +274,28 @@ export class MyLeiloesComponent implements OnInit {
     }
   }
   
+  markAsReceived(objectId: number) {
+    console.log(`Marking object as received with ID: ${objectId}`); // Log for debugging
+    
+    // Encontra o FoundObject correspondente ao objeto
+    const foundObject = this.lostObjects.find(obj => obj.objeto_id === objectId);
   
+    if (foundObject) {
+      this.service.updateFoundObject(foundObject.id, { delivered: true }).subscribe(
+        () => {
+          foundObject.delivered = true; // Atualiza localmente o status de entrega
+          this.loadFoundObjects(); // Recarrega os objetos encontrados
+        },
+        (error) => {
+          console.error('Erro ao marcar como recebido:', error);
+        }
+      );
+    } else {
+      console.error('FoundObject não encontrado para o objeto ID:', objectId);
+    }
+  }
+  
+
   cancelAddObject() { 
     this.lostObjectForm.reset();
     this.showAddObjectForm = false;
@@ -327,9 +348,23 @@ export class MyLeiloesComponent implements OnInit {
     return null;
   }
 
-  viewDetails(lostObject: any) {
-    this.router.navigate(['/object-details', lostObject.id]); // Navigate to the details page
+  // Inside MyLeiloesComponent class
+
+  viewDetails(foundObject: any) {
+    console.log('Clicked foundObject:', foundObject);
+  
+    if (foundObject && foundObject.id !== undefined) {
+      console.log('Navigating to object details with ID:', foundObject.id);
+      this.router.navigate(['/object-details', foundObject.id]);
+    } else {
+      console.error('objeto_id (or id) is undefined or null for foundObject:', foundObject);
+      // Handle error or debug further as needed
+    }
   }
+  
+  
+
+  
 
   removeFoundObject(id: number) {
     if (confirm('Tem certeza que deseja remover este objeto?')) {

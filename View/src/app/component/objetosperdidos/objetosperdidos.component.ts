@@ -60,7 +60,7 @@ export class ObjetosperdidosComponent implements OnInit {
         this.service.getObjects().subscribe(
           (objects: any[]) => {
             const associatedObjects = objects.filter(object => 
-              this.lostObjects.some(lostObject => lostObject.objeto_id === object.id)
+              this.lostObjects.some(lostObject => lostObject.objeto_id === object.id && lostObject.generaluser === parseInt(this.userId || '0', 10))
             );
             this.filteredObjects = associatedObjects;
             this.dataSource.data = this.filteredObjects;

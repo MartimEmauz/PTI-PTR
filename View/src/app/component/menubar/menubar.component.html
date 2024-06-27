@@ -32,11 +32,11 @@
             <mat-list-item *ngIf="isPoliceUser()">
                 <button routerLink="myleiloes" mat-button class="botao"><mat-icon>phonelink</mat-icon> Objetos Encontrados</button>
             </mat-list-item>
-            <mat-list-item>
+            <mat-list-item *ngIf="!isPoliceUser()">
                 <button routerLink="objetosperdidos" mat-button class="botao"><mat-icon>phonelink</mat-icon> Objetos Perdidos</button>
             </mat-list-item>
             <mat-list-item *ngIf="isPoliceUser()">
-                <button routerLink="objetosperdidos" mat-button class="botao"><mat-icon>phonelink</mat-icon> Objetos Perdidos Policia</button>
+                <button routerLink="objetosperdidospolicia" mat-button class="botao"><mat-icon>phonelink</mat-icon> Objetos Perdidos</button>
             </mat-list-item>
             <mat-list-item>
                 <button (click)="navigateToAccount()" mat-button class="botao"><mat-icon>account_circle</mat-icon> Minha Conta</button>

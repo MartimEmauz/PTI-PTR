@@ -15,6 +15,7 @@ import { MyAccountLogadoComponent } from './component/my-account-logado/my-accou
 import { ObjectDetailsComponent } from './component/object-details/object-details.component'; // Import ObjectDetailsComponent
 import { CriarLeilaoComponent } from './component/criar-leilao/criar-leilao.component';
 import { AdminComponent } from './component/admin/admin.component';
+import { ObjetosperdidospoliciaComponent } from './component/objetosperdidospolicia/objetosperdidospolicia.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'objetosperdidos', component: ObjetosperdidosComponent, canActivate: [AuthGuard] },
   { path: 'my-account-logado', component: MyAccountLogadoComponent, canActivate: [AuthGuard]},
   { path: 'object-details/:id', component: ObjectDetailsComponent, canActivate: [AuthGuard] }, // Add route for object details
-  { path: 'admin', component: AdminComponent }
+  { path: 'admin', component: AdminComponent },
+  { path: 'objetosperdidospolicia', component: ObjetosperdidospoliciaComponent, canActivate: [AuthGuard]} // Add route for object details
 ];
 
 @NgModule({
