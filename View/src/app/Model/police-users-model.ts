@@ -5,7 +5,7 @@ export interface PoliceUser {
   lastname?: string;
   email: string;
   password?: string | null;
-  internalid?: number | null;
+  internalid?: string | null;
   postopolice?: number | PolicePost | null; // Pode ser do tipo number ou do tipo PolicePost
 }
 

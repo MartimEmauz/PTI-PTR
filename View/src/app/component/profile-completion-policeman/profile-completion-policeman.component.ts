@@ -5,22 +5,16 @@ import { AuthService } from '@auth0/auth0-angular';
 import { MasterService } from '../../service/master.service';
 import { Router } from '@angular/router';
 import { PoliceUser } from 'src/app/Model/police-users-model';
+import { PolicePost } from 'src/app/Model/postopolice.model';
 
 @Component({
   selector: 'app-profile-completion-policeman',
   templateUrl: './profile-completion-policeman.component.html',
   styleUrls: ['./profile-completion-policeman.component.css']
 })
-
-interface PostoDePolicia {
-  id: number;
-  nome: string;
-}
-
 export class ProfileCompletionPolicemanComponent implements OnInit {
   profileForm: FormGroup;
-  postosDePolicia: PostoDePolicia[] = [];
-  
+  postosDePolicia: PolicePost[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -42,7 +36,7 @@ export class ProfileCompletionPolicemanComponent implements OnInit {
 
   loadPostosDePolicia() {
     this.masterService.getPolicePosts().subscribe(
-      (data: any) => {
+      (data: PolicePost[]) => {
         this.postosDePolicia = data;
       },
       (error: any) => {
@@ -59,14 +53,16 @@ export class ProfileCompletionPolicemanComponent implements OnInit {
             firstname: this.profileForm.value.firstname,
             lastname: this.profileForm.value.lastname,
             password: null, // Default password
-            internalid: parseInt(this.profileForm.value.internalid),
+            internalid: this.profileForm.value.internalid,
             postopolice: parseInt(this.profileForm.value.postopolice),
             email: user.email,
           };
+          console.log(this.profileForm.value.internalid),
 
-          console.log('Updating user with data:', userData); // Log dos dados do usuário
 
-          this.masterService.updateUser(user.email!, userData).subscribe(
+          console.log('Updating user with data:', userData);
+
+          this.masterService.updatePoliceUser(user.email!, userData).subscribe(
             (response) => {
               console.log('Profile updated successfully:', response);
               this.router.navigate(['']);

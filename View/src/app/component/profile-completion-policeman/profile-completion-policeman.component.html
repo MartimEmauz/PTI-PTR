@@ -16,7 +16,7 @@
     <label for="postopolice">Posto de Polícia</label>
     <select id="postopolice" formControlName="postopolice" required>
       <option value="">Selecione um Posto de Polícia</option>
-      <option *ngFor="let posto of postosDePolicia" [value]="posto.id">{{ posto.nome }}</option>
+      <option *ngFor="let posto of postosDePolicia" [value]="posto.id">{{ posto.stationnumber }}</option>
     </select>
     <div *ngIf="profileForm.controls['postopolice'].invalid && profileForm.controls['postopolice'].touched" class="error-message">
       Por favor, selecione um Posto de Polícia válido.
