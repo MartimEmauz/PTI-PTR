@@ -9,7 +9,7 @@ import { Address } from '../../Model/address.model';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent {
+export class AdminComponent implements OnInit{
 
   policePosts: PolicePost[] = [];
   postForm: FormGroup;
