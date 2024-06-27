@@ -1,12 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MasterService } from 'src/app/service/master.service';
 import { Subscription, interval } from 'rxjs';
+import { MasterService } from 'src/app/service/master.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { BidModalComponent } from '../bid-modal/bid-modal.component';
 import { AuthSwitchService } from 'src/app/auth-switch.service';
+import { MatSort } from '@angular/material/sort';
+import { AuthService, User } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-auction',
@@ -14,45 +15,63 @@ import { AuthSwitchService } from 'src/app/auth-switch.service';
   styleUrls: ['./auction.component.css']
 })
 export class AuctionComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['nome', 'valorAtual', 'tempoRestante', 'fazerLicitacao','info', 'seguir'];
-  dataSource = new MatTableDataSource<any>();
-  showAddBidForm = false;
+  displayedColumns: string[] = ['item', 'valorAtual', 'tempoRestante', 'fazerLicitacao','info', 'seguir'];
+  activeDataSource = new MatTableDataSource<any>();
+  closedDataSource = new MatTableDataSource<any>();
+  activeDisplayedColumns: string[] = ['item', 'valorAtual', 'tempoRestante', 'fazerLicitacao', 'info', 'seguir'];
+  closedDisplayedColumns: string[] = ['item', 'valorAtual', 'tempoRestante', 'info'];
+  activeTab: 'active' | 'closed' = 'active';
   subscriptions: Subscription[] = [];
+  userId: number | null = null;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  bids: any[] = [];
 
   constructor(
     private auctionService: MasterService,
-    private fb: FormBuilder,
     private router: Router,
     public dialog: MatDialog,
-    private authSwitchService: AuthSwitchService
+    private authSwitchService: AuthSwitchService,
+    private _auth: AuthService,
+    private service: MasterService
   ) {}
 
   ngOnInit(): void {
+    this._auth.user$.subscribe((user: User | null | undefined) => {
+      if (user) {
+        const userEmail = user.email || '';
+        this.getUserByEmail(userEmail);
+      }
+    });
     this.loadAuctions();
     this.startCountdown();
-  }
-
-  
-
-  isPoliceUser(): boolean {
-    return this.authSwitchService.getRole() === 'police';
-  }
-
-  openLeilaoDetails(id: number): void {
-    this.router.navigate(['/leilao-details', id]);
+    this.activeDataSource.sort = this.sort;
+    this.closedDataSource.sort = this.sort;
   }
 
   loadAuctions(): void {
     this.auctionService.getLeilao().subscribe((data: any[]) => {
+      const activeAuctions: any[] = [];
+      const closedAuctions: any[] = [];
+
       data.forEach(auction => {
-        this.auctionService.getFoundObjectById(auction.objeto).subscribe((objeto: any) => {
-          auction.objeto = objeto;
-          this.auctionService.getObjectById(objeto.objeto_id).subscribe((object: any) => {
+        auction.tempoRestante = this.calculateTimeRemaining(auction.data_fim);
+
+        if (auction.tempoRestante === 'Leilão Encerrado') {
+          closedAuctions.push(auction);
+        } else {
+          activeAuctions.push(auction);
+        }
+
+        this.auctionService.getFoundObjectById(auction.objeto).subscribe((foundobject: any) => {
+          auction.objeto = foundobject;
+          this.auctionService.getObjectById(auction.objeto.objeto_id).subscribe((object: any) => {
             auction.objeto = object;
-            this.dataSource.data = data;
           });
         });
       });
+
+      this.activeDataSource.data = activeAuctions;
+      this.closedDataSource.data = closedAuctions;
     });
   }
 
@@ -60,9 +79,31 @@ export class AuctionComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
+  getUserByEmail(email: string): void {
+    if (!this.isPoliceUser()) {
+      this.service.getUserByEmail(email).subscribe(
+        (data: any) => {
+          this.userId = data.id;
+        },
+        (error) => {
+          console.error('Erro ao carregar usuário:', error);
+        }
+      );
+    } else {
+      this.service.getPoliceUserByEmail(email).subscribe(
+        (data: any) => {
+          this.userId = data.id;
+        },
+        (error) => {
+          console.error('Erro ao carregar usuário:', error);
+        }
+      );
+    }
+  }
+
   startCountdown(): void {
     const sub = interval(1000).subscribe(() => {
-      this.dataSource.data.forEach(auction => {
+      this.activeDataSource.data.forEach(auction => {
         auction.tempoRestante = this.calculateTimeRemaining(auction.data_fim);
       });
     });
@@ -86,6 +127,18 @@ export class AuctionComponent implements OnInit, OnDestroy {
     return `${days}d ${hours}h ${minutes}m ${seconds}s`;
   }
 
+  setActiveTab(tab: 'active' | 'closed'): void {
+    this.activeTab = tab;
+  }
+
+  isPoliceUser(): boolean {
+    return this.authSwitchService.getRole() === 'police';
+  }
+
+  openLeilaoDetails(id: number): void {
+    this.router.navigate(['/leilao-details', id]);
+  }
+
   openBidModal(id: number): void {
     const dialogRef = this.dialog.open(BidModalComponent, {
       data: { leilaoId: id }
@@ -100,25 +153,20 @@ export class AuctionComponent implements OnInit, OnDestroy {
     });
   }
 
-  filterChange(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  followBid(id: number): void {
+    // Implemente a lógica para seguir o leilão com o ID fornecido
+    console.log('Seguindo leilão com ID:', id);
   }
 
   navegarParaCriarLeilao(): void {
     this.router.navigate(['/criar-leilao']);
   }
 
-  followBid(id: number): void {
-    // Implemente a lógica para seguir o leilão com o ID fornecido
-    console.log('Seguindo leilão com ID:', id);
-  }
-
   getValorAtual(element: any): string {
     if (element.maior_licitacao !== null && element.maior_licitacao !== undefined) {
       return element.maior_licitacao.toString();
     } else {
-      return element.valor_base
+      return element.valor_base.toString();
     }
   }
 }
