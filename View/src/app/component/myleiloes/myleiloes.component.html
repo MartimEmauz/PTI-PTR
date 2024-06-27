@@ -6,7 +6,7 @@
   <mat-card-content>
     <ul class="cards">
       <li *ngFor="let foundObject of filteredObjects">
-        <div class="card">
+        <div class="card" (click)="viewDetails(foundObject)">
           <div class="card__header">
             <h3 class="card__title">{{ foundObject.title }}</h3>
             <span class="card__status">{{ foundObject.specific_date | date }}</span>

@@ -1,0 +1,73 @@
+<div>
+    <form [formGroup]="policePostForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="stationnumber">Station Number:</label>
+        <input id="stationnumber" formControlName="stationnumber" type="text">
+        <div *ngIf="policePostForm.get('stationnumber')?.invalid && policePostForm.get('stationnumber')?.touched">
+          <small>Station number is required and must be a number.</small>
+        </div>
+      </div>
+  
+      <div>
+        <label for="street">Street:</label>
+        <input id="street" formControlName="street" type="text">
+        <div *ngIf="policePostForm.get('street')?.invalid && policePostForm.get('street')?.touched">
+          <small>Street is required.</small>
+        </div>
+      </div>
+  
+      <div>
+        <label for="country">Country:</label>
+        <input id="country" formControlName="country" type="text">
+        <div *ngIf="policePostForm.get('country')?.invalid && policePostForm.get('country')?.touched">
+          <small>Country is required and must contain only letters and spaces.</small>
+        </div>
+      </div>
+  
+      <div>
+        <label for="city">City:</label>
+        <input id="city" formControlName="city" type="text">
+        <div *ngIf="policePostForm.get('city')?.invalid && policePostForm.get('city')?.touched">
+          <small>City is required and must contain only letters and spaces.</small>
+        </div>
+      </div>
+  
+      <div>
+        <label for="zip">Zip Code:</label>
+        <input id="zip" formControlName="zip" type="text">
+        <div *ngIf="policePostForm.get('zip')?.invalid && policePostForm.get('zip')?.touched">
+          <small>Zip code is required and must follow the format ####-###.</small>
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="policePostForm.invalid">Submit</button>
+    </form>
+  </div>
+  
+  <div>
+    <h2>Police Posts</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Station Number</th>
+          <th>Street</th>
+          <th>Country</th>
+          <th>City</th>
+          <th>Zip</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of policePosts">
+          <td>{{ post.stationnumber }}</td>
+          <td *ngIf="isAddress(post.location)">{{ post.location.street }}</td>
+          <td *ngIf="isAddress(post.location)">{{ post.location.country }}</td>
+          <td *ngIf="isAddress(post.location)">{{ post.location.city }}</td>
+          <td *ngIf="isAddress(post.location)">{{ post.location.zip }}</td>
+          <td>
+            <button (click)="deletePolicePost(post.id!)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

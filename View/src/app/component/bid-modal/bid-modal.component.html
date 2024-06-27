@@ -1,15 +1,16 @@
-<h1 mat-dialog-title>Fazer Licitação</h1>
-<div mat-dialog-content class="pop">
-  <!-- Conteúdo do formulário de lance -->
+<h2 mat-dialog-title>Realizar Licitação</h2>
+<div mat-dialog-content>
   <form [formGroup]="bidForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="full-width">      
       <mat-label>Valor da Licitação</mat-label>
-      <input matInput formControlName="valorLance" type="number" required>
-      <mat-error *ngIf="bidForm.controls['valorLance'].invalid">Valor é obrigatório</mat-error>
+      <input matInput formControlName="valor_licitacao" type="number" step="0.01" required>
+      <mat-error *ngIf="bidForm.get('valor_licitacao')?.invalid && bidForm.get('valor_licitacao')?.dirty && bidForm.get('valor_licitacao')?.errors?.['min']">
+        O valor da licitação não pode ser menor que {{ valorMinimo }}
+      </mat-error>
     </mat-form-field>
   </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button type="submit" [disabled]="bidForm.invalid" (click)="onSubmit()">Salvar</button>
+  <button mat-button color="primary" [disabled]="!bidForm.valid" (click)="onSubmit()">Enviar Licitação</button>
   <button mat-button (click)="onNoClick()">Cancelar</button>
 </div>

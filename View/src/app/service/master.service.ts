@@ -16,6 +16,7 @@ import { Objeto } from '../Model/object-model';
   providedIn: 'root'
 })
 export class MasterService {
+  [x: string]: any;
   private apiUrl = 'http://127.0.0.1:8000/';
 
   constructor(private http: HttpClient) { }
@@ -115,7 +116,6 @@ export class MasterService {
   getAttributes(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}categoryattributes/`);
   }
-      
 
   getUserByEmail(email: string): Observable<GeneralUser | null> {
     return this.http.get<GeneralUser | null>(`${this.apiUrl}generalusers/${email}/`);
@@ -197,5 +197,41 @@ export class MasterService {
 
   getFoundObjects(): Observable<any[]> {
     return this.http.get<FoundObject[]>(`${this.apiUrl}foundobjects/`);
+  }
+
+  getGeneralUserById(id: number): Observable<GeneralUser> {
+    return this.http.get<GeneralUser>(`${this.apiUrl}generalusers/${id}/`);
+  }
+  
+  updateBidValueInAuction(auctionId: number, bidValue: number): Observable<any> {
+    const url = `${this.apiUrl}auctions/${auctionId}/`;
+    return this.http.put<any>(url, { maior_licitacao: bidValue });
+  }
+
+  getPolicePosts(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}policeposts/`);
+  }
+  addPolicePost(post: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}policeposts/`, post);
+  }
+
+  deletePolicePost(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}policeposts/${id}/`);
+  }
+
+  getFoundObjectById(id: number): Observable<FoundObject> {
+    return this.http.get<FoundObject>(`${this.apiUrl}foundobjects/${id}/`);
+  }
+
+  getObjectById(id: number): Observable<Objeto> {
+    return this.http.get<Objeto>(`${this.apiUrl}objects/${id}/`);
+  }
+
+  getLeilaoById(id: number): Observable<Leilao> {
+    return this.http.get<Leilao>(`${this.apiUrl}auctions/${id}/`);
+  }
+
+  getBidsByLeilaoId(id: number): Observable<Licitacao[]> {
+    return this.http.get<Licitacao[]>(`${this.apiUrl}auctions/bids/${id}/`);
   }
 }

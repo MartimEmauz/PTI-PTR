@@ -79,8 +79,8 @@ export class MyAccountLogadoComponent implements OnInit {
   }
 
   loadUserData(): void {
-    if(!this.isPoliceUser){
-    this.auth.user$.subscribe((user: User | null | undefined) => {
+    if(!this.isPoliceUser()){
+      this.auth.user$.subscribe((user: User | null | undefined) => {
       if (user) {
         const email = user.email || this.user.email;
         this.service.getUserByEmail(email).subscribe({

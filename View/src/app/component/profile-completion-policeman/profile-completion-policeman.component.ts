@@ -15,6 +15,7 @@ import { PolicePost } from 'src/app/Model/postopolice.model';
 export class ProfileCompletionPolicemanComponent implements OnInit {
   profileForm: FormGroup;
   postosDePolicia: PolicePost[] = [];
+  
 
   constructor(
     private fb: FormBuilder,

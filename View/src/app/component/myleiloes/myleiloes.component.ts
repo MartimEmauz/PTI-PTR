@@ -230,8 +230,18 @@ export class MyLeiloesComponent implements OnInit {
     return null;
   }
 
-  viewDetails(lostObject: any) {
-    this.router.navigate(['/object-details', lostObject.id]);
+   // Inside MyLeiloesComponent class
+
+   viewDetails(foundObject: any) {
+    console.log('Clicked foundObject:', foundObject);
+
+    if (foundObject && foundObject.id !== undefined) {
+      console.log('Navigating to object details with ID:', foundObject.id);
+      this.router.navigate(['/object-details', foundObject.id]);
+    } else {
+      console.error('objeto_id (or id) is undefined or null for foundObject:', foundObject);
+      // Handle error or debug further as needed
+    }
   }
 
   removeFoundObject(id: number) {
