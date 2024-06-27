@@ -25,6 +25,30 @@
       </div>
 
       <div class="mapa" #divMap></div>
+
+      <div>
+        <h2>Police Posts</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Station Number</th>
+              <th>Street</th>
+              <th>Country</th>
+              <th>City</th>
+              <th>Zip</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let post of policePosts">
+              <td>{{ post.stationnumber }}</td>
+              <td *ngIf="isAddress(post.location)">{{ post.location.street }}</td>
+              <td *ngIf="isAddress(post.location)">{{ post.location.country }}</td>
+              <td *ngIf="isAddress(post.location)">{{ post.location.city }}</td>
+              <td *ngIf="isAddress(post.location)">{{ post.location.zip }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     
     </form>
   </div>
