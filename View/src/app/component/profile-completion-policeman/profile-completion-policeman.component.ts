@@ -11,16 +11,8 @@ import { PoliceUser } from 'src/app/Model/police-users-model';
   templateUrl: './profile-completion-policeman.component.html',
   styleUrls: ['./profile-completion-policeman.component.css']
 })
-
-interface PostoDePolicia {
-  id: number;
-  nome: string;
-}
-
 export class ProfileCompletionPolicemanComponent implements OnInit {
   profileForm: FormGroup;
-  postosDePolicia: PostoDePolicia[] = [];
-  
 
   constructor(
     private fb: FormBuilder,
@@ -36,20 +28,7 @@ export class ProfileCompletionPolicemanComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.loadPostosDePolicia();
-  }
-
-  loadPostosDePolicia() {
-    this.masterService.getPolicePosts().subscribe(
-      (data: any) => {
-        this.postosDePolicia = data;
-      },
-      (error: any) => {
-        console.error('Erro ao carregar postos de polícia:', error);
-      }
-    );
-  }
+  ngOnInit() {}
 
   onCompleteProfile() {
     if (this.profileForm.valid) {
