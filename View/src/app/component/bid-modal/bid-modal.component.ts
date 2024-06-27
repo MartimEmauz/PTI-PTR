@@ -32,7 +32,6 @@ export class BidModalComponent implements OnInit {
       if (user) {
         const userEmail = user.email || '';
         this.getUserByEmail(userEmail);
-        this.userName = user.name || '';
       }
     });
 

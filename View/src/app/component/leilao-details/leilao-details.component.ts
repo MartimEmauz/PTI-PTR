@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthSwitchService } from 'src/app/auth-switch.service';
 import { MasterService } from 'src/app/service/master.service';
-import { BidModalComponent } from '../bid-modal/bid-modal.component';
-import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-leilao-details',
@@ -87,7 +85,6 @@ export class LeilaoDetailsComponent implements OnInit {
         },
         error: (error: any) => {
           console.error('Erro ao eliminar leilão:', error);
-          // Tratamento de erro ao eliminar o leilão
         }
       });
     }
