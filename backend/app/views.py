@@ -301,23 +301,10 @@ class AuctionBidListAPIView(generics.ListAPIView):
     serializer_class = LicitacaoSerializer
     permission_classes = [AllowAny]
 
-
     def get_queryset(self):
-        leilao_id = self.kwargs['pk']
-        return Licitacao.objects.filter(leilao_id=leilao_id)
-
-class AuctionDetailAPIView(APIView):
-    def put(self, request, auction_id):
-        try:
-            auction = Leilao.objects.get(pk=auction_id)
-        except Leilao.DoesNotExist:
-            return Response({'error': 'Leilao não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
-        
-        # Atualize o valor da maior_licitacao com base nos dados recebidos na requisição
-        auction.maior_licitacao = request.data.get('maior_licitacao', auction.maior_licitacao)
-        auction.save()
-
-        return Response({'success': 'Valor da licitação atualizado com sucesso.'})
+        auction = self.request.data.get('auction')
+        bids = Licitacao.objects.filter(auction=auction)
+        return bids
 
 class SubscriptionListCreateAPIView(generics.ListCreateAPIView):
     queryset = Subscription.objects.all()

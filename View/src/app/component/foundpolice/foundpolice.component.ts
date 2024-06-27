@@ -13,10 +13,10 @@ import { AuthSwitchService } from 'src/app/auth-switch.service';
 
 @Component({
   selector: 'app-table',
-  templateUrl: './myleiloes.component.html',
-  styleUrls: ['./myleiloes.component.css']
+  templateUrl: './foundpolice.component.html',
+  styleUrls: ['./foundpolice.component.css']
 })
-export class MyLeiloesComponent implements OnInit {
+export class FoundpoliceComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ["code", "name", "email", "phone", "status", "action"];

@@ -1,0 +1,174 @@
+<mat-card>
+    <div class="search-container">
+      <input class="searchbar" [(ngModel)]="searchText" (input)="onSearch()" placeholder="Pesquisar Objeto" aria-label="Pesquisar Objetos">
+      <button (click)="showAddObjectForm = true" mat-raised-button color="primary">Adicionar Objeto</button>
+    </div>
+    
+    <mat-card-content>
+      <div *ngIf="showAddObjectForm" class="add-object-form">
+        <mat-stepper [linear]="true" #stepper>
+          <mat-step [stepControl]="lostObjectForm">
+            <form [formGroup]="lostObjectForm">
+              <ng-template matStepLabel>Informações do Objeto</ng-template>
+  
+              <!-- Campos para o objeto encontrado -->
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Título</mat-label>
+                <input matInput formControlName="title" required>
+                <mat-error *ngIf="lostObjectForm.controls['title'].invalid && lostObjectForm.controls['title'].touched">Título é obrigatório</mat-error>
+              </mat-form-field>
+  
+  
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Data Específica</mat-label>
+                  <input matInput formControlName="specific_date" type="date">
+                  <mat-error *ngIf="lostObjectForm.controls['specific_date'].invalid && lostObjectForm.controls['specific_date'].touched">Data Específica é obrigatória se o intervalo de datas não for fornecido</mat-error>
+                </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Descrição</mat-label>
+                <textarea matInput formControlName="description" required></textarea>
+                <mat-error *ngIf="lostObjectForm.controls['description'].invalid && lostObjectForm.controls['description'].touched">Descrição é obrigatória</mat-error>
+              </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Categoria</mat-label>
+                <mat-select formControlName="category" (selectionChange)="onCategoryChange($event)" required>
+                  <mat-option *ngFor="let category of categories" [value]="category.id">
+                    {{ category.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="lostObjectForm.controls['category'].invalid">Categoria é obrigatória</mat-error>
+              </mat-form-field>
+  
+              <div *ngIf="filteredAttributes.length > 0">
+                <div *ngFor="let attribute of filteredAttributes">
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>{{ attribute.attribute }}</mat-label>
+                    <input matInput [placeholder]="attribute.attribute" [formControlName]="attribute.id" required>
+                    <mat-error *ngIf="lostObjectForm.controls[attribute.id].invalid && lostObjectForm.controls[attribute.id].touched">{{ attribute.attribute }} é obrigatório</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+  
+              <div>
+                <button mat-button matStepperNext>Próximo</button>
+              </div>
+            </form>
+          </mat-step>
+  
+          <mat-step [stepControl]="addressFormGroup">
+            <form [formGroup]="addressFormGroup">
+              <ng-template matStepLabel>Endereço</ng-template>
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Morada</mat-label>
+                <input matInput formControlName="street" required>
+                <mat-error *ngIf="addressFormGroup.controls['street'].invalid && addressFormGroup.controls['street'].touched">Morada é obrigatória</mat-error>
+              </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>País</mat-label>
+                <input matInput formControlName="country" required>
+                <mat-error *ngIf="addressFormGroup.controls['country'].invalid && addressFormGroup.controls['country'].touched">Por favor, insira um país válido.</mat-error>
+              </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Cidade</mat-label>
+                <input matInput formControlName="city" required>
+                <mat-error *ngIf="addressFormGroup.controls['city'].invalid && addressFormGroup.controls['city'].touched">Por favor, insira uma cidade válida.</mat-error>
+              </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Código Postal</mat-label>
+                <input matInput formControlName="zip" required>
+                <mat-error *ngIf="addressFormGroup.controls['zip'].invalid && addressFormGroup.controls['zip'].touched">Por favor, insira um código postal válido.</mat-error>
+              </mat-form-field>
+  
+              <div>
+                <button mat-button matStepperPrevious>Anterior</button>
+                <button mat-button matStepperNext>Próximo</button>
+              </div>
+            </form>
+          </mat-step>
+  
+          <mat-step [stepControl]="ownerFormGroup">
+            <form [formGroup]="ownerFormGroup">
+              <ng-template matStepLabel>Dados do Proprietário</ng-template>
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Primeiro Nome</mat-label>
+                <input matInput formControlName="firstname" required>
+                <mat-error *ngIf="ownerFormGroup.controls['firstname'].invalid && ownerFormGroup.controls['firstname'].touched">Primeiro nome é obrigatório</mat-error>
+              </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Sobrenome</mat-label>
+                <input matInput formControlName="lastname" required>
+                <mat-error *ngIf="ownerFormGroup.controls['lastname'].invalid && ownerFormGroup.controls['lastname'].touched">Sobrenome é obrigatório</mat-error>
+              </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Gênero</mat-label>
+                <input matInput formControlName="genero" required>
+                <mat-error *ngIf="ownerFormGroup.controls['genero'].invalid && ownerFormGroup.controls['genero'].touched">Gênero é obrigatório</mat-error>
+              </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Data de Nascimento</mat-label>
+                <input matInput formControlName="birthday" type="date" required>
+                <mat-error *ngIf="ownerFormGroup.controls['birthday'].invalid && ownerFormGroup.controls['birthday'].touched">Data de nascimento é obrigatória</mat-error>
+              </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Identificação Civil</mat-label>
+                <input matInput formControlName="idcivil" required>
+                <mat-error *ngIf="ownerFormGroup.controls['idcivil'].invalid && ownerFormGroup.controls['idcivil'].touched">Identificação civil é obrigatória</mat-error>
+              </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Identificação Fiscal</mat-label>
+                <input matInput formControlName="idfiscal" required>
+                <mat-error *ngIf="ownerFormGroup.controls['idfiscal'].invalid && ownerFormGroup.controls['idfiscal'].touched">Identificação fiscal é obrigatória</mat-error>
+              </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Número de Telefone</mat-label>
+                <input matInput formControlName="phonenumber" type="number" required>
+                <mat-error *ngIf="ownerFormGroup.controls['phonenumber'].invalid && ownerFormGroup.controls['phonenumber'].touched">Número de telefone é obrigatório</mat-error>
+              </mat-form-field>
+  
+              <div class="button-group full-width">
+                <button mat-button matStepperPrevious>Anterior</button>
+                <button mat-raised-button color="primary" (click)="addFoundObject()">Enviar</button>
+              </div>
+            </form>
+          </mat-step>
+        </mat-stepper>
+      </div>
+  
+      <ul class="cards">
+        <li *ngFor="let foundObject of filteredObjects">
+          <div class="card">
+            <div class="card__header">
+              <h3 class="card__title">{{ foundObject.title }}</h3>
+              <span class="card__status">{{ foundObject.specific_date | date }}</span>
+            </div>
+            <p class="card__description">{{ foundObject.description }}</p>
+            <div class="delivery-status" [ngClass]="{'delivered': getDeliveredStatus(foundObject.id), 'not-delivered': !getDeliveredStatus(foundObject.id)}">
+              <span class="status-icon material-icons">{{ getDeliveredStatus(foundObject.id) ? 'check_circle' : 'cancel' }}</span>
+              <span class="status-label">{{ getDeliveredStatus(foundObject.id) ? 'Entregue' : 'Não entregue' }}</span>
+            </div>
+            <button mat-button color="primary" class="receive-button"
+          *ngIf="!getDeliveredStatus(foundObject.id)"
+          (click)="markAsReceived(foundObject.id); $event.stopPropagation()">
+    Marcar como Recebido
+  </button>  
+            <button mat-button color="warn" (click)="removeFoundObject(foundObject.id); $event.stopPropagation()" class="remove-button">Remover</button>
+          </div>
+        </li>
+      </ul>
+  
+    </mat-card-content>
+  </mat-card>
+  

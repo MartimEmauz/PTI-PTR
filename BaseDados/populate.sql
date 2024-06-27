@@ -52,19 +52,19 @@ INSERT INTO Category_attribute (attribute, category_id) VALUES
 
 -- Populate UserPolice table
 INSERT INTO UserPolice (firstName, lastName, email, password, internalId, postoPolice) VALUES
-('João', 'Silva', 'joao.silva@police.pt', 'Test123*', '105258812', 1),
-('Ana', 'Costa', 'ana.costa@police.pt', 'Test123*', '123546879', 2),
-('Carlos', 'Pereira', 'carlos.pereira@police.pt', 'Test123*', '1548569876', 3),
-('Maria', 'Fernandes', 'maria.fernandes@police.pt', 'Test123*', '168796397', 4),
-('Pedro', 'Gomes', 'pedro.gomes@police.pt', 'Test123*', '5361978941', 5);
+('João', 'Silva', 'joao.silva@police.pt', 'password123', '105258812', 1),
+('Ana', 'Costa', 'ana.costa@police.pt', 'password123', '123546879', 2),
+('Carlos', 'Pereira', 'carlos.pereira@police.pt', 'password123', '1548569876', 3),
+('Maria', 'Fernandes', 'maria.fernandes@police.pt', 'password123', '168796397', 4),
+('Pedro', 'Gomes', 'pedro.gomes@police.pt', 'password123', '5361978941', 5);
 
 -- Populate GeneralUser table
 INSERT INTO GeneralUser (firstName, lastName, email, password, gender, birthday, address, phoneNumber, status, idCivil, idFiscal) VALUES
-('Miguel', 'Oliveira', 'miguel.oliveira@gmail.com', 'Test123*', 'Masculino', '1990-05-12', 1, '912345678', TRUE, '123456789', '987654321'),
-('Rita', 'Martins', 'rita.martins@gmail.com', 'Test123*', 'Feminino', '1985-09-25', 2, '923456789', TRUE, '223456789', '887654321'),
-('José', 'Rodrigues', 'jose.rodrigues@gmail.com', 'Test123*', 'Outro', '1978-11-03', 3, '934567890', TRUE, '323456789', '787654321'),
-('Sofia', 'Lopes', 'sofia.lopes@gmail.com', 'Test123*', 'Feminino', '1995-02-17', 4, '945678901', TRUE, '423456789', '687654321'),
-('Bruno', 'Alves', 'bruno.alves@gmail.com', 'Test123*', 'Masculino', '1983-07-30', 5, '956789012', TRUE, '523456789', '587654321');
+('Miguel', 'Oliveira', 'miguel.oliveira@gmail.com', 'password123', 'Masculino', '1990-05-12', 1, '912345678', TRUE, '123456789', '987654321'),
+('Rita', 'Martins', 'rita.martins@gmail.com', 'password123', 'Feminino', '1985-09-25', 2, '923456789', TRUE, '223456789', '887654321'),
+('José', 'Rodrigues', 'jose.rodrigues@gmail.com', 'password123', 'Outro', '1978-11-03', 3, '934567890', TRUE, '323456789', '787654321'),
+('Sofia', 'Lopes', 'sofia.lopes@gmail.com', 'password123', 'Feminino', '1995-02-17', 4, '945678901', TRUE, '423456789', '687654321'),
+('Bruno', 'Alves', 'bruno.alves@gmail.com', 'password123', 'Masculino', '1983-07-30', 5, '956789012', TRUE, '523456789', '587654321');
 
 -- Populate Objeto table
 INSERT INTO Objeto (title, specific_date, start_date, end_date, description, category, address) VALUES
