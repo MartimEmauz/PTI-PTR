@@ -1,158 +1,170 @@
+/* Estilos para mat-card */
 mat-card {
-    margin: 2%;
-  }
-  
-  button {
-    margin: 2px;
-    background-color: #54acb4;
-  }
-  
-  th {
-    background-color: black !important;
-    color: white;
-  }
-  
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin: 4rem 5vw;
-    padding: 0;
-    list-style-type: none;
-  }
-
-  .card:hover {
-    cursor:pointer;
-  }
-  
-  
-  .card {
-    position: relative;
-    display: block;
-    height: 100%;
-    border-radius: calc(40 * 1px);
-    overflow: hidden;
-    text-decoration: none;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  }
-  
-  .card__image {
-    width: 100%;
-    height: auto;
-  }
-  
-  .card__overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    border-radius: calc(40 * 1px);
-    background-color: white;
-    transform: translateY(100%);
-    transition: .2s ease-in-out;
-  }
-  
-  .card:hover .card__overlay {
-    transform: translateY(0);
-  }
-  
-  .card__header {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 2em;
-    padding: 2em;
-    border-radius: calc(40 * 1px) 0 0 0;
-    background-color: white;
-    transform: translateY(-100%);
-    transition: .2s ease-in-out;
-  }
-  
-  .card__header-text {
-    text-align: left;
-  }
-  
-  .card__arc {
-    width: 80px;
-    height: 80px;
-    position: absolute;
-    bottom: 100%;
-    right: 0;
-    z-index: 1;
-  }
-  
-  .card__arc path {
-    fill: white;
-    d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
-  }
-  
-  .card:hover .card__header {
-    transform: translateY(0);
-  }
-  
-  .card__thumb {
-    flex-shrink: 0;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  }
-  
-  .card__title {
-    font-size: 25px;
-    margin: 0 0 .3em;
-    color: #6A515E;
-  }
-  
-  .card__tagline {
-    display: block;
-    margin: 1em 0;
-    font-size: .8em;
-    color: #D7BDCA;
-  }
-  
-  .card__status {
-    font-size: 15px;
-    color: #D7BDCA;
-  }
-  
-  .card__description {
-    padding: 0 2em 2em;
-    margin: 0;
-    color: #000000;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-    text-align: left;
-  }
-  
-  .search-container {
-    height: 10vh;
-    display: flex;
-    align-items: center;
-    padding-inline: 100px;
-    gap: 30px;
-  }
-  
-  .searchbar {
-    height: 25px;
-    width: 300px;
-    font-size: 15px;
-    border-radius: 40px;
-    border-style: solid;
-    padding: 10px;
-  }
-
-  button.remove-button {
-  color: #fff;
-  background-color: #f44336; /* Vermelho */
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+  margin: 2%;
+  padding: 2%;
+  max-width: 1000px; /* Limita a largura máxima do card para melhor visualização */
 }
 
-button.remove-button:hover {
-  background-color: #e57373; /* Tom mais claro de vermelho ao passar o mouse */
+/* Estilos para a barra de pesquisa */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.searchbar {
+  flex: 1; /* Ocupa o espaço disponível */
+  height: 40px;
+  font-size: 16px;
+  border-radius: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  max-width: 300px; /* Limita a largura máxima da barra de pesquisa */
+}
+
+/* Estilos para formulário de adicionar objeto */
+.add-object-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.mat-form-field {
+  flex: 1;
+  min-width: 200px;
+  max-width: 100%; /* Ocupa a largura total disponível */
+}
+
+.full-width {
+  flex-basis: 100%;
+}
+
+.attribute-category-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  border-top: 1px solid #54acb4;
+  padding-top: 1rem;
+  width: 100%;
+}
+
+.attribute-category-container .mat-form-field {
+  flex: 1;
+  min-width: 200px;
+  max-width: 50%; /* Limita a largura máxima dos campos de categoria e atributos */
+}
+
+.button-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.button-container button {
+  flex: 1;
+  max-width: 200px;
+}
+
+/* Estilos para a lista de cartões */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  padding: 0;
+  list-style-type: none;
+}
+
+.card {
+  position: relative;
+  display: block;
+  height: auto;
+  border-radius: 20px; /* Arredonda os cantos dos cartões */
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.card:hover {
+  cursor: pointer;
+}
+
+.card__image {
+  width: 100%;
+  height: auto;
+}
+
+.card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  border-radius: 20px;
+  background-color: white;
+  transform: translateY(100%);
+  transition: .2s ease-in-out;
+}
+
+.card:hover .card__overlay {
+  transform: translateY(0);
+}
+
+.card__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  padding: 2em;
+  border-radius: 20px 20px 0 0; /* Arredonda apenas os cantos superiores */
+  background-color: white;
+  transform: translateY(-100%);
+  transition: .2s ease-in-out;
+}
+
+.card:hover .card__header {
+  transform: translateY(0);
+}
+
+.card__header-text {
+  text-align: left;
+}
+
+.card__arc {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  z-index: 1;
+}
+
+.card__arc path {
+  fill: white;
+  d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
+}
+
+.card__title {
+  font-size: 25px;
+  margin: 0 0 .3em;
+  color: #6A515E;
+}
+
+.card__status {
+  font-size: 15px;
+  color: #D7BDCA;
+}
+
+.card__description {
+  padding: 0 2em 2em;
+  margin: 0;
+  color: #000000;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-align: left;
 }

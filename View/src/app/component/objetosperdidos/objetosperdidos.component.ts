@@ -9,6 +9,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { User } from '@auth0/auth0-spa-js';
 import { Router } from '@angular/router';
 import { AuthSwitchService } from '../../auth-switch.service';
+import { get } from 'jquery';
 
 @Component({
   selector: 'app-table',
@@ -29,7 +30,10 @@ export class ObjetosperdidosComponent implements OnInit {
   filteredObjects: any[] = [];
   userName: string = '';
   userId: string | null = null;
-
+  filteredAttributes: any[] = [];
+  categories = [
+    { id: null, name: '' },
+  ];
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router, private _auth: AuthService,private authSwitchService: AuthSwitchService) {
     this.dataSource = new MatTableDataSource<any>();
     this.lostObjectForm = this.fb.group({
@@ -39,6 +43,7 @@ export class ObjetosperdidosComponent implements OnInit {
       category: ['', Validators.required],
       generaluser: [null],
       objeto_id: [null],
+      filteredAttributes: ['']
     });
   }
 
@@ -52,6 +57,19 @@ export class ObjetosperdidosComponent implements OnInit {
     });
     
     this.loadLostObjects();
+    this.getCategoriesFromDb();
+  }
+
+  getCategoriesFromDb() {
+    this.service.getCategories().subscribe(
+      (categories: any[]) => {
+        this.categories = categories;
+      },
+      (error) => {
+        console.error('Erro ao carregar categorias:', error);
+      }
+    );
+  
   }
 
   loadLostObjects() {
@@ -133,6 +151,21 @@ export class ObjetosperdidosComponent implements OnInit {
     return this.authSwitchService.getRole() === 'police';
   }
 
+  updateFormWithAttributes(attributes: any[]): void {
+    // Limpar controles antigos
+    Object.keys(this.lostObjectForm.controls).forEach(key => {
+      if (key !== 'title' && key !== 'specific_date' && key !== 'description' && key !== 'category') {
+        this.lostObjectForm.removeControl(key);
+      }
+    });
+  
+    // Adicionar novos controles baseados nos atributos filtrados
+    attributes.forEach(attribute => {
+      const control = this.fb.control('', Validators.required);
+      this.lostObjectForm.addControl(attribute.id.toString(), control); // Certifique-se de usar toString() se attribute.id for um número
+    });
+  }
+
   getUserByEmail(email: string): void {
     if (!this.isPoliceUser()) {
     this.service.getUserByEmail(email).subscribe(
@@ -159,6 +192,42 @@ export class ObjetosperdidosComponent implements OnInit {
       }
     );
   }
+}
+
+onCategoryChange(event: any): void {
+  const categoryId = event.value;
+  this.loadCategoryAttributes(categoryId);
+}
+
+loadCategoryAttributes(categoryId: number): void {
+  this.service.getAttributes().subscribe(
+    (attributes: any[]) => {
+      // Filtrar atributos com base no category_id
+      this.filteredAttributes = attributes.filter(attribute => attribute.category_id === categoryId);
+      this.updateFormWithAttributes(this.filteredAttributes);
+    },
+    (error) => {
+      console.error('Erro ao carregar atributos da categoria:', error);
+    }
+  );
+}
+
+getAttributesData(): any[] {
+  const attributesData: any[] = [];
+
+  // Iterate over filteredAttributes and get values from form
+  this.filteredAttributes.forEach(attribute => {
+    const value = this.lostObjectForm.get(attribute.id.toString())?.value;
+    const attributeData = {
+      id: attribute.id,
+      value: value,
+      object_id: 1, // Replace with the actual object_id if needed
+      category_attribute_id: attribute.id
+    };
+    attributesData.push(attributeData);
+  });
+
+  return attributesData;
 }
 
   getCardImagePath(categoryId: number): string {

@@ -1,58 +1,76 @@
 <mat-card>
-    <div class="search-container">
-      <input class="searchbar" [(ngModel)]="searchText" (input)="onSearch()" placeholder="Pesquisar Objeto" aria-label="Search Objects">
-      <button (click)="showAddObjectForm = true" mat-raised-button color="primary">Adicionar Objeto</button>
-    </div>
-    
-    <mat-card-content>
-      <!-- Formulário para adicionar objeto -->
-      <div *ngIf="showAddObjectForm">
-        <form (ngSubmit)="addLostObject()" [formGroup]="lostObjectForm">
-          <mat-form-field>
-            <mat-label>Title</mat-label>
-            <input matInput formControlName="title" required>
-            <mat-error *ngIf="lostObjectForm.controls['title'].invalid">Title is required</mat-error>
+  <div class="search-container">
+    <input class="searchbar" [(ngModel)]="searchText" (input)="onSearch()" placeholder="Pesquisar Objeto" aria-label="Search Objects">
+    <button (click)="showAddObjectForm = true" mat-raised-button color="primary">Adicionar Objeto</button>
+  </div>
+
+  <mat-card-content>
+    <!-- Formulário para adicionar objeto -->
+    <div *ngIf="showAddObjectForm" class="add-object-form">
+      <form (ngSubmit)="addLostObject()" [formGroup]="lostObjectForm">
+        <mat-form-field class="full-width">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" required>
+          <mat-error *ngIf="lostObjectForm.controls['title'].invalid">Title is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Date</mat-label>
+          <input matInput formControlName="specific_date" type="date" required>
+          <mat-error *ngIf="lostObjectForm.controls['specific_date'].invalid">Date is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description" required>
+          <mat-error *ngIf="lostObjectForm.controls['description'].invalid">Description is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Categoria</mat-label>
+          <mat-select formControlName="category" (selectionChange)="onCategoryChange($event)" required>
+            <mat-option *ngFor="let category of categories" [value]="category.id">
+              {{ category.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="lostObjectForm.controls['category'].invalid">Categoria é obrigatória</mat-error>
+        </mat-form-field>
+
+        <div *ngIf="filteredAttributes.length > 0" class="attribute-container">
+          <mat-form-field *ngFor="let attribute of filteredAttributes" class="full-width">
+            <mat-label>{{ attribute.attribute }}</mat-label>
+            <input matInput [placeholder]="attribute.attribute" [formControlName]="attribute.id" required>
+            <mat-error *ngIf="lostObjectForm.controls[attribute.id].invalid && lostObjectForm.controls[attribute.id].touched">{{ attribute.attribute }} é obrigatório</mat-error>
           </mat-form-field>
-          <mat-form-field>
-            <mat-label>Date</mat-label>
-            <input matInput formControlName="specific_date" type="date" required>
-            <mat-error *ngIf="lostObjectForm.controls['specific_date'].invalid">Date is required</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Description</mat-label>
-            <input matInput formControlName="description" required>
-            <mat-error *ngIf="lostObjectForm.controls['description'].invalid">Description is required</mat-error>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Category</mat-label>
-            <input matInput formControlName="category" required>
-            <mat-error *ngIf="lostObjectForm.controls['category'].invalid">Category is required</mat-error>
-          </mat-form-field>
+        </div>
+
+        <div class="button-container">
           <button mat-raised-button type="submit" color="primary" [disabled]="lostObjectForm.invalid">Save</button>
           <button mat-raised-button type="button" (click)="cancelAddObject()">Cancel</button>
-        </form>
-      </div>
-  
-      <ul class="cards">
-        <li *ngFor="let lostObject of filteredObjects">
-          <a class="card" (click)="viewDetails(lostObject)">
-            <img [src]="getCardImagePath(lostObject.category)" class="card__image" alt="Image of {{lostObject.title}}">
-            <div class="card__overlay">
-              <div class="card__header">
-                <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
-                  <path />
-                </svg>
-                <div class="card__header-text">
-                  <h3 class="card__title">{{lostObject.title}}</h3>
-                  <span class="card__status">{{lostObject.specific_date | date}}</span>
-                </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Lista de cartões -->
+    <ul class="cards">
+      <li *ngFor="let lostObject of filteredObjects">
+        <a class="card" (click)="viewDetails(lostObject)">
+          <img [src]="getCardImagePath(lostObject.category)" class="card__image" alt="Image of {{lostObject.title}}">
+          <div class="card__overlay">
+            <div class="card__header">
+              <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
+                <path />
+              </svg>
+              <div class="card__header-text">
+                <h3 class="card__title">{{lostObject.title}}</h3>
+                <span class="card__status">{{lostObject.specific_date | date}}</span>
               </div>
-              <p class="card__description">{{lostObject.description}}</p>
-              <button mat-button color="warn" class = "remove-button" (click)="removeLostObject(lostObject.id); $event.stopPropagation()">Remover</button>
             </div>
-          </a>
-        </li>
-      </ul>
-    </mat-card-content>
-  </mat-card>
-  
+            <p class="card__description">{{lostObject.description}}</p>
+            <button mat-button color="warn" class="remove-button" (click)="removeLostObject(lostObject.id); $event.stopPropagation()">Remover</button>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>
