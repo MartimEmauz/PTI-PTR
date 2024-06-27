@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Attribute, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -8,8 +8,8 @@ import { Router } from '@angular/router'; // Import Router
 import { FoundObject } from 'src/app/Model/found-object.model';
 import { User } from '@auth0/auth0-spa-js';
 import { AuthService } from '@auth0/auth0-angular';
-import { count, zip } from 'rxjs';
 import { Address } from 'src/app/Model/address.model';
+import { AuthSwitchService } from 'src/app/auth-switch.service';
 
 @Component({
   selector: 'app-table',
@@ -26,43 +26,45 @@ export class MyLeiloesComponent implements OnInit {
   showAddObjectForm: boolean = false;
   useSpecificDate: boolean = true;
   categories = [
-    { id: 1, name: 'Eletrónicos' },
-    { id: 2, name: 'Documentos' },
-    { id: 3, name: 'Chaves' },
-    { id: 4, name: 'Acessórios' },
-    { id: 5, name: 'Roupas' },
-    { id: 6, name: 'Outros' }
+    { id: null, name: '' },
   ];
+
 
   searchText: string = '';
   lostObjects: any[] = [];
   filteredObjects: any[] = [];
+  filteredAttributes: any[] = [];
   userId: string | null = null; // Change the type to string | null
   delivered: boolean = false;
+  ownerFormGroup: FormGroup;
+  addressFormGroup: FormGroup;
+  categoryAttributes: any[] = [];
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router, private _auth: AuthService) { // Inject Router
     this.dataSource = new MatTableDataSource<any>();
     this.lostObjectForm = this.fb.group({
       title: ['', Validators.required],
-      specific_date: [{ value: '', disabled: !this.useSpecificDate }],
-      start_date: [{ value: '', disabled: this.useSpecificDate }],
-      end_date: [{ value: '', disabled: this.useSpecificDate }],
+      specific_date: [''],
       description: ['', Validators.required],
       category: ['', Validators.required],
-      street : ['', Validators.required],
+      filteredAttributes: [''],
+    });
+
+    this.addressFormGroup = this.fb.group({
+      street: ['', Validators.required],
       country: ['', Validators.required],
-      city : ['', Validators.required],
-      zip: ['', Validators.required],
+      city: ['', Validators.required],
+      zip: ['', Validators.required]
+    });
+
+    this.ownerFormGroup = this.fb.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       genero: ['', Validators.required],
       birthday: ['', Validators.required],
       idcivil: ['', Validators.required],
       idfiscal: ['', Validators.required],
-      phonenumber: ['', Validators.required],
-      police: ['', Validators.required],
-      address : [],
-      delivered: [false],
-    }, { validators: this.dateRangeValidator });
+      phonenumber: ['', [Validators.required, Validators.pattern(/^\d+$/)]]
+    });
   }
 
   ngOnInit(): void {
@@ -73,6 +75,71 @@ export class MyLeiloesComponent implements OnInit {
       }
     });
     this.loadFoundObjects();
+    this.getCategoriesFromDb();
+  }
+
+
+  onCategoryChange(event: any): void {
+    const categoryId = event.value;
+    this.loadCategoryAttributes(categoryId);
+  }
+
+  loadCategoryAttributes(categoryId: number): void {
+    this.service.getAttributes().subscribe(
+      (attributes: any[]) => {
+        // Filtrar atributos com base no category_id
+        this.filteredAttributes = attributes.filter(attribute => attribute.category_id === categoryId);
+        this.updateFormWithAttributes(this.filteredAttributes);
+      },
+      (error) => {
+        console.error('Erro ao carregar atributos da categoria:', error);
+      }
+    );
+  }
+
+  updateFormWithAttributes(attributes: any[]): void {
+    // Limpar controles antigos
+    Object.keys(this.lostObjectForm.controls).forEach(key => {
+      if (key !== 'title' && key !== 'specific_date' && key !== 'description' && key !== 'category') {
+        this.lostObjectForm.removeControl(key);
+      }
+    });
+  
+    // Adicionar novos controles baseados nos atributos filtrados
+    attributes.forEach(attribute => {
+      const control = this.fb.control('', Validators.required);
+      this.lostObjectForm.addControl(attribute.id.toString(), control); // Certifique-se de usar toString() se attribute.id for um número
+    });
+  }
+  
+  getAttributesData(): any[] {
+    const attributesData: any[] = [];
+
+    // Iterate over filteredAttributes and get values from form
+    this.filteredAttributes.forEach(attribute => {
+      const value = this.lostObjectForm.get(attribute.id.toString())?.value;
+      const attributeData = {
+        id: attribute.id,
+        value: value,
+        object_id: 1, // Replace with the actual object_id if needed
+        category_attribute_id: attribute.id
+      };
+      attributesData.push(attributeData);
+    });
+
+    return attributesData;
+  }
+
+  getCategoriesFromDb() {
+    this.service.getCategories().subscribe(
+      (categories: any[]) => {
+        this.categories = categories;
+      },
+      (error) => {
+        console.error('Erro ao carregar categorias:', error);
+      }
+    );
+  
   }
 
   loadFoundObjects() {
@@ -106,77 +173,128 @@ export class MyLeiloesComponent implements OnInit {
     return foundObject.delivered;
   }
   
-
   addFoundObject() {
     if (this.lostObjectForm.valid) {
-        // Extraia os dados do endereço do formulário
-        const address: Address = {
-            street: this.lostObjectForm.value.street,
-            country: this.lostObjectForm.value.country,
-            city: this.lostObjectForm.value.city,
-            zip: this.lostObjectForm.value.zip,
-        };
-
-        // Cria o endereço associado
-        this.service.createAddress(address).subscribe(
-            (addressResponse) => { 
-                if (addressResponse && addressResponse.id) {
-                    // Atualiza o formulário com o ID do endereço criado
-                    this.lostObjectForm.patchValue({ address: addressResponse.id });
-
-                    // Adiciona o objeto principal
-                    this.service.addObject(this.lostObjectForm.value).subscribe((newObject: any) => {
-                        const objeto_id = newObject.id; // Captura o id do objeto criado
-                        console.log('Address Response:', addressResponse.id);
-                        // Formata a data de aniversário
-                        const formattedDate = this.lostObjectForm.value.birthday.split('T')[0];
-
-                        // Cria o objeto foundObject associado
-                        const foundObjectData: FoundObject = {
-                            title: this.lostObjectForm.value.title,
-                            specific_date: this.lostObjectForm.value.specific_date,
-                            start_date: this.lostObjectForm.value.start_date,
-                            end_date: this.lostObjectForm.value.end_date,
-                            description: this.lostObjectForm.value.description,
-                            category: this.lostObjectForm.value.category,
-                            generaluser: parseInt(this.userId || '0'),
-                            firstname: this.lostObjectForm.value.firstname,
-                            lastname: this.lostObjectForm.value.lastname,
-                            genero: this.lostObjectForm.value.genero,
-                            birthday: formattedDate,
-                            idcivil: this.lostObjectForm.value.idcivil,
-                            idfiscal: this.lostObjectForm.value.idfiscal,
-                            phonenumber: this.lostObjectForm.value.phonenumber,
-                            police: this.lostObjectForm.value.police,
-                            objeto_id: objeto_id,
-                            delivered: false,
-                            address: addressResponse.id, // Adiciona o ID do endereço criado
-                        };
-
-                        console.log('Found Object Data:', foundObjectData); // Verifique o conteúdo do foundObjectData
-
-                        // Adiciona o foundObject associado
-                        this.service.addFoundObject(foundObjectData).subscribe(() => {
-                            this.loadFoundObjects();
-                            this.cancelAddObject();
-                        }, (error) => {
-                            console.error('Error adding found object:', error);
-                        });
-                    }, (error) => {
-                        console.error('Error adding object:', error);
-                    });
-                } else {
-                    console.error('Address ID is null or undefined:', addressResponse);
+      const lostObjectData = this.lostObjectForm.value;
+      const addressData = this.addressFormGroup.value;
+      const ownerData = this.ownerFormGroup.value;
+  
+      // Verifica e ajusta os campos start_date e end_date
+      lostObjectData.start_date = lostObjectData.start_date ? lostObjectData.start_date : null;
+      lostObjectData.end_date = lostObjectData.end_date ? lostObjectData.end_date : null;
+  
+      // Extraia os dados do endereço do formulário
+      const address: Address = {
+        street: addressData.street,
+        country: addressData.country,
+        city: addressData.city,
+        zip: addressData.zip,
+      };
+  
+      // Cria o endereço associado
+      this.service.createAddress(address).subscribe(
+        (addressResponse) => {
+          if (addressResponse && addressResponse.id) {
+            // Atualiza o formulário com o ID do endereço criado
+            this.lostObjectForm.patchValue({ address: addressResponse.id });
+  
+            // Adiciona o objeto principal
+            this.service.addObject(this.lostObjectForm.value).subscribe((newObject: any) => {
+              const objeto_id = newObject.id; // Captura o id do objeto criado
+              console.log('Address Response:', addressResponse.id);
+  
+              // Formata a data de aniversário
+              const formattedDate = ownerData.birthday.split('T')[0];
+  
+              // Cria o objeto foundObject associado
+              const foundObjectData: FoundObject = {
+                title: lostObjectData.title,
+                specific_date: lostObjectData.specific_date,
+                description: lostObjectData.description,
+                category: lostObjectData.category,
+                address: addressResponse.id,
+                generaluser: parseInt(this.userId || '0', 10),
+                firstname: ownerData.firstname,
+                lastname: ownerData.lastname,
+                genero: ownerData.genero,
+                birthday: formattedDate,
+                idcivil: ownerData.idcivil,
+                idfiscal: ownerData.idfiscal,
+                phonenumber: ownerData.phonenumber,
+                police: parseInt(this.userId || '0', 10), // Valor temporário que será substituído pelo backend
+                objeto_id: objeto_id,
+                delivered: false
+              };
+  
+              console.log('Found Object Data:', foundObjectData); // Verifique o conteúdo do foundObjectData
+  
+              // Adiciona o foundObject associado
+              this.service.addFoundObject(foundObjectData).subscribe(() => {
+                // Agora, adicione os atributos ao objeto
+                const attributeObjects = [];
+                for (const key of Object.keys(this.lostObjectForm.value)) {
+                  const attributeId = parseInt(key, 10);
+                  if (!isNaN(attributeId)) {
+                    const attributeObject = {
+                      value: this.lostObjectForm.value[key],
+                      object_id: objeto_id,
+                      category_attribute_id: attributeId
+                    };
+                    attributeObjects.push(attributeObject);
+                  }
                 }
-            },
-            (error) => {
-                console.error('Error creating address:', error);
-            }
-        );
+  
+                // Envie os atributos para a API
+                for (const attribute of attributeObjects) {
+                  this.service.addAttributeObject(attribute).subscribe(() => {
+                    console.log('Attribute added:', attribute);
+                  }, (error) => {
+                    console.error('Error adding attribute:', error);
+                  });
+                }
+  
+                this.loadFoundObjects();
+                this.cancelAddObject();
+              }, (error) => {
+                console.error('Error adding found object:', error);
+              });
+            }, (error) => {
+              console.error('Error adding object:', error);
+            });
+          } else {
+            console.error('Address ID is null or undefined:', addressResponse);
+          }
+        },
+        (error) => {
+          console.error('Error creating address:', error);
+        }
+      );
     } else {
-        console.error('Lost object form is invalid');
+      console.error('Lost object form is invalid');
     }
-}
+  }
+  
+  markAsReceived(objectId: number) {
+    console.log(`Marking object as received with ID: ${objectId}`); // Log for debugging
+    
+    // Encontra o FoundObject correspondente ao objeto
+    const foundObject = this.lostObjects.find(obj => obj.objeto_id === objectId);
+  
+    if (foundObject) {
+      this.service.updateFoundObject(foundObject.id, { delivered: true }).subscribe(
+        () => {
+          foundObject.delivered = true; // Atualiza localmente o status de entrega
+          this.loadFoundObjects(); // Recarrega os objetos encontrados
+        },
+        (error) => {
+          console.error('Erro ao marcar como recebido:', error);
+        }
+      );
+    } else {
+      console.error('FoundObject não encontrado para o objeto ID:', objectId);
+    }
+  }
+  
 
   cancelAddObject() { 
     this.lostObjectForm.reset();
@@ -249,7 +367,7 @@ export class MyLeiloesComponent implements OnInit {
   }
 
   getUserByEmail(email: string): void {
-    this.service.getUserByEmail(email).subscribe(
+    this.service.getPoliceByEmail(email).subscribe(
       (data: any) => {
         console.log(data);
         this.userId = data.id;

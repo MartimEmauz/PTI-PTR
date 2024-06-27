@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { colorentity } from '../Entity/colorentity';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
+import { colorentity } from '../Entity/colorentity';
 import { Country, Customer } from '../Model/Customer';
 import { LostObject } from '../Model/lost-object.model';
 import { GeneralUser } from '../Model/general-users-model';
@@ -12,11 +12,14 @@ import { Leilao } from '../Model/leilao-model';
 import { Licitacao } from '../Model/licitacao-model';
 import { Objeto } from '../Model/object-model';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class MasterService {
+  private apiUrl = 'http://127.0.0.1:8000/';
+
+  constructor(private http: HttpClient) { }
+
   followLeilao(id: any) {
     throw new Error('Method not implemented.');
   }
@@ -25,9 +28,6 @@ export class MasterService {
     return this.http.get<any[]>(`${this.apiUrl}objects/`);
   }
 
-  private apiUrl = 'http://127.0.0.1:8000/';
-  constructor(private http: HttpClient) { }
-
   GetColorList(): colorentity[] {
     return [
       { code: 'c0', name: 'black' },
@@ -35,61 +35,67 @@ export class MasterService {
       { code: 'c2', name: 'Green' },
       { code: 'c3', name: 'Yellow' },
       { code: 'c4', name: 'White' }
-    ]
+    ];
   }
 
   addObject(newObject: Objeto): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}objects/`, newObject);
   }
 
+  getCategories(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}categories/`);
+  }
+
   GetCustomer(): Observable<Customer[]> {
-    return this.http.get<Customer[]>("http://localhost:8000/customer");
+    return this.http.get<Customer[]>('http://localhost:8000/customer');
   }
 
-  Savecustomer(data: any) {
-    console.log(data)
-    return this.http.post("http://localhost:8000/customer", data);
+  Savecustomer(data: any): Observable<any> {
+    return this.http.post('http://localhost:8000/customer', data);
   }
 
-  GetCustomerbycode(code: any) {
-    return this.http.get("http://localhost:8000/customer/" + code);
+  GetCustomerbycode(code: any): Observable<any> {
+    return this.http.get(`http://localhost:8000/customer/${code}`);
   }
 
-  GetAssociate() {
+  GetAssociate(): Observable<any> {
     return this.http.get('http://localhost:8000/associate');
   }
 
-  GetAssociatebycode(code: any) {
-    return this.http.get('http://localhost:8000/associate/' + code);
+  GetAssociatebycode(code: any): Observable<any> {
+    return this.http.get(`http://localhost:8000/associate/${code}`);
   }
 
   GetCountry(): Observable<Country[]> {
     return this.http.get<Country[]>('http://localhost:8000/country');
   }
 
-  SaveAssociate(data: any, code: any) {
-    return this.http.put('http://localhost:8000/associate/' + code, data);
+  SaveAssociate(data: any, code: any): Observable<any> {
+    return this.http.put(`http://localhost:8000/associate/${code}`, data);
   }
 
-  //API ------------------------------------------------------------------
+  // API ------------------------------------------------------------------
   private jsonUrl = 'assets/lost_objects.json';
 
   getLostObjects(): Observable<any[]> {
     return this.http.get<LostObject[]>(`${this.apiUrl}lostobjects/`);
   }
 
-  // Example function to send data to Django API
   sendData(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/endpoint`, data);
+    return this.http.post<any>(`${this.apiUrl}endpoint`, data);
   }
 
   addLostObject(newLostObject: LostObject): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/lostobjects/`, newLostObject); 
+    return this.http.post<any>(`${this.apiUrl}lostobjects/`, newLostObject); 
   } 
 
   addFoundObject(newFoundObject: FoundObject): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/foundobjects/`, newFoundObject); 
+    return this.http.post<any>(`${this.apiUrl}foundobjects/`, newFoundObject); 
   } 
+
+  addAttributeObject(attribute: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}atributesobjects/`, attribute);
+  }
 
   createUser(user: GeneralUser): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}generalusers/`, user);
@@ -99,10 +105,22 @@ export class MasterService {
     return this.http.put<any>(`${this.apiUrl}generalusers/${email}/`, userData);
   }
 
+  updateFoundObject(id: number, foundObjectData: Partial<FoundObject>): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}foundobjects/${id}/`, foundObjectData);
+  }
+
+  getAttributes(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}categoryattributes/`);
+  }
+      
+
   getUserByEmail(email: string): Observable<GeneralUser | null> {
     return this.http.get<GeneralUser | null>(`${this.apiUrl}generalusers/${email}/`);
   }
 
+  getPoliceByEmail(email: string): Observable<PoliceUser | null> {
+    return this.http.get<PoliceUser | null>(`${this.apiUrl}policeusers/${email}/`);
+  }
   createAddress(address: Address): Observable<Address> {
     return this.http.post<Address>(`${this.apiUrl}addresses/`, address);
   }
@@ -122,20 +140,38 @@ export class MasterService {
   getAdressById(id: number): Observable<Address> {
     return this.http.get<Address>(`${this.apiUrl}addresses/${id}/`);
   }
+
   updateAddress(address: Address): Observable<Address> {
     return this.http.put<Address>(`${this.apiUrl}addresses/${address.id}/`, address);
   }
-  // Add method to fetch object details
-  getObjectDetails(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/object-details/${id}`);
+
+  // Method to fetch object details
+  getObjectDetails(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}objects/${id}/`);
   }
+
+  getCategory(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}categories/${id}/`);
+  }
+
+
+  getCategoryAttributes(categoryId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}categoryattributes/category/${categoryId}/`);
+  }
+
+
+  getAddressById(id: number): Observable<Address> {
+    return this.http.get<Address>(`${this.apiUrl}addresses/${id}/`);
+  }
+
   deleteFoundObject(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}foundobjects/${id}/`);
   }
+
   deleteLostObject(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}lostobjects/${id}/`);
   }
-  
+
   deleteUser(email: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}generalusers/${email}/`);
   }
@@ -152,7 +188,6 @@ export class MasterService {
     return this.http.post<any>(`${this.apiUrl}auctions/`, auction);
   }
 
-  // Bid Services
   addBid(bid: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}bids/`, bid);
   }

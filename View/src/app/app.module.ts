@@ -37,6 +37,7 @@ import { ObjetosperdidospoliciaComponent } from './component/objetosperdidospoli
 import { BidModalComponent } from './component/bid-modal/bid-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LeilaoDetailsComponent } from './component/leilao-details/leilao-details.component';
+import { MatStepperModule } from '@angular/material/stepper';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +62,7 @@ import { LeilaoDetailsComponent } from './component/leilao-details/leilao-detail
     LeilaoDetailsComponent,
   ],
   imports: [
+    MatStepperModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
