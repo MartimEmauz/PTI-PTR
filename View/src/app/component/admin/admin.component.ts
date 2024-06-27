@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { MasterService } from '../../service/master.service';
 import { Address } from '../../Model/address.model';
 import { PolicePost } from '../../Model/postopolice.model';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
@@ -13,6 +15,7 @@ import { PolicePost } from '../../Model/postopolice.model';
 export class AdminComponent implements OnInit {
   policePostForm: FormGroup;
   policePosts: PolicePost[] = [];
+  deleteError: string | null = null; // Add a property to hold error messages
 
   constructor(
     private fb: FormBuilder,
@@ -91,19 +94,34 @@ export class AdminComponent implements OnInit {
       console.error('Form is invalid');
     }
   }
-  
+
   deletePolicePost(id: number) {
-    this.masterService.deletePolicePost(id).subscribe(
+    this.masterService.deletePolicePost(id).pipe(
+      catchError((error) => {
+        console.error('Error details:', error);
+        if (error.status === 500 && error.error && error.error.detail && typeof error.error.detail === 'string' && error.error.detail.includes('is still referenced')) {
+          this.deleteError = 'Cannot delete the post because there are police officers assigned to this post.';
+        } else {
+          this.deleteError = 'Cannot delete the post because there are police officers assigned to this post.';
+        }
+
+          // Clear the error message after 5 seconds
+        setTimeout(() => {
+          this.deleteError = null;
+        }, 3000);
+
+        return of(null); // Return an observable to allow the stream to complete
+      })
+    ).subscribe(
       () => {
-        this.loadPolicePosts();
-      },
-      (error: any) => {
-        console.error('Error deleting police post:', error);
+        if (!this.deleteError) { // Only reload posts if there was no error
+          this.loadPolicePosts();
+        }
       }
     );
   }
 
   isAddress(location: number | Address | undefined): location is Address {
-      return (location as Address).street !== undefined;
+    return (location as Address).street !== undefined;
   }
 }
