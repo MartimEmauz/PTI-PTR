@@ -210,4 +210,8 @@ export class MasterService {
   compareObjectsByCategory(categoryId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}lostobjects/comparebycategory/${categoryId}/`);
   }
+
+  getAttributesObject(objectId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}atributesobjects/object/${objectId}/`);
+  }
 }

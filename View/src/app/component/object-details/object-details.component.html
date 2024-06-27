@@ -21,5 +21,25 @@
         {{ objectDetails.address.zip }}
       </div>
     </div>
+    <div class="detail-row">
+      <div class="detail-label">Category Attributes:</div>
+      <div class="detail-value">
+        <ul>
+          <li *ngFor="let catAttr of objectDetails.cat_att">
+            {{ catAttr }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Object Attributes:</div>
+      <div class="detail-value">
+        <ul>
+          <li *ngFor="let objAttr of objectDetails.att_obj">
+            {{ objAttr }}
+          </li>
+        </ul>
+      </div>
+    </div>
   </mat-card-content>
 </mat-card>

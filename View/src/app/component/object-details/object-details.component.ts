@@ -16,6 +16,8 @@ export class ObjectDetailsComponent implements OnInit {
     specific_date: '',
     description: '',
     category: '',
+    cat_att: [],
+    att_obj: [],
     address: {
       street: '',
       country: '',
@@ -35,6 +37,7 @@ export class ObjectDetailsComponent implements OnInit {
         (data: any) => {
           console.log(data.address);
           this.objectDetails = data;
+          this.loadAttributesObject(data.id);
           this.loadCategory(data.category);
           this.loadAddress(data.address);
           console.log(data);
@@ -67,5 +70,16 @@ export class ObjectDetailsComponent implements OnInit {
         console.error('Error loading address:', error);
       }
     );
+  }
+
+  loadAttributesObject(objectId: number): void {
+    this.service.getAttributesObject(objectId).subscribe(
+      (attributes: any[]) => {
+        this.objectDetails.att_obj = attributes;
+      });
+    this.service.getCategoryAttributes(this.objectDetails.category).subscribe(
+      (attributes: any[]) => {
+        this.objectDetails.cat_att = attributes;
+      });
   }
 }
