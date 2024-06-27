@@ -1,30 +1,54 @@
-<mat-toolbar color="primary" class="mat-elevation-z8">
+<mat-toolbar color="primary" class="mat-elevation-z8 toolbar">
     <button (click)="drawer.toggle()" mat-icon-button>
         <mat-icon>menu</mat-icon>
     </button>
+    <h1 class="title">
+        <a routerLink="" class="title-link">Tesouros Perdidos</a>
+    </h1>
     <span class="example-spacer"></span>
-    <button (click)="badgevisibility()"  mat-icon-button>
+    <button routerLink="myaccount" class="login-button" *ngIf="!(_auth.isAuthenticated$ | async)">Login</button>
+    <div routerLink="my-account-logado" class="profile-container" *ngIf="_auth.isAuthenticated$ | async" [matTooltip]="userName">
+        <img *ngIf="profileImage" [src]="profileImage" class="profile-image" alt="Profile Image">
+        <div *ngIf="!profileImage" class="profile-initials">{{ initials }}</div>
+    </div>
+    <button (click)="_auth.logout()" class="logout-button" *ngIf="_auth.isAuthenticated$ | async">Logout</button>
+    <button (click)="badgevisibility()" mat-icon-button>
         <mat-icon matBadgeColor="accent" matBadge="15" [matBadgeHidden]="badgevisible" matBadgeSize="small">notifications</mat-icon>
     </button>
 </mat-toolbar>
+
 <mat-drawer-container autosize>
-    <mat-drawer #drawer opened="true" mode="side" position="start">
-    <mat-nav-list>
-        <mat-list-item>
-            <button routerLink="" mat-button><mat-icon>home</mat-icon> Home</button>
-        </mat-list-item>
-        <mat-list-item>
-            <button routerLink="slider" mat-button><mat-icon>explore</mat-icon> Maps</button>
-        </mat-list-item>
-        <mat-list-item>
-            <button routerLink="table" mat-button><mat-icon>table</mat-icon> Objetos</button>
-        </mat-list-item>
-    </mat-nav-list>
+    <mat-drawer #drawer opened="true" mode="side" position="start" class="drawer">
+        <mat-nav-list class="centered-list">
+            <mat-list-item>
+                <button routerLink="" mat-button class="botao"><mat-icon>home</mat-icon> Home</button>
+            </mat-list-item>
+            <mat-list-item>
+                <button routerLink="mapa" mat-button class="botao"><mat-icon>explore</mat-icon> Maps</button>
+            </mat-list-item>
+            <mat-list-item>
+                <button routerLink="auction" mat-button class="botao"><mat-icon>menu</mat-icon> Leilões</button>
+            </mat-list-item>
+            <mat-list-item *ngIf="!isPoliceUser()">
+                <button routerLink="myleiloes" mat-button class="botao"><mat-icon>phonelink</mat-icon> Objetos Encontrados</button>
+            </mat-list-item>
+            <mat-list-item *ngIf="isPoliceUser()">
+                <button routerLink="foundpolice" mat-button class="botao"><mat-icon>phonelink</mat-icon> Objetos Encontrados</button>
+            </mat-list-item>
+            <mat-list-item *ngIf="!isPoliceUser()">
+                <button routerLink="objetosperdidos" mat-button class="botao"><mat-icon>phonelink</mat-icon> Objetos Perdidos</button>
+            </mat-list-item>
+            <mat-list-item *ngIf="isPoliceUser()">
+                <button routerLink="objetosperdidospolicia" mat-button class="botao"><mat-icon>phonelink</mat-icon> Objetos Perdidos</button>
+            </mat-list-item>
+            <mat-list-item>
+                <button (click)="navigateToAccount()" mat-button class="botao"><mat-icon>account_circle</mat-icon> Minha Conta</button>
+            </mat-list-item>
+        </mat-nav-list>
     </mat-drawer>
     <mat-drawer-content>
-        <div style="text-align: center;min-height: 600px;">
-
+        <div class="main-content">
             <router-outlet></router-outlet>
-            </div>
+        </div>
     </mat-drawer-content>
 </mat-drawer-container>

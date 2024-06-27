@@ -1,0 +1,62 @@
+/* Add your styles here */
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center; /* Center text */
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 0.5em;
+  }
+  
+  input {
+    width: calc(100% - 1em); /* Adjust input width to accommodate padding */
+    padding: 0.5em;
+    margin-bottom: 1em;
+  }
+  
+  button {
+    width: calc(100% - 1em); /* Adjust button width to accommodate padding */
+    padding: 0.5em;
+    background-color: #54acb4; /* Green */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Add smooth transition */
+    display: block; /* Make button a block element */
+    margin: 0 auto; /* Center button horizontally */
+  }
+  
+  button:hover {
+    background-color: #54acb4; /* Darker green on hover */
+  }
+  
+  .signup-link {
+    margin-top: 1em; /* Add some space between the form and the sign up link */
+  }
+  
+  .signup-link a {
+    color: #007bff; /* Blue color for the sign up link */
+  }
+  
+  .signup-link a:hover {
+    text-decoration: underline; /* Underline the link on hover */
+  }
+  
+  .signup-google {
+    margin-top: 0.5em; /* Add some space between the sign up link and the sign up with google link */
+  }
+  
+  .signup-google a {
+    color: #DB4437; /* Google red color */
+  }
+  
+  .signup-google a:hover {
+    text-decoration: underline; /* Underline the link on hover */
+  }
+  

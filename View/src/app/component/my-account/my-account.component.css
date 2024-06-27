@@ -1,0 +1,85 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  background-color: #54acb4; /* Azul claro */
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.auth-cards {
+  display: flex;
+  justify-content: space-between;
+}
+
+.auth-card {
+  width: 45%; /* Ajustar conforme necessário */
+  background-color: #d3eff7; /* Azul mais claro */
+  border-radius: 10px;
+}
+
+.auth-card.police-card {
+  background-color: #b8d9e2; /* Azul médio */
+}
+
+.auth-card.user-card {
+  background-color: #a3ced6; /* Azul mais escuro */
+}
+
+.police-icon, .user-icon {
+  width: 50px;
+  height: 50px;
+  background-color: #54acb4; /* Azul claro */
+  border-radius: 50%;
+}
+
+.police-icon::after {
+  content: '👮'; /* Ícone de polícia */
+  font-size: 30px;
+  display: block;
+  text-align: center;
+  line-height: 50px;
+}
+
+.user-icon::after {
+  content: '👤'; /* Ícone de usuário */
+  font-size: 30px;
+  display: block;
+  text-align: center;
+  line-height: 50px;
+}
+
+.login-button, .signup-button {
+  margin: 10px;
+  color: white;
+}
+
+.login-button {
+  background-color: #007bff; /* Azul primário */
+}
+
+.signup-button {
+  background-color: #0056b3; /* Azul mais escuro */
+}
+
+.auth-button:hover {
+  background-color: #004080; /* Azul ainda mais escuro ao passar o mouse */
+}
+
+.auth-button.police-login, .auth-button.user-login {
+  background-color: #007bff; /* Azul claro */
+  margin-right: 10px; /* Adiciona espaço à direita */
+}
+
+.auth-button.police-register, .auth-button.user-register {
+  background-color: #0366d6; /* Azul médio */
+  margin-left: 10px; /* Adiciona espaço à esquerda */
+}
+
+

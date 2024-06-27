@@ -1,0 +1,19 @@
+19-06
+
+Todos presentes
+
+------------------------------------------------
+
+Api implementada nas VM's.
+Foram identificados problemas na ligação entre a API e as BD's.
+
+------------------------------------------------
+
+Esforço alocado (em horas):
+
+André Silva - 4
+Bernardo Caldas - 4
+David Carreira - 4
+Martim Emauz - 16
+Miguel Martins - 10
+Tomás Alves - 16

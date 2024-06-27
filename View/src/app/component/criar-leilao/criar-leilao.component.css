@@ -1,0 +1,173 @@
+/* Styles for the toolbar */
+.toolbar {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+  }
+  
+  .search-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .search-bar {
+    margin-top: 3px;
+    flex-grow: 1;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .add-bid-form {
+    margin: 20px 0;
+  }
+  
+  .add-bid-form .mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+    gap: 10px;
+  }
+  
+  /* Styles for the table */
+  table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 16px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f0f0f0;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .mat-elevation-z8 {
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styles for the mat-card */
+  mat-card {
+    margin: 20px;
+    padding: 0;
+  }
+  
+  mat-card-content {
+    padding: 20px;
+  }
+  
+  mat-card-footer {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  /* Styles for the toolbar */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+  }
+  
+  .search-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .search-bar {
+    margin-top: 15px;
+    flex-grow: 1;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .add-bid-form {
+    margin: 20px 0;
+  }
+  
+  .add-bid-form .mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+    gap: 10px;
+  }
+  
+  /* Styles for the table */
+  table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 16px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f0f0f0;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .mat-elevation-z8 {
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styles for the mat-card */
+  mat-card {
+    margin: 20px;
+    padding: 0;
+  }
+  
+  mat-card-content {
+    padding: 20px;
+  }
+  
+  mat-card-footer {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  .criar-leilao-card {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .button-group button {
+    margin-left: 10px;
+  }

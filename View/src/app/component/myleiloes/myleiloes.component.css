@@ -1,0 +1,232 @@
+/* Estilos para o status de entrega */
+.delivery-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.875rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+.status-icon {
+  font-size: 1.2rem;
+  margin-right: 8px;
+}
+
+.delivered {
+  background-color: #dcedc8; /* Fundo verde claro */
+  color: #4caf50; /* Texto verde */
+  border: 2px solid #4caf50; /* Borda verde */
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.3); /* Sombra verde */
+}
+
+.not-delivered {
+  background-color: #ffcdd2; /* Fundo vermelho claro */
+  color: #f44336; /* Texto vermelho */
+  border: 2px solid #f44336; /* Borda vermelha */
+  box-shadow: 0 0 10px rgba(244, 67, 54, 0.3); /* Sombra vermelha */
+}
+
+/* Estilos gerais para o componente mat-card */
+.mat-card {
+  margin: 2%;
+  width: calc(100% - 4%);
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para botões */
+button {
+  margin: 5px;
+  background-color: #5c6bc0;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #3949ab;
+}
+
+.card:hover {
+  cursor:pointer;
+}
+
+
+/* Estilos para a seção de pesquisa */
+.search-container {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.searchbar {
+  height: 40px;
+  width: 300px;
+  font-size: 15px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  outline: none;
+}
+
+/* Estilos para o formulário de adição de objeto */
+.add-object-form {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Estilos para campos do formulário */
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-flex {
+  padding: 8px 12px;
+}
+
+.mat-error {
+  font-size: 0.875rem;
+  color: #f44336; /* Vermelho para erros */
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Estilos para o grupo de botões */
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Estilos para a grade de cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 4rem 5vw;
+  padding: 0;
+  list-style-type: none;
+}
+
+/* Estilos para cada card individual */
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.2s ease-in-out;
+  text-decoration: none;
+  color: #333;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.card__title {
+  font-size: 20px;
+  color: #6a515e;
+  margin: 0;
+}
+
+.card__status {
+  font-size: 14px;
+  color: #999;
+}
+
+.card__description {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+/* Ajustes específicos para o botão "Remover" */
+button.mat-button {
+  color: #fff;
+  background-color: #f44336; /* Vermelho */
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+button.mat-button:hover {
+  background-color: #e57373; /* Tom mais claro de vermelho */
+}
+
+/* Estilos para o botão "Remover" */
+button.remove-button {
+  color: #fff;
+  background-color: #f44336; /* Vermelho */
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+button.remove-button:hover {
+  background-color: #e57373; /* Tom mais claro de vermelho ao passar o mouse */
+}
+
+/* Estilos específicos para o botão "Marcar como Recebido" */
+.receive-button {
+  color: #fff;
+  background-color: #4caf50; /* Verde */
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.receive-button:hover {
+  background-color: #388e3c; /* Tom mais escuro de verde ao passar o mouse */
+}
+
+.receive-button[disabled] {
+  background-color: #a0a0a0; /* Cinza claro para botão desabilitado */
+  cursor: not-allowed;
+}
+
+.receive-button[disabled]:hover {
+  background-color: #a0a0a0; /* Manter a cor cinza em hover */
+}

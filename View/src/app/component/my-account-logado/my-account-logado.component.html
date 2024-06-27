@@ -1,0 +1,127 @@
+<mat-card class="profile-card">
+  <mat-card-header>
+    <!-- Display profile avatar from MenubarComponent -->
+    <div mat-card-avatar class="profile-avatar" [style.background-image]="'url(' + profileImage + ')'"></div>
+    <mat-card-title>{{ userName }}</mat-card-title> <!-- Display user's full name -->
+    <mat-card-subtitle>{{ user.email }}</mat-card-subtitle> <!-- Display user's email -->
+  </mat-card-header>
+
+  <mat-card-content *ngIf="!isEditing">
+    <div class="profile-field">
+      <span class="profile-label">Nome:</span>
+      <span class="profile-value">{{user.firstname}}</span>
+    </div>
+    <div class="profile-field">
+      <span class="profile-label">Apelido:</span>
+      <span class="profile-value">{{ user.lastname }}</span>
+    </div>
+    <div class="profile-field">
+      <span class="profile-label">Género:</span>
+      <span class="profile-value">{{ user.gender }}</span>
+    </div>
+    <div class="profile-field">
+      <span class="profile-label">Data de Nascimento:</span>
+      <span class="profile-value">{{ user.birthday }}</span>
+    </div>
+    <div  *ngIf ="!isPoliceUser()" class="profile-field">
+      <span class="profile-label">Morada:</span>
+      <span class="profile-value">{{ user.address.street }}</span>
+    </div>
+    <div  *ngIf ="!isPoliceUser()" class="address-fields">
+      <div class="profile-field">
+        <span class="profile-label">País:</span>
+        <span class="profile-value">{{ user.address.country }}</span>
+      </div>
+      <div *ngIf ="!isPoliceUser()" class="profile-field">
+        <span class="profile-label">Cidade:</span>
+        <span class="profile-value">{{ user.address.city }}</span>
+      </div>
+      <div *ngIf ="!isPoliceUser()" class="profile-field">
+        <span class="profile-label">Código Postal:</span>
+        <span class="profile-value">{{ user.address.zip }}</span>
+      </div>
+    </div>
+    <div class="profile-field">
+      <span class="profile-label">NIF:</span>
+      <span class="profile-value">{{ user.idfiscal }}</span>
+    </div>
+    <div class="profile-field">
+      <span class="profile-label">CC:</span>
+      <span class="profile-value">{{ user.idcivil }}</span>
+    </div>
+    <div class="profile-field">
+      <span class="profile-label">Número de Telefone:</span>
+      <span class="profile-value">{{ user.phonenumber }}</span>
+    </div>
+    <div class="button-container">
+      <button mat-raised-button color="primary" (click)="editProfile()">Editar Perfil</button>
+      <button mat-raised-button color="warn" (click)="deactivateAccount()">Desativar conta</button>
+      <button mat-raised-button color="warn" (click)="deleteAccount()">Apagar conta</button>
+    </div>
+  </mat-card-content>
+
+  <mat-card-content *ngIf="isEditing">
+    <form [formGroup]="profileForm" (ngSubmit)="onSave()">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="firstname" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Apelido</mat-label>
+        <input matInput formControlName="lastname" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Género</mat-label>
+        <mat-select formControlName="gender" required>
+          <mat-option value="male">Masculino</mat-option>
+          <mat-option value="female">Feminino</mat-option>
+          <mat-option value="other">Outro</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Data de Nascimento</mat-label>
+        <input matInput type="date" formControlName="birthday" required>
+      </mat-form-field>
+      <mat-form-field *ngIf ="!isPoliceUser()" appearance="outline">
+        <mat-label>Morada</mat-label>
+        <input matInput formControlName="street" required>
+      </mat-form-field>
+      <div class="address-fields">
+        <div>
+          <mat-form-field *ngIf ="!isPoliceUser()" appearance="outline">
+            <mat-label>País</mat-label>
+            <input matInput formControlName="country" required>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field  *ngIf ="!isPoliceUser()" appearance="outline">
+            <mat-label>Cidade</mat-label>
+            <input matInput formControlName="city" required>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field *ngIf ="!isPoliceUser()" appearance="outline">
+            <mat-label>Código Postal</mat-label>
+            <input matInput formControlName="zip" required>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>NIF</mat-label>
+        <input matInput formControlName="idfiscal" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>CC</mat-label>
+        <input matInput formControlName="idcivil" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Número de Telefone</mat-label>
+        <input matInput type="tel" formControlName="phonenumber" required>
+      </mat-form-field>
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">Guardar</button>
+        <button mat-raised-button color="accent" type="button" (click)="onCancel()">Cancelar</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

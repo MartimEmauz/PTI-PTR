@@ -1,0 +1,25 @@
+ATA 24-03
+
+Todos presentes
+
+----------------------------------
+
+Discutimos a lógica de construção do website. O David Carreira tinha importado um template, mas parecia tudo demasiado complicado. O Martim Emauz e o Tomás Alves sugeriram começar do zero, pois a longo prazo seria muito melhor na resolução de problemas, e queremos um website simples, minimalista e acima de tudo funcional.
+Dito isto, decidimos que será melhor desenhar e programar tudo de raiz, em vez de usar um template.
+
+Revimos o planeamento feito no semestre anterior, e atribuímos as tarefas como planeado, pela ordem que elaborámos. Segue-se a lógica de pesquisa e registo de objetos perdidos e achados, pela qual o André Silva é responsável neste primeiro sprint.
+
+O Martim e o Miguel Martins vão estar responsáveis pela implementação da arquitetura, e das alterações à mesma, bem como à API, com base no feedback dado na reunião.
+
+O Tomás vai ajudar estes últimos, com ênfase na configuração dos servidores.
+
+------------------------------
+
+Esforço alocado (em horas):
+
+André Silva - 15
+Bernardo Caldas - 12
+David Carreira - 15
+Martim Emauz - 13
+Miguel Martins - 15
+Tomás Alves - 13

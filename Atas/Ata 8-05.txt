@@ -1,0 +1,20 @@
+8-05
+
+Todos presentes
+
+------------------------------------------------
+
+Preparação da reunião com os docentes, analise do relatório a entregar.
+Criação de footer do lado visual.
+Continuação de progresso do lado da API.
+
+------------------------------------------------
+
+Esforço alocado (em horas):
+
+André Silva - 7
+Bernardo Caldas - 5
+David Carreira - 3
+Martim Emauz - 6
+Miguel Martins - 3
+Tomás Alves - 6

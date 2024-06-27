@@ -1,0 +1,24 @@
+<mat-card>
+  <div class="search-container">
+    <input class="searchbar" [(ngModel)]="searchText" (input)="onSearch()" placeholder="Pesquisar Objeto" aria-label="Pesquisar Objetos">
+  </div>
+
+  <mat-card-content>
+    <ul class="cards">
+      <li *ngFor="let foundObject of filteredObjects">
+        <div class="card" (click)="viewDetails(foundObject)">
+          <div class="card__header">
+            <h3 class="card__title">{{ foundObject.title }}</h3>
+            <span class="card__status">{{ foundObject.specific_date | date }}</span>
+          </div>
+          <p class="card__description">{{ foundObject.description }}</p>
+          <div class="delivery-status" [ngClass]="{'delivered': getDeliveredStatus(foundObject.id), 'not-delivered': !getDeliveredStatus(foundObject.id)}">
+            <span class="status-icon material-icons">{{ getDeliveredStatus(foundObject.id) ? 'check_circle' : 'cancel' }}</span>
+            <span class="status-label">{{ getDeliveredStatus(foundObject.id) ? 'Entregue' : 'Não entregue' }}</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,25 @@
+Como instalar gCloud em windows:
+
+Requisitos:
+
+- Ser membro do projeto na GCP: O id do projeto é fcul-ptr
+- Ter o python instalado
+
+-> Num terminal **powershell**, correr os comandos (podem colar e enviar os dois ao mesmo tempo):
+
+(New-Object Net.WebClient).DownloadFile("https://dl.google.com/dl/cloudsdk/channels/rapid/GoogleCloudSDKInstaller.exe", "$env:Temp\GoogleCloudSDKInstaller.exe")
+
+& $env:Temp\GoogleCloudSDKInstaller.exe
+
+
+-> Seguir as prompts e instalar o software
+
+-> Aceitar a prompt na linha de comandos que vai dar pop-up, e fazer login com uma conta google
+
+-> Se pedir um ID de projeto, introduzir: fcul-ptr
+
+(também se pode definir o projeto manualmente através de:
+gcloud config set project <PROJETO>
+Em que PROJETO corresponde ao ID do projeto)
+
+No final, vão ter uma nova linha de comandos chamada "Google Cloud SDK shell"

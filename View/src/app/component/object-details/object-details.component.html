@@ -1,0 +1,25 @@
+<mat-card class="object-details-card">
+  <mat-card-header class="object-details-header">
+    <mat-card-title class="object-details-title">{{ objectDetails.title }}</mat-card-title>
+    <mat-card-subtitle>Data de Perda: {{ objectDetails.specific_date | date }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="object-details-content">
+    <div class="detail-row">
+      <div class="detail-label">Descrição:</div>
+      <div class="detail-value">{{ objectDetails.description }}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Categoria:</div>
+      <div class="detail-value">{{ objectDetails.category }}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Endereço:</div>
+      <div class="detail-value">
+        {{ objectDetails.address.street }},
+        {{ objectDetails.address.city }},
+        {{ objectDetails.address.country }},
+        {{ objectDetails.address.zip }}
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

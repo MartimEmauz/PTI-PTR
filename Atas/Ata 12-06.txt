@@ -1,0 +1,20 @@
+12-06
+
+Apenas presentes Martim e Tomás (após reunir segregadamente com outros membros)
+
+------------------------------------------------
+
+Iptables criado e implementado bem como medidas de firewall finais.
+Atualização do login.
+Alterações na API, Base de dados e Auth0.
+
+------------------------------------------------
+
+Esforço alocado (em horas):
+
+André Silva - 10
+Bernardo Caldas - 6
+David Carreira - 6
+Martim Emauz - 16
+Miguel Martins - 4
+Tomás Alves - 16

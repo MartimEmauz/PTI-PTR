@@ -1,0 +1,24 @@
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 3px 0; /* Reduced padding */
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+}
+
+footer p {
+  margin: 0;
+  font-size: 11px; /* Further reduced font size */
+}
+
+a:link, a:visited {
+  color: #fff;
+  font-size: 11px; /* Further reduced font size */
+  margin: 0 3px; /* Reduced margin for spacing between links */
+}
+
+.footer-title a {
+  display: inline-block; /* Ensures links are displayed inline */
+  margin: 0 3px; /* Reduced margin for better spacing */
+}

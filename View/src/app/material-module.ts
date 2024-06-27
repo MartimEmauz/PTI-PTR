@@ -21,6 +21,28 @@ import {MatCheckboxModule} from "@angular/material/checkbox"
 import {MatDialogModule} from "@angular/material/dialog"
 
 @NgModule({
+imports:[
+    MatInputModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatBadgeModule,
+    MatSidenavModule,
+    MatListModule,
+    MatCardModule,
+    MatSliderModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatDialogModule
+],
 exports:[
     MatInputModule,
     MatSelectModule,

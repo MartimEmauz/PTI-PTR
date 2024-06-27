@@ -1,3 +1,162 @@
+/* General layout styling */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0; /* Reset default body margin */
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #54acb4;
+  padding: 0 10px;
+  position: relative;
+  height: 60px; /* Adjust toolbar height as needed */
+}
+
 .example-spacer {
-    flex: 1 1 auto;
+  flex: 1;
+}
+
+.title {
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.title-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5em;
+}
+
+
+
+.login-button, .logout-button {
+  height: 45px;
+  margin-right: 7px;
+  border: none;
+  border-radius: 5px;
+  background-color: #e9ecf0;
+  color: #333;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0 15px;
+}
+
+.logout-button {
+  background-color: #FF5733;
+  color: #fff;
+}
+
+.drawer {
+  background-color: #f8f9fa;
+}
+
+.mat-nav-list .mat-list-item {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.mdc-list {
+  /* margin-top: calc((100vh - 200px) / 2);  Adjust 200px to half of the element's height */
+  padding: 8px 0;
+  list-style-type: none;
+}
+
+.botao {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.main-content {
+  text-align: center;
+  min-height: calc(100vh - 60px); /* Adjust based on toolbar height */
+  padding: 20px;
+}
+
+@media (max-width: 600px) {
+  .toolbar {
+      flex-wrap: wrap;
+      height: auto; /* Allow toolbar to expand based on content */
+      padding: 10px; /* Increase padding for smaller screens */
   }
+
+  .title {
+      order: 2;
+      width: 100%;
+      margin: 10px 0;
+  }
+
+  .login-button, .logout-button {
+      order: 1;
+      height: 40px;
+      font-size: 14px;
+      margin-right: 5px;
+      padding: 0 10px;
+  }
+
+  .toolbar button mat-icon {
+      font-size: 20px;
+  }
+
+  .mat-nav-list .mat-list-item {
+      padding-left: 8px;
+  }
+}
+
+.mat-toolbar {
+  width: 100%;
+}
+
+mat-drawer-content {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  padding: 0;
+  margin: 0;
+}
+
+mat-drawer-content div {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+mat-drawer-content {
+  background-color: #f8f9fa;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+.profile-container:hover {
+  cursor:pointer;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.profile-initials {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e9ecf0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}

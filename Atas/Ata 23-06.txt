@@ -1,0 +1,22 @@
+23-06
+
+Todos presentes
+
+------------------------------------------------
+
+Preparação da apresentação final.
+Foi alterada a estrutura de dados dos objetos, tal implicou alterações na integra da estrutura da BD e da API.
+Implementação do lado do frontend da api nos objetos achados e perdidos.
+Atualização do Modelo de Dados.
+Atualização de load balancers e garantia de persistencia no website.
+
+------------------------------------------------
+
+Esforço alocado (em horas):
+
+André Silva - 14
+Bernardo Caldas - 15
+David Carreira - 15
+Martim Emauz - 40
+Miguel Martins - 30
+Tomás Alves - 40

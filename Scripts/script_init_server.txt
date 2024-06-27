@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Inicia o modo sudo
+sudo -s
+
+# Atualiza o sistema
+apt-get update
+
+# Instala o Apache2
+echo "Y" | apt-get install apache2
+
+# Habilita o Apache2 para iniciar na inicialização
+systemctl enable apache2
+
+# Inicia o serviço do Apache2
+systemctl start apache2
+
+# Obtém o número do servidor
+SERVER_NUMBER=$(curl -s -H "Metadata-Flavor:Google" http://metadata.google.internal/computeMetadata/v1/instance/hostname | awk -F'-' '{print $2}' | awk -F'.' '{print $1}')
+
+# Atualiza o conteúdo do index.html com o número do servidor
+echo "<html><head><title>Servidor $SERVER_NUMBER</title></head><body><h1>Servidor $SERVER_NUMBER</h1></body></html>" > /var/www/html/index.html

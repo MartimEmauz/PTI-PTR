@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="header">
+    <h2>Minha Conta</h2>
+  </div>
+  <div class="auth-cards">
+    <!-- Police User Login/Signup Card -->
+    <div class="auth-card police-card">
+      <mat-card>
+        <mat-card-header>
+          <div mat-card-avatar class="police-icon"></div>
+          <mat-card-title>Polícia</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Entre ou registe-se como um polícia.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button (click)="loginPolice()">Login</button>
+          <!-- Optional: Add a register button for police users -->
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    
+    <!-- General User Login/Signup Card -->
+    <div class="auth-card user-card">
+      <mat-card>
+        <mat-card-header>
+          <div mat-card-avatar class="user-icon"></div>
+          <mat-card-title>Utilizador</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Entre ou registe-se como um utilizador.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button (click)="loginGeneral()">Login</button>
+          <!-- Optional: Add a register button for general users -->
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
