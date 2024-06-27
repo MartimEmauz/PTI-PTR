@@ -302,10 +302,13 @@ export class FoundpoliceComponent implements OnInit {
   }
 
   onSearch() {
-    this.filteredObjects = this.searchText.trim() === '' ? [...this.lostObjects] : this.lostObjects.filter(obj =>
+    this.filteredObjects = this.searchText.trim() === '' ? [...this.filteredObjects] : this.filteredObjects.filter(obj =>
       obj.title.toLowerCase().includes(this.searchText.toLowerCase())
     );
     this.dataSource.data = this.filteredObjects;
+    if(this.searchText == ''){
+      this.loadFoundObjects();
+    }
   }
 
   getCardImagePath(categoryId: number): string {

@@ -93,6 +93,9 @@ export class MasterService {
     return this.http.post<any>(`${this.apiUrl}foundobjects/`, newFoundObject); 
   } 
 
+  compareObjectsByCategory(categoryId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}lostobjects/comparebycategory/${categoryId}/`);
+  }
   addAttributeObject(attribute: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}atributesobjects/`, attribute);
   }
