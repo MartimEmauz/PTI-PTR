@@ -29,8 +29,11 @@
             <mat-list-item>
                 <button routerLink="auction" mat-button class="botao"><mat-icon>menu</mat-icon> Leilões</button>
             </mat-list-item>
-            <mat-list-item *ngIf="isPoliceUser()">
+            <mat-list-item *ngIf="!isPoliceUser()">
                 <button routerLink="myleiloes" mat-button class="botao"><mat-icon>phonelink</mat-icon> Objetos Encontrados</button>
+            </mat-list-item>
+            <mat-list-item *ngIf="isPoliceUser()">
+                <button routerLink="foundpolice" mat-button class="botao"><mat-icon>phonelink</mat-icon> Objetos Encontrados</button>
             </mat-list-item>
             <mat-list-item *ngIf="!isPoliceUser()">
                 <button routerLink="objetosperdidos" mat-button class="botao"><mat-icon>phonelink</mat-icon> Objetos Perdidos</button>
