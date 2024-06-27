@@ -47,34 +47,6 @@ export class MasterService {
     return this.http.get<any[]>(`${this.apiUrl}categories/`);
   }
 
-  GetCustomer(): Observable<Customer[]> {
-    return this.http.get<Customer[]>('http://localhost:8000/customer');
-  }
-
-  Savecustomer(data: any): Observable<any> {
-    return this.http.post('http://localhost:8000/customer', data);
-  }
-
-  GetCustomerbycode(code: any): Observable<any> {
-    return this.http.get(`http://localhost:8000/customer/${code}`);
-  }
-
-  GetAssociate(): Observable<any> {
-    return this.http.get('http://localhost:8000/associate');
-  }
-
-  GetAssociatebycode(code: any): Observable<any> {
-    return this.http.get(`http://localhost:8000/associate/${code}`);
-  }
-
-  GetCountry(): Observable<Country[]> {
-    return this.http.get<Country[]>('http://localhost:8000/country');
-  }
-
-  SaveAssociate(data: any, code: any): Observable<any> {
-    return this.http.put(`http://localhost:8000/associate/${code}`, data);
-  }
-
   // API ------------------------------------------------------------------
   private jsonUrl = 'assets/lost_objects.json';
 
@@ -230,5 +202,9 @@ export class MasterService {
 
   getBidsByLeilaoId(id: number): Observable<Licitacao[]> {
     return this.http.get<Licitacao[]>(`${this.apiUrl}auctions/bids/${id}/`);
+  }
+
+  getEliminarLeilao(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}auctions/${id}/`);
   }
 }
