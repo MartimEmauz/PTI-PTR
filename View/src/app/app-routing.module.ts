@@ -14,6 +14,9 @@ import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosper
 import { MyAccountLogadoComponent } from './component/my-account-logado/my-account-logado.component';
 import { ObjectDetailsComponent } from './component/object-details/object-details.component'; // Import ObjectDetailsComponent
 import { CriarLeilaoComponent } from './component/criar-leilao/criar-leilao.component';
+import { AdminComponent } from './component/admin/admin.component';
+import { LeilaoDetailsComponent } from './component/leilao-details/leilao-details.component';
+
 import { ObjetosperdidospoliciaComponent } from './component/objetosperdidospolicia/objetosperdidospolicia.component';
 import { FoundpoliceComponent } from './component/foundpolice/foundpolice.component';
 
@@ -30,9 +33,12 @@ const routes: Routes = [
   { path: 'politica-privacidade', component: PoliticaPrivacidadeComponent },
   { path: 'objetosperdidos', component: ObjetosperdidosComponent, canActivate: [AuthGuard] },
   { path: 'my-account-logado', component: MyAccountLogadoComponent, canActivate: [AuthGuard]},
-  { path: 'object-details/:id', component: ObjectDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'object-details/:id', component: ObjectDetailsComponent, canActivate: [AuthGuard] }, // Add route for object details
+  { path: 'admin', component: AdminComponent },
+  { path: 'objetosperdidospolicia', component: ObjetosperdidospoliciaComponent, canActivate: [AuthGuard]}, // Add route for object details
+  { path: 'leilao-details/:id', component: LeilaoDetailsComponent },
   { path: 'objetosperdidospolicia', component: ObjetosperdidospoliciaComponent, canActivate: [AuthGuard]},
-  { path: 'foundpolice', component: FoundpoliceComponent, canActivate: [AuthGuard]} // Add route for object details
+  { path: 'foundpolice', component: FoundpoliceComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

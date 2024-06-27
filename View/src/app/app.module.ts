@@ -36,9 +36,11 @@ import { CriarLeilaoComponent } from './component/criar-leilao/criar-leilao.comp
 import { ObjetosperdidospoliciaComponent } from './component/objetosperdidospolicia/objetosperdidospolicia.component';
 import { BidModalComponent } from './component/bid-modal/bid-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { LeilaoDetailsComponent } from './component/leilao-details/leilao-details.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { FoundpoliceComponent } from './component/foundpolice/foundpolice.component';
 
+import { AdminComponent } from './component/admin/admin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,13 +56,14 @@ import { FoundpoliceComponent } from './component/foundpolice/foundpolice.compon
     PoliticaPrivacidadeComponent,
     ObjetosperdidosComponent,
     MyAccountLogadoComponent,
-    ProfileCompletionPolicemanComponent,
     ObjectDetailsComponent,
     PostoPoliciaComponent,
     CriarLeilaoComponent,
     ObjetosperdidospoliciaComponent,
     BidModalComponent,
     FoundpoliceComponent,
+    AdminComponent,
+    LeilaoDetailsComponent,
   ],
   imports: [
     MatStepperModule,

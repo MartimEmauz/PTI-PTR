@@ -11,6 +11,7 @@ import { FoundObject } from '../Model/found-object.model';
 import { Leilao } from '../Model/leilao-model';
 import { Licitacao } from '../Model/licitacao-model';
 import { Objeto } from '../Model/object-model';
+import { PolicePost } from '../Model/postopolice.model';
 
 @Injectable({
   providedIn: 'root'
@@ -194,5 +195,45 @@ export class MasterService {
 
   getFoundObjects(): Observable<any[]> {
     return this.http.get<FoundObject[]>(`${this.apiUrl}foundobjects/`);
+  }
+
+  // Get all police posts
+  getPolicePosts(): Observable<PolicePost[]> {
+    return this.http.get<PolicePost[]>(`${this.apiUrl}policeposts/`);
+  }
+
+  // Add a new police post
+  addPolicePost(newPost: PolicePost): Observable<PolicePost> {
+    return this.http.post<PolicePost>(`${this.apiUrl}policeposts/`, newPost);
+  }
+
+  // Delete a police post
+  deletePolicePost(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}policeposts/${id}/`)
+  }
+  
+  getFoundObjectById(id: number): Observable<FoundObject> {
+    return this.http.get<FoundObject>(`${this.apiUrl}foundobjects/${id}/`);
+  }
+
+  getObjectById(id: number): Observable<Objeto> {
+    return this.http.get<Objeto>(`${this.apiUrl}objects/${id}/`);
+  }
+
+  getLeilaoById(id: number): Observable<Leilao> {
+    return this.http.get<Leilao>(`${this.apiUrl}auctions/${id}/`);
+  }
+
+  getBidsByLeilaoId(id: number): Observable<Licitacao[]> {
+    return this.http.get<Licitacao[]>(`${this.apiUrl}auctions/bids/${id}/`);
+  }
+  
+  getGeneralUserById(id: number): Observable<GeneralUser> {
+    return this.http.get<GeneralUser>(`${this.apiUrl}generalusers/${id}/`);
+  }
+
+  updateBidValueInAuction(auctionId: number, bidValue: number): Observable<any> {
+    const url = `${this.apiUrl}auctions/${auctionId}/`;
+    return this.http.put<any>(url, { maior_licitacao: bidValue });
   }
 }
