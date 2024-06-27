@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { User } from '@auth0/auth0-spa-js';
 import { AuthService } from '@auth0/auth0-angular';
 import { ConstantPool } from '@angular/compiler';
+import { AuthSwitchService } from 'src/app/auth-switch.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-table',
@@ -33,8 +35,12 @@ export class MyLeiloesComponent implements OnInit {
   ownerFormGroup: FormGroup;
   addressFormGroup: FormGroup;
   categoryAttributes: any[] = [];
+  lostObjects: any[] = [];
+  userName: string = '';
+  foundObjects: any[] = [];
+  categoriesfiltered: any[] = [];
 
-  constructor(private service: MasterService, private fb: FormBuilder, private router: Router, private _auth: AuthService) {
+  constructor(private service: MasterService, private fb: FormBuilder, private router: Router, private _auth: AuthService, private authSwitchService: AuthSwitchService) {
     this.dataSource = new MatTableDataSource<any>();
     this.lostObjectForm = this.fb.group({
       title: ['', Validators.required],
@@ -64,12 +70,13 @@ export class MyLeiloesComponent implements OnInit {
 
   ngOnInit(): void {
     this._auth.user$.subscribe((user: User | null | undefined) => {
-      if (user !== null && user !== undefined) {
+      if (user) {
         const userEmail = user.email || '';
         this.getUserByEmail(userEmail);
+        this.userName = user.name || '';
       }
     });
-    this.loadFoundObjects();
+    this.loadLostObjects();
     this.getCategoriesFromDb();
   }
 
@@ -129,17 +136,88 @@ export class MyLeiloesComponent implements OnInit {
     );
   }
 
-  loadFoundObjects() {
-    this.service.getFoundObjects().subscribe(
-      (foundObjects: any[]) => {
-        this.objects = foundObjects;
-        this.loadObjectsByCategory(2); // Assume a categoria que você quer carregar, como 2
+  loadLostObjects() {
+    this.service.getLostObjects().subscribe(
+      (lostObjects: any[]) => {
+        this.lostObjects = lostObjects;
+        this.service.getObjects().subscribe(
+          (objects: any[]) => {
+            const associatedObjects = objects.filter(object => 
+              this.lostObjects.some(lostObject => lostObject.objeto_id === object.id && lostObject.generaluser === parseInt(this.userId || '0', 10))
+            );
+            this.filteredObjects = associatedObjects;
+            this.dataSource.data = this.filteredObjects;
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            this.getCategories(this.filteredObjects);
+          },
+          (error) => {
+            console.error('Erro ao carregar objetos:', error);
+          }
+        );
       },
       (error) => {
-        console.error('Erro ao carregar objetos encontrados:', error);
+        console.error('Erro ao carregar objetos perdidos:', error);
       }
     );
   }
+  
+  getCategories(filteredObjects: any[]) {
+    this.categoriesfiltered = filteredObjects.map(obj => obj.category);
+    console.log(this.categoriesfiltered);
+    this.compareObjectsByCategory(this.categoriesfiltered);
+  }
+
+  compareObjectsByCategory(categoryIds: number[]) {
+    const observables = categoryIds.map(categoryId => 
+      this.service.compareObjectsByCategory(categoryId)
+    );
+  
+    forkJoin(observables).subscribe(
+      (results: any[][]) => {
+        // Combina os resultados de todas as chamadas de API em uma única lista
+        const combinedResults = results.flat();
+        // Aqui você pode fazer o que precisar com combinedResults, por exemplo:
+        
+        this.filteredObjects = combinedResults;
+        this.dataSource.data = this.filteredObjects;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.foundObjects = combinedResults;
+        this.FoundObjectsToObjects(this.filteredObjects);
+      },
+      (error) => {
+        console.error('Erro ao comparar objetos por categoria:', error);
+      }
+    );
+  }
+  
+  FoundObjectsToObjects(foundObjects: any[]) {
+    // Buscar todos os objetos
+    this.service.getObjects().subscribe(
+      (objects: any[]) => {
+        // Filtrar os objetos que correspondem aos foundObjects
+        const filteredObjects = objects.filter(object => 
+          foundObjects.some(foundObject => foundObject.objeto_id === object.id)
+        );
+  
+        // Atualizar a lista de objetos filtrados
+        this.filteredObjects = filteredObjects;
+        
+        // Log dos objetos filtrados
+        console.log('filteredObjects:', filteredObjects);
+        
+        // Atualizar o dataSource se necessário
+        this.dataSource.data = this.filteredObjects;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      (error) => {
+        console.error('Erro ao carregar objetos:', error);
+      }
+    );
+  }
+  
 
   loadObjectsByCategory(categoryId: number) {
     this.service.compareObjectsByCategory(categoryId).subscribe(
@@ -163,8 +241,8 @@ export class MyLeiloesComponent implements OnInit {
   }
 
   getDeliveredStatus(objectId: number): boolean | undefined {
-    const foundObject = this.objects.find(obj => obj.id === objectId);
-    return foundObject?.delivered;
+    const foundObject = this.foundObjects.find(obj => obj.objeto_id === objectId);
+    return foundObject.delivered;
   }
 
   cancelAddObject() {
@@ -178,7 +256,7 @@ export class MyLeiloesComponent implements OnInit {
     );
     this.dataSource.data = this.filteredObjects;
     if (this.searchText == '') {
-      this.loadFoundObjects();
+      this.loadLostObjects();
     }
   }
 
@@ -238,7 +316,7 @@ export class MyLeiloesComponent implements OnInit {
     if (confirm('Tem certeza que deseja remover este objeto?')) {
       this.service.deleteObject(id).subscribe(
         () => {
-          this.loadFoundObjects();
+          this.loadLostObjects();
         },
         error => {
           console.error('Erro ao remover objeto encontrado:', error);
@@ -246,19 +324,36 @@ export class MyLeiloesComponent implements OnInit {
       );
     }
   }
+  
+  isPoliceUser(): boolean {
+    return this.authSwitchService.getRole() === 'police';
+  }
 
   getUserByEmail(email: string): void {
-    this.service.getPoliceByEmail(email).subscribe(
+    if (!this.isPoliceUser()) {
+    this.service.getUserByEmail(email).subscribe(
       (data: any) => {
-        console.log(data);
         this.userId = data.id;
         this.lostObjectForm.patchValue({
-          generaluser: parseInt(this.userId || '0')
+          generaluser: parseInt(this.userId || '0', 10)
         });
       },
       (error) => {
-        console.error('Erro ao carregar objetos perdidos:', error);
+        console.error('Erro ao carregar usuário:', error);
+      }
+    );
+  }else{
+    this.service.getPoliceUserByEmail(email).subscribe(
+      (data: any) => {
+        this.userId = data.id;
+        this.lostObjectForm.patchValue({
+          police: parseInt(this.userId || '0', 10)
+        });
+      },
+      (error) => {
+        console.error('Erro ao carregar usuário:', error);
       }
     );
   }
+}
 }

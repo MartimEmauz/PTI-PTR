@@ -50,6 +50,7 @@ export class ObjetosperdidosComponent implements OnInit {
         this.userName = user.name || '';
       }
     });
+    
     this.loadLostObjects();
   }
 
@@ -150,7 +151,7 @@ export class ObjetosperdidosComponent implements OnInit {
       (data: any) => {
         this.userId = data.id;
         this.lostObjectForm.patchValue({
-          generaluser: parseInt(this.userId || '0', 10)
+          police: parseInt(this.userId || '0', 10)
         });
       },
       (error) => {
