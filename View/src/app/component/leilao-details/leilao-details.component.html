@@ -1,8 +1,10 @@
 <div *ngIf="leilao" class="auction-details">
     <h2>Detalhes do Leilão</h2>
 
-    <h3 *ngIf="leilao.objeto"><strong>Nome do Objeto:</strong> <a [routerLink]="['/object-details', leilao.objeto.id]">{{ leilao.objeto.title }}</a></h3>
+    <h3 *ngIf="leilao.objeto"><strong>Nome do Objeto:</strong> <a [routerLink]="['/object-details', leilao.objeto.id]"> {{ leilao.objeto.title }}</a></h3>
     <p *ngIf="leilao.objeto"><strong>Descrição do objeto:</strong> {{ leilao.objeto.description }}</p>
+    <p><strong>Valor Base:</strong> {{ leilao.valor_base }}</p>
+    <p><strong>Valor da Licitação Vencedora:</strong> {{ leilao.maior_licitacao }}</p>
 
     <h3><strong>Licitação Feitas:</strong></h3>
     <table>
@@ -18,7 +20,8 @@
           <td>{{ bid.id_user.firstname }} {{ bid.id_user.lastname }}</td>
           <td>{{ bid.valor_licitacao | currency:'EUR':'symbol':'1.2-2' }}</td>
           <td>{{ bid.data | date:'dd/MM/yyyy HH:mm' }}</td>
-        </tr>
+        </tr> 
       </tbody>
     </table>
+    <button mat-button color="warn" *ngIf="isPoliceUser()" (click)="eliminarLeilao()">Eliminar Leilão</button>
   </div>

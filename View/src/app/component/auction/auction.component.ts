@@ -113,4 +113,12 @@ export class AuctionComponent implements OnInit, OnDestroy {
     // Implemente a lógica para seguir o leilão com o ID fornecido
     console.log('Seguindo leilão com ID:', id);
   }
+
+  getValorAtual(element: any): string {
+    if (element.maior_licitacao !== null && element.maior_licitacao !== undefined) {
+      return element.maior_licitacao.toString();
+    } else {
+      return element.valor_base
+    }
+  }
 }

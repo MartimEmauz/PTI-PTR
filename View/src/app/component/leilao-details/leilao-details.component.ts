@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthSwitchService } from 'src/app/auth-switch.service';
 import { MasterService } from 'src/app/service/master.service';
+import { BidModalComponent } from '../bid-modal/bid-modal.component';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-leilao-details',
@@ -14,7 +17,9 @@ export class LeilaoDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private auctionService: MasterService
+    private auctionService: MasterService,
+    private authSwitchService: AuthSwitchService
+
   ) { }
 
   ngOnInit(): void {
@@ -28,17 +33,22 @@ export class LeilaoDetailsComponent implements OnInit {
     }
   }
 
+  isPoliceUser(): boolean {
+    return this.authSwitchService.getRole() === 'police'; // Método fictício para verificar se o usuário é do tipo "police"
+  }
+
   loadLeilaoDetails(): void {
     this.auctionService.getLeilaoById(this.leilaoId).subscribe({
       next: (leilao: any) => {
         this.leilao = leilao;
         if (leilao?.objeto) {
-          this.auctionService.getObjectById(leilao.objeto).subscribe({
+          this.auctionService.getFoundObjectById(leilao.objeto).subscribe({
             next: (objeto: any) => {
-              this.leilao.objeto = objeto;
-              this.loadBids();
-            },
-            error: err => console.error('Error fetching objeto details:', err)
+              this.auctionService.getObjectById(objeto.objeto_id).subscribe((object: any) => {
+                this.leilao.objeto = object;
+                this.loadBids();
+            });
+          }
           });
         } else {
           this.loadBids();
@@ -67,6 +77,20 @@ export class LeilaoDetailsComponent implements OnInit {
       },
       error: err => console.error('Error fetching bids:', err)
     });
+  }
+
+  eliminarLeilao(): void {
+    if (confirm('Tem certeza que deseja eliminar este leilão?')) {
+      this.auctionService.getEliminarLeilao(this.leilao.id).subscribe({
+        next: () => {
+          console.log('Leilão eliminado com sucesso');
+        },
+        error: (error: any) => {
+          console.error('Erro ao eliminar leilão:', error);
+          // Tratamento de erro ao eliminar o leilão
+        }
+      });
+    }
   }
 
 }
