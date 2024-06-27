@@ -36,6 +36,7 @@ import { CriarLeilaoComponent } from './component/criar-leilao/criar-leilao.comp
 import { ObjetosperdidospoliciaComponent } from './component/objetosperdidospolicia/objetosperdidospolicia.component';
 import { BidModalComponent } from './component/bid-modal/bid-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { LeilaoDetailsComponent } from './component/leilao-details/leilao-details.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { AdminComponent } from './component/admin/admin.component';
 @NgModule({
@@ -59,7 +60,8 @@ import { AdminComponent } from './component/admin/admin.component';
     CriarLeilaoComponent,
     ObjetosperdidospoliciaComponent,
     BidModalComponent,
-    AdminComponent
+    AdminComponent,
+    LeilaoDetailsComponent,
   ],
   imports: [
     MatStepperModule,
