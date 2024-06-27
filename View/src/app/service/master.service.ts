@@ -215,4 +215,9 @@ export class MasterService {
   getGeneralUserById(id: number): Observable<GeneralUser> {
     return this.http.get<GeneralUser>(`${this.apiUrl}generalusers/${id}/`);
   }
+
+  updateBidValueInAuction(auctionId: number, bidValue: number): Observable<any> {
+    const url = `${this.apiUrl}auctions/${auctionId}/`;
+    return this.http.put<any>(url, { maior_licitacao: bidValue });
+  }
 }

@@ -31,8 +31,8 @@ const routes: Routes = [
   { path: 'objetosperdidos', component: ObjetosperdidosComponent, canActivate: [AuthGuard] },
   { path: 'my-account-logado', component: MyAccountLogadoComponent, canActivate: [AuthGuard]},
   { path: 'object-details/:id', component: ObjectDetailsComponent, canActivate: [AuthGuard] },
-  { path: 'leilao-details/:id', component: LeilaoDetailsComponent }
-  { path: 'objetosperdidospolicia', component: ObjetosperdidospoliciaComponent, canActivate: [AuthGuard]} // Add route for object details
+  { path: 'leilao-details/:id', component: LeilaoDetailsComponent },
+  { path: 'objetosperdidospolicia', component: ObjetosperdidospoliciaComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

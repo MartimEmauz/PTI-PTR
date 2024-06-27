@@ -100,6 +100,7 @@ export class AuctionComponent implements OnInit, OnDestroy {
   navegarParaCriarLeilao(): void {
     this.router.navigate(['/criar-leilao']);
   }
+ 
 
   followBid(id: number): void {
     // Implemente a lógica para seguir o leilão com o ID fornecido
