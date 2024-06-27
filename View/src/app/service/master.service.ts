@@ -108,6 +108,10 @@ export class MasterService {
     return this.http.get<GeneralUser | null>(`${this.apiUrl}policeusers/${email}/`);
   }
 
+  deletePoliceUser(email: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}policeusers/${email}/`);
+  }
+
   getAdressById(id: number): Observable<Address> {
     return this.http.get<Address>(`${this.apiUrl}addresses/${id}/`);
   }
@@ -125,11 +129,9 @@ export class MasterService {
     return this.http.get<any>(`${this.apiUrl}categories/${id}/`);
   }
 
-
   getCategoryAttributes(categoryId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}categoryattributes/category/${categoryId}/`);
   }
-
 
   getAddressById(id: number): Observable<Address> {
     return this.http.get<Address>(`${this.apiUrl}addresses/${id}/`);
@@ -210,4 +212,6 @@ export class MasterService {
   compareObjectsByCategory(categoryId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}lostobjects/comparebycategory/${categoryId}/`);
   }
+
+
 }
