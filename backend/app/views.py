@@ -301,10 +301,10 @@ class AuctionBidListAPIView(generics.ListAPIView):
     serializer_class = LicitacaoSerializer
     permission_classes = [AllowAny]
 
+
     def get_queryset(self):
-        auction = self.request.data.get('auction')
-        bids = Licitacao.objects.filter(auction=auction)
-        return bids
+        leilao_id = self.kwargs['pk']
+        return Licitacao.objects.filter(leilao_id=leilao_id)
 
 class SubscriptionListCreateAPIView(generics.ListCreateAPIView):
     queryset = Subscription.objects.all()

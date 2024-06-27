@@ -365,8 +365,8 @@ class Leilao(models.Model):
 class Licitacao(models.Model):
     id = models.AutoField(primary_key=True)
     valor_licitacao = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
-    data = models.DateField(blank=True, null=True)
-    id_user = models.ForeignKey(Generaluser, models.DO_NOTHING, to_field='id_user', db_column='generaluser', blank=True, null=True)
+    data = models.DateTimeField(blank=True, null=True)
+    id_user = models.ForeignKey(Generaluser, models.DO_NOTHING, to_field='id', db_column='id_user', blank=True, null=True)
     leilao = models.ForeignKey(Leilao, on_delete=models.CASCADE, db_column='leilao', blank=True, null=True)
 
     class Meta:

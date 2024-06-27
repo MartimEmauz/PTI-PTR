@@ -14,6 +14,7 @@ import { ObjetosperdidosComponent } from './component/objetosperdidos/objetosper
 import { MyAccountLogadoComponent } from './component/my-account-logado/my-account-logado.component';
 import { ObjectDetailsComponent } from './component/object-details/object-details.component'; // Import ObjectDetailsComponent
 import { CriarLeilaoComponent } from './component/criar-leilao/criar-leilao.component';
+import { LeilaoDetailsComponent } from './component/leilao-details/leilao-details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -28,7 +29,8 @@ const routes: Routes = [
   { path: 'politica-privacidade', component: PoliticaPrivacidadeComponent },
   { path: 'objetosperdidos', component: ObjetosperdidosComponent, canActivate: [AuthGuard] },
   { path: 'my-account-logado', component: MyAccountLogadoComponent, canActivate: [AuthGuard]},
-  { path: 'object-details/:id', component: ObjectDetailsComponent, canActivate: [AuthGuard] } // Add route for object details
+  { path: 'object-details/:id', component: ObjectDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'leilao-details/:id', component: LeilaoDetailsComponent }
 ];
 
 @NgModule({

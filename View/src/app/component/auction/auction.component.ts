@@ -13,7 +13,7 @@ import { BidModalComponent } from '../bid-modal/bid-modal.component';
   styleUrls: ['./auction.component.css']
 })
 export class AuctionComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['nome', 'valorAtual', 'tempoRestante', 'fazerLicitacao', 'seguir'];
+  displayedColumns: string[] = ['nome', 'valorAtual', 'tempoRestante', 'fazerLicitacao','info', 'seguir'];
   dataSource = new MatTableDataSource<any>();
   showAddBidForm = false;
   subscriptions: Subscription[] = [];
@@ -34,9 +34,21 @@ export class AuctionComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
+  openLeilaoDetails(id: number): void {
+    this.router.navigate(['/leilao-details', id]);
+  }
+
   loadAuctions(): void {
     this.auctionService.getLeilao().subscribe((data: any[]) => {
-      this.dataSource.data = data;
+      data.forEach(auction => {
+        this.auctionService.getFoundObjectById(auction.objeto).subscribe((objeto: any) => {
+          auction.objeto = objeto;
+          this.auctionService.getObjectById(objeto.objeto_id).subscribe((object: any) => {
+            auction.objeto = object;
+            this.dataSource.data = data;
+          });
+        });
+      });
     });
   }
 
@@ -68,8 +80,6 @@ export class AuctionComponent implements OnInit, OnDestroy {
 
   openBidModal(id: number): void {
     const dialogRef = this.dialog.open(BidModalComponent, {
-      height: '250px',
-      width: '400px',
       data: { leilaoId: id }
     });
 

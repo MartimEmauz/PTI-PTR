@@ -161,4 +161,23 @@ export class MasterService {
     return this.http.get<FoundObject[]>(`${this.apiUrl}foundobjects/`);
   }
 
+  getFoundObjectById(id: number): Observable<FoundObject> {
+    return this.http.get<FoundObject>(`${this.apiUrl}foundobjects/${id}/`);
+  }
+
+  getObjectById(id: number): Observable<Objeto> {
+    return this.http.get<Objeto>(`${this.apiUrl}objects/${id}/`);
+  }
+
+  getLeilaoById(id: number): Observable<Leilao> {
+    return this.http.get<Leilao>(`${this.apiUrl}auctions/${id}/`);
+  }
+
+  getBidsByLeilaoId(id: number): Observable<Licitacao[]> {
+    return this.http.get<Licitacao[]>(`${this.apiUrl}auctions/bids/${id}/`);
+  }
+  
+  getGeneralUserById(id: number): Observable<GeneralUser> {
+    return this.http.get<GeneralUser>(`${this.apiUrl}generalusers/${id}/`);
+  }
 }
