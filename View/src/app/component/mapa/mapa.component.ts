@@ -1,6 +1,9 @@
 ///<reference path="../../../../node_modules/@types/googlemaps/index.d.ts"/>
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MasterService } from '../../service/master.service';
+import { PolicePost } from 'src/app/Model/postopolice.model';
+import { Address } from '../../Model/address.model';
 
 declare var google: any; // Declarando o objeto google globalmente
 
@@ -18,8 +21,10 @@ export class MapaComponent implements OnInit, AfterViewInit {
   markers: google.maps.Marker[];
   distancia!: string;
   formMapas!: FormGroup;
+  policePosts: PolicePost[] = [];
+  
 
-  constructor(private renderer: Renderer2) {
+  constructor(private renderer: Renderer2, private masterService: MasterService,) {
     this.markers = [];
     this.formMapas = new FormGroup({
       busqueda: new FormControl(''),
@@ -29,9 +34,14 @@ export class MapaComponent implements OnInit, AfterViewInit {
       provincia: new FormControl(''),
       region: new FormControl('')
     });
+    
   }
 
+
+
+
   ngOnInit(): void {
+    this.loadPolicePosts();
     this.loadGoogleMapsScript().then(() => {
       console.log('Google Maps API carregada com sucesso.');
       // Após o carregamento da API, inicializa o mapa
@@ -179,4 +189,35 @@ export class MapaComponent implements OnInit, AfterViewInit {
 
     this.formMapas.controls['direccion'].setValue(getAddressComp('route') + ' ' + getAddressComp('street_number'));
   }
+
+  loadPolicePosts() {
+    this.masterService.getPolicePosts().subscribe(
+      (data: PolicePost[]) => {
+        this.policePosts = data;
+        this.loadAddresses();
+      },
+      (error: any) => {
+        console.error('Error fetching police posts:', error);
+      }
+    );
+  }
+
+  loadAddresses() {
+    this.policePosts.forEach((post) => {
+      if (post.location && typeof post.location === 'number') {
+        this.masterService.getAddressById(post.location).subscribe(
+          (address) => {
+            post.location = address;
+          },
+          (error) => {
+            console.error('Error fetching address:', error);
+          }
+        );
+      }
+    });
+  }
+
+  isAddress(location: number | Address | undefined): location is Address {
+    return (location as Address).street !== undefined;
+}
 }
