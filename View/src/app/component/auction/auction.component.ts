@@ -6,6 +6,7 @@ import { Subscription, interval } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { BidModalComponent } from '../bid-modal/bid-modal.component';
+import { AuthSwitchService } from 'src/app/auth-switch.service';
 
 @Component({
   selector: 'app-auction',
@@ -17,12 +18,13 @@ export class AuctionComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<any>();
   showAddBidForm = false;
   subscriptions: Subscription[] = [];
-
+  
   constructor(
     private auctionService: MasterService,
     private fb: FormBuilder,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private authSwitchService: AuthSwitchService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +34,11 @@ export class AuctionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  
+  isPoliceUser(): boolean {
+    return this.authSwitchService.getRole() === 'police';
   }
 
   openLeilaoDetails(id: number): void {

@@ -14,8 +14,13 @@
     <div *ngIf="profileForm.controls['internalid'].invalid && profileForm.controls['internalid'].touched" class="error-message">Por favor, insira um ID Interno válido.</div>
 
     <label for="postopolice">Posto de Polícia</label>
-    <input type="text" id="postopolice" formControlName="postopolice" required>
-    <div *ngIf="profileForm.controls['postopolice'].invalid && profileForm.controls['postopolice'].touched" class="error-message">Por favor, insira um Posto de Polícia válido.</div>
+    <select id="postopolice" formControlName="postopolice" required>
+      <option value="">Selecione um Posto de Polícia</option>
+      <option *ngFor="let posto of postosDePolicia" [value]="posto.id">{{ posto.nome }}</option>
+    </select>
+    <div *ngIf="profileForm.controls['postopolice'].invalid && profileForm.controls['postopolice'].touched" class="error-message">
+      Por favor, selecione um Posto de Polícia válido.
+    </div>
 
     <button type="submit" [disabled]="profileForm.invalid">Completar Perfil</button>
   </form>
