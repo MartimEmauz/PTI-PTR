@@ -51,3 +51,66 @@ mat-card-subtitle {
     box-shadow: none;
   }
 }
+
+.object-details-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.attributes-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.category-attributes, .object-attributes {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.category-attributes .detail-value ul, .object-attributes .detail-value ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.detail-row {
+  margin-bottom: 10px;
+}
+
+.detail-label {
+  font-weight: bold;
+}
+
+.detail-value {
+  margin-left: 5px;
+}
+
+.object-details-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-row {
+  margin-bottom: 10px;
+}
+
+.detail-label {
+  font-weight: bold;
+}
+
+.detail-value {
+  margin-left: 5px;
+}
+
+.category-attributes-list {
+  list-style-type: none;
+  padding-left: 20px; /* Adjust this value to control the indentation */
+  margin: 0;
+}
+
+.object-attributes-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+

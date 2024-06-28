@@ -69,7 +69,6 @@ INSERT INTO GeneralUser (firstName, lastName, email, password, gender, birthday,
 -- Populate Objeto table
 INSERT INTO Objeto (title, specific_date, start_date, end_date, description, category, address) VALUES
 ('Telemóvel', '2024-01-10 14:30:00', '2024-01-01', '2024-01-31', 'Telemóvel preto perdido', 1, 1),
-('Carteira', '2024-01-12 09:00:00', '2024-01-01', '2024-01-31', 'Carteira de couro castanha', 2, 2),
 ('Chaves de Carro', '2024-01-15 16:00:00', '2024-01-01', '2024-01-31', 'Chaves de carro com porta chaves azul', 3, 3),
 ('Relógio', '2024-01-20 11:45:00', '2024-01-01', '2024-01-31', 'Relógio de pulso prateado', 4, 4),
 ('Casaco', '2024-01-25 18:00:00', '2024-01-01', '2024-01-31', 'Casaco de inverno vermelho', 5, 5),
@@ -157,16 +156,14 @@ INSERT INTO Leilao (valor_base, data_inicio, data_fim, maior_licitacao, objeto) 
 (100.00, '2024-02-01 10:00:00', '2024-12-10 10:00:00', 0.00, 1),
 (200.00, '2024-02-05 12:00:00', '2024-12-15 12:00:00', 0.00, 2),
 (150.00, '2024-02-08 14:00:00', '2024-12-18 14:00:00', 0.00, 3),
-(250.00, '2024-02-12 16:00:00', '2024-12-22 16:00:00', 0.00, 4),
-(300.00, '2024-02-15 18:00:00', '2024-12-25 18:00:00', 0.00, 5);
+
 
 -- Populate Licitacao table
 INSERT INTO Licitacao (valor_licitacao, data, id_user, leilao) VALUES
 (110.00, '2024-02-02 11:00:00', 1, 1),
 (220.00, '2024-02-06 13:00:00', 2, 2),
 (160.00, '2024-02-09 15:00:00', 3, 3),
-(260.00, '2024-02-13 17:00:00', 4, 4),
-(310.00, '2024-02-16 19:00:00', 5, 5);
+
 
 UPDATE Leilao AS l
 SET maior_licitacao = (
