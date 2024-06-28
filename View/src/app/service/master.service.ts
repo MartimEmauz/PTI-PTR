@@ -214,4 +214,12 @@ export class MasterService {
   getAttributesObject(objectId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}atributesobjects/object/${objectId}/`);
   }
+
+  getPoliceUser(id: number): Observable<PoliceUser> {
+    return this.http.get<PoliceUser>(`${this.apiUrl}policeusers/${id}/`);
+  }
+
+  getPolicePostsById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}policeposts/${id}/`);
+  }
 }

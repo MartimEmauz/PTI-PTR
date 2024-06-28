@@ -12,8 +12,26 @@
       <div class="detail-label">Categoria:</div>
       <div class="detail-value">{{ objectDetails.category }}</div>
     </div>
+    <div class="detail-row attributes-container">
+        <div class="detail-label">
+          <ul class="category-attributes-list">
+            <li *ngFor="let catAttr of objectDetails.cat_att">
+              <strong>{{ catAttr.attribute }} :</strong>
+            </li>
+          </ul>
+      </div>
+      <div class="object-attributes">
+        <div class="detail-value">
+          <ul class="object-attributes-list">
+            <li *ngFor="let objAttr of objectDetails.att_obj">
+              {{ objAttr.value }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <div class="detail-row">
-      <div class="detail-label">Endereço:</div>
+      <div class="detail-label">Encontrado em:</div>
       <div class="detail-value">
         {{ objectDetails.address.street }},
         {{ objectDetails.address.city }},
@@ -22,23 +40,12 @@
       </div>
     </div>
     <div class="detail-row">
-      <div class="detail-label">Category Attributes:</div>
-      <div class="detail-value">
-        <ul>
-          <li *ngFor="let catAttr of objectDetails.cat_att">
-            {{ catAttr }}
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="detail-row">
-      <div class="detail-label">Object Attributes:</div>
-      <div class="detail-value">
-        <ul>
-          <li *ngFor="let objAttr of objectDetails.att_obj">
-            {{ objAttr }}
-          </li>
-        </ul>
+      <div *ngIf="!isPoliceUser()" class="detail-label">Posto da Policia:</div>
+      <div *ngIf="!isPoliceUser()" class="detail-value">{{ objectDetails.policePost.stationnumber }} : 
+        {{ objectDetails.address.street }},
+        {{ objectDetails.address.city }},
+        {{ objectDetails.address.country }},
+        {{ objectDetails.address.zip }}
       </div>
     </div>
   </mat-card-content>

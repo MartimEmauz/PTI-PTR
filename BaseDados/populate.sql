@@ -69,7 +69,6 @@ INSERT INTO GeneralUser (firstName, lastName, email, password, gender, birthday,
 -- Populate Objeto table
 INSERT INTO Objeto (title, specific_date, start_date, end_date, description, category, address) VALUES
 ('Telemóvel', '2024-01-10 14:30:00', '2024-01-01', '2024-01-31', 'Telemóvel preto perdido', 1, 1),
-('Carteira', '2024-01-12 09:00:00', '2024-01-01', '2024-01-31', 'Carteira de couro castanha', 2, 2),
 ('Chaves de Carro', '2024-01-15 16:00:00', '2024-01-01', '2024-01-31', 'Chaves de carro com porta chaves azul', 3, 3),
 ('Relógio', '2024-01-20 11:45:00', '2024-01-01', '2024-01-31', 'Relógio de pulso prateado', 4, 4),
 ('Casaco', '2024-01-25 18:00:00', '2024-01-01', '2024-01-31', 'Casaco de inverno vermelho', 5, 5),
