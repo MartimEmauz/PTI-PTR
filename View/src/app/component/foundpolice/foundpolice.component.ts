@@ -47,6 +47,7 @@ export class FoundpoliceComponent implements OnInit {
       description: ['', Validators.required],
       category: ['', Validators.required],
       filteredAttributes: [''],
+      address: null,
     });
 
     this.addressFormGroup = this.fb.group({
@@ -194,14 +195,14 @@ export class FoundpoliceComponent implements OnInit {
       // Cria o endereço associado
       this.service.createAddress(address).subscribe(
         (addressResponse) => {
+          console.log('Address created:', addressResponse.id); // Log para depuração
           if (addressResponse && addressResponse.id) {
             // Atualiza o formulário com o ID do endereço criado
-            this.lostObjectForm.patchValue({ address: addressResponse.id });
-  
+            this.lostObjectForm.value.address = addressResponse.id;
+            console.log('Lost Object Form:', this.lostObjectForm.value.address); // Log para depuração
             // Adiciona o objeto principal
             this.service.addObject(this.lostObjectForm.value).subscribe((newObject: any) => {
               const objeto_id = newObject.id; // Captura o id do objeto criado
-              console.log('Address Response:', addressResponse.id);
   
               // Formata a data de aniversário
               const formattedDate = ownerData.birthday.split('T')[0];
