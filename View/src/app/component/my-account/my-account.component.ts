@@ -32,6 +32,9 @@ export class MyAccountComponent {
                 console.log('Profile is not completed');
                 this.router.navigate(['/profile-completion']);
               }
+              else {
+                this.router.navigate(['/my-account-logado']);
+              }
             },
             (error) => {
               console.error('Error checking profile completion:', error);
@@ -132,6 +135,9 @@ export class MyAccountComponent {
               if (!profileCompleted) {
                 console.log('Profile is not completed');
                 this.router.navigate(['/profile-completion-policeman']);
+              }
+              else {
+                this.router.navigate(['/my-account-logado']);
               }
             },
             (error) => {
